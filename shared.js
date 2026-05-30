@@ -594,8 +594,8 @@ tr:hover td{background:var(--surface)}
 .theme-select-lbl{font-size:13px;font-weight:700;color:var(--text);line-height:1.2}
 .theme-select-desc{font-size:10px;color:var(--text-3);margin-top:2px}
 /* ── Picker thème (topbar) ── */
-.theme-picker-overlay{position:fixed;inset:0;z-index:399}
-.theme-picker{position:absolute;top:calc(100% + 8px);right:0;background:var(--panel-bg,var(--card-bg));border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.4),var(--glow-sm);z-index:400;min-width:220px;overflow:hidden;padding:8px}
+.theme-picker-overlay{position:fixed;inset:0;z-index:9998}
+.theme-picker{position:fixed;top:60px;right:12px;background:var(--panel-bg,#1e2030);border:2px solid var(--accent,#7c3aed);border-radius:14px;box-shadow:0 16px 48px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.5);z-index:9999;min-width:240px;overflow:hidden;padding:10px;backdrop-filter:none}
 .theme-picker-title{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.1em;padding:4px 8px 8px;border-bottom:1px solid var(--border);margin-bottom:6px}
 .theme-picker-btn{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:none;background:none;cursor:pointer;border-radius:8px;transition:all .15s;text-align:left}
 .theme-picker-btn:hover{background:var(--surface)}
