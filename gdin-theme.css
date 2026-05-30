@@ -680,8 +680,8 @@ input.err, select.err, textarea.err { border-color: var(--red); background: var(
 .bp-realise    { background: var(--green-dim); color: var(--green); }
 .bp-annule     { background: var(--red-dim);   color: var(--red); }
 .bp-reporte    { background: var(--orange-dim);color: var(--orange); }
-.bp-nonrealise { background: var(--bg-3); color: var(--text-3); }
-.bp-public     { background: var(--bg-3); color: var(--text-3); }
+.bp-nonrealise { background: var(--bg-3); color: var(--text-2); border: 1px solid var(--border); }
+.bp-public     { background: var(--bg-3); color: var(--text-2); border: 1px solid var(--border); }
 .bp-retard     { background: var(--red-dim); color: var(--red); border: 1px solid rgba(239,68,68,0.3); animation: blink-retard 1.4s ease-in-out infinite; }
 .badge-retard  { background: var(--red-dim); color: var(--red); border: 1px solid rgba(239,68,68,0.3); animation: blink-retard 1.4s ease-in-out infinite; }
 

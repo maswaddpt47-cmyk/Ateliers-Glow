@@ -32,8 +32,8 @@
 
 /* Saisie — composants spécifiques */
 .sf-mat-checks{display:flex;flex-wrap:wrap;gap:10px}
-.sf-mat-chip{display:flex;align-items:center;gap:6px;padding:7px 12px;border:2px solid var(--border);border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;color:var(--text-3);background:var(--bg-2);transition:all var(--t-fast);user-select:none}
-.sf-mat-chip.checked{border-color:var(--ac,var(--cyan));background:var(--ac-light,var(--cyan-dim));color:var(--ac,var(--cyan))}
+.sf-mat-chip{display:flex!important;align-items:center;gap:6px;padding:7px 12px!important;border:2px solid var(--border)!important;border-radius:20px!important;cursor:pointer;font-size:12px;font-weight:600;color:var(--text-2)!important;background:var(--bg-2)!important;transition:all var(--t-fast);user-select:none}
+.sf-mat-chip.checked{border-color:var(--ac,var(--cyan))!important;background:var(--ac-light,var(--cyan-dim))!important;color:var(--ac,var(--cyan))!important}
 .sf-mat-chip input{display:none}
 .sf-err{color:var(--red);font-size:11px;font-weight:600;margin-top:4px;display:block}
 .sf-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text);margin-bottom:2px;letter-spacing:-.02em}
@@ -112,6 +112,10 @@
 @keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeSlideIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 .view-anim{animation:fadeSlideIn .28s ease both}
+/* Force dark sur sf-pill et sf-mat-chip quelle que soit la spécificité */
+[data-theme="dark"] .sf-pill:not(.active) { background:var(--bg-2)!important; color:var(--text-2)!important; border-color:var(--border)!important; }
+[data-theme="dark"] .sf-mat-chip:not(.checked) { background:var(--bg-2)!important; color:var(--text-2)!important; border-color:var(--border)!important; }
+
 
 /* ═══════════════════════════════════════════════════════════
    DARK MODE — Surcharge des inline styles hardcodés React
@@ -241,6 +245,10 @@ window.addEventListener('afterprint',()=>{
 
 if(!window.React||!window.ReactDOM){throw new Error('React/ReactDOM non chargé — vérifiez les CDN dans le HTML');}
 const CE = React.createElement;
+
+// ── Helper thème pour les composants React ─────────────────
+function isDarkMode(){ return document.documentElement.getAttribute('data-theme')!=='light'; }
+
 function FadeItem({children,delay=0,style={}}){
   const[v,setV]=React.useState(false);
   React.useEffect(()=>{const t=setTimeout(()=>setV(true),delay*1000+20);return()=>clearTimeout(t);},[]);
@@ -704,7 +712,11 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
       statuts.map(s=>{
         const active=form.statut===s;
         return CE('button',{key:s,type:'button',
-          className:'sf-pill'+(active?' active':''),style:{'--ac':ac,'--ac-light':ac+'22'},
+          className:'sf-pill'+(active?' active':''),style:(()=>{
+            const dark=isDarkMode();
+            if(active) return{borderColor:ac,background:ac,color:'#fff'};
+            return{borderColor:'var(--border)',background:'var(--bg-2)',color:'var(--text-2)'};
+          })(),
           onClick:()=>set('statut',s)},
           CE('span',{style:{width:7,height:7,borderRadius:'50%',background:active?'rgba(255,255,255,.7)':SDOTS[s]||'#94a3b8',display:'inline-block'}}),s);
       })
@@ -750,7 +762,10 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
       CE('div',{style:{display:'flex',flexWrap:'wrap',gap:8}},
         materiels.map(m=>{
           const chk=frm.materiel.includes(m);
-          return CE('label',{key:m,className:'sf-mat-chip'+(chk?' checked':''),style:{'--ac':ac,'--ac-light':acLight}},
+          return CE('label',{key:m,className:'sf-mat-chip'+(chk?' checked':''),style:(()=>{
+              if(chk) return{borderColor:ac,background:acLight,color:ac};
+              return{borderColor:'var(--border)',background:'var(--bg-2)',color:'var(--text-2)'};
+            })(),
             CE('input',{type:'checkbox',checked:chk,style:{display:'none'},onChange:()=>(modeLot?toggleLotMat:toggleMat)(m)}),m);
         })
       )
