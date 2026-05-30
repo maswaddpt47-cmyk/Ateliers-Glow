@@ -850,9 +850,9 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
     // Liste des ateliers
     CE('div',{className:'atelier-list'},filtered.map((e,ei)=>{
       const d=fmtCardDate(e.date);const retard=isRetard(e);const cColor=conseillerColor(e.conseiller);
-      return CE(FadeItem,{key:e._id,delay:Math.min(ei*0.05,0.5)},CE('div',{className:'atelier-card',style:{background:retard?'#fffbeb':hexToRgba(cColor,0.04),borderLeft:'none'},onClick:()=>openPanel(e)},
+      return CE(FadeItem,{key:e._id,delay:Math.min(ei*0.05,0.5)},CE('div',{className:'atelier-card'+(retard?' atelier-card--retard':''),style:{'--c-color':cColor,'--c-alpha04':hexToRgba(cColor,0.04),'--c-alpha08':hexToRgba(cColor,0.08),'--c-border':hexToRgba(cColor,0.2)},onClick:()=>openPanel(e)},
         CE('div',{className:'atelier-card-border',style:{background:cColor}}),
-        CE('div',{className:'atelier-card-date',style:{background:hexToRgba(cColor,0.08),borderRight:`1px solid ${hexToRgba(cColor,0.2)}`}},
+        CE('div',{className:'atelier-card-date'},
           CE('div',{className:'atelier-card-day'},d.day),CE('div',{className:'atelier-card-month'},d.month),
           CE('div',{className:'atelier-card-jour'},d.jour),CE('div',{className:'atelier-card-time'},e.horaire)
         ),
