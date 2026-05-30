@@ -14,6 +14,13 @@
   transition:all .2s;
   flex-shrink:0;
 }
+/* ── Theme toggle toujours visible ── */
+.theme-toggle {
+  position:fixed !important;
+  top:5px;
+  right:5px;
+  z-index:9990 !important;
+}
 .theme-toggle:hover {
   background:var(--accent-bg);
   color:var(--accent-2);
@@ -273,6 +280,17 @@
 }
 .accueil-stat-trend {
   font-size:10px; font-weight:700; opacity:.75;
+}
+
+/* ── Tablette / mobile paysage : sidebar étendue ───────────── */
+@media (max-width: 860px) {
+  .app-topbar-sub { display:none; }
+  .app-topbar-title { font-size:13px; }
+  .app-topbar-right { gap:5px; }
+}
+@media (max-width: 760px) {
+  .app-topbar-title { display:none; }
+  .app-topbar-sub { display:none; }
 }
 
 /* ── Responsive mobile ──────────────────────────────────────── */
