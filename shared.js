@@ -386,6 +386,13 @@ function VueListes({lists,onSave,onClose,emails,onSaveEmails}){
 const emptyRow=()=>({id:genId(),date:'',horaire:'',ampm:'',thematique:''});
 
 function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefillData,onClearPrefill,accentColor}){
+  // ── Re-render quand le thème change ──
+  const[_themeKey,_setThemeKey]=React.useState(0);
+  React.useEffect(()=>{
+    const obs=new MutationObserver(()=>_setThemeKey(k=>k+1));
+    obs.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+    return()=>obs.disconnect();
+  },[]);
   const statuts    = lists?.statuts     || STATUTS_DEFAULT;
   const conseillers= lists?.conseillers || CONSEILLERS_DEFAULT;
   const publics    = lists?.publics     || PUBLICS_DEFAULT;
@@ -894,14 +901,14 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
           ),
           CE('hr',{style:{border:'none',borderTop:'1px solid var(--border)',margin:'12px 0'}}),
           CE('div',{className:'sp-field'},CE('label',null,'Statut *'),
-            CE('select',{value:panelStatut,onChange:e=>setPanelStatut(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13}},
+            CE('select',{value:panelStatut,onChange:e=>setPanelStatut(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13,background:'rgba(255,255,255,.07)',color:'#f1f5f9'}},
               STATUTS.map(s=>CE('option',{key:s,value:s},s)))),
           CE('div',{className:'sp-field'},CE('label',null,"Nombre d'inscrits"),
-            CE('input',{type:'number',min:0,value:panelInscrits,onChange:e=>setPanelInscrits(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13},placeholder:'0'})),
+            CE('input',{type:'number',min:0,value:panelInscrits,onChange:e=>setPanelInscrits(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13,background:'rgba(255,255,255,.07)',color:'#f1f5f9'},placeholder:'0'})),
           CE('div',{className:'sp-field'},CE('label',null,'Nombre de présents'),
-            CE('input',{type:'number',min:0,value:panelPresents,onChange:e=>setPanelPresents(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13},placeholder:'0'})),
+            CE('input',{type:'number',min:0,value:panelPresents,onChange:e=>setPanelPresents(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13,background:'rgba(255,255,255,.07)',color:'#f1f5f9'},placeholder:'0'})),
           CE('div',{className:'sp-field'},CE('label',null,'Remarques'),
-            CE('textarea',{value:panelNote,onChange:e=>setPanelNote(e.target.value),rows:3,placeholder:'Ajouter une note…',style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13,resize:'vertical'}}))
+            CE('textarea',{value:panelNote,onChange:e=>setPanelNote(e.target.value),rows:3,placeholder:'Ajouter une note…',style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13,resize:'vertical',background:'rgba(255,255,255,.07)',color:'#f1f5f9'}}))
         ),
         CE('div',{className:'side-panel-footer'},
           canDelete&&CE('button',{className:'btn btn-danger btn-sm',onClick:()=>{setConfirmDel(panel);closePanel();}},'Supprimer'),
@@ -1101,14 +1108,14 @@ function VueCalendrier({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
           ),
           CE('hr',{style:{border:'none',borderTop:'1px solid var(--border)',margin:'12px 0'}}),
           CE('div',{className:'sp-field'},CE('label',null,'Statut *'),
-            CE('select',{value:panelStatut,onChange:e=>setPanelStatut(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13}},
+            CE('select',{value:panelStatut,onChange:e=>setPanelStatut(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13,background:'rgba(255,255,255,.07)',color:'#f1f5f9'}},
               STATUTS.map(s=>CE('option',{key:s,value:s},s)))),
           CE('div',{className:'sp-field'},CE('label',null,"Nombre d'inscrits"),
-            CE('input',{type:'number',min:0,value:panelInscrits,onChange:e=>setPanelInscrits(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13},placeholder:'0'})),
+            CE('input',{type:'number',min:0,value:panelInscrits,onChange:e=>setPanelInscrits(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13,background:'rgba(255,255,255,.07)',color:'#f1f5f9'},placeholder:'0'})),
           CE('div',{className:'sp-field'},CE('label',null,'Nombre de présents'),
-            CE('input',{type:'number',min:0,value:panelPresents,onChange:e=>setPanelPresents(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13},placeholder:'0'})),
+            CE('input',{type:'number',min:0,value:panelPresents,onChange:e=>setPanelPresents(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13,background:'rgba(255,255,255,.07)',color:'#f1f5f9'},placeholder:'0'})),
           CE('div',{className:'sp-field'},CE('label',null,'Remarques'),
-            CE('textarea',{value:panelNote,onChange:e=>setPanelNote(e.target.value),rows:3,placeholder:'Ajouter une note…',style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13,resize:'vertical'}}))
+            CE('textarea',{value:panelNote,onChange:e=>setPanelNote(e.target.value),rows:3,placeholder:'Ajouter une note…',style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:13,resize:'vertical',background:'rgba(255,255,255,.07)',color:'#f1f5f9'}}))
         ),
         CE('div',{className:'side-panel-footer'},
           canDelete&&CE('button',{className:'btn btn-danger btn-sm',onClick:()=>{setConfirmDel(panel);closePanel();}},'Supprimer'),
