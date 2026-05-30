@@ -429,6 +429,12 @@ function App(){
             style:{background:accentColor}
           },adminConseiller),
           CE('button',{
+            className:'theme-toggle',
+            title:darkMode?'Mode clair':'Mode sombre',
+            onClick:()=>setDarkMode(d=>!d),
+            'aria-label':'Changer de thème'
+          },darkMode?'☀️':'🌙'),
+          CE('button',{
             onClick:()=>{localStorage.removeItem('adm_conseiller');setAdminConseiller('');},
             title:'Changer d\'identité',
             style:{background:'none',border:'1px solid #e2e8f0',borderRadius:6,padding:'3px 8px',fontSize:11,color:'#718096',cursor:'pointer'}
