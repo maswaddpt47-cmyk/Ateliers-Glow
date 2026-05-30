@@ -1919,6 +1919,46 @@ function VueAccueil({conseillers,onChoix,loading}){
 }
 
 // ═══════════════════════════════════════════════════════════
+// TableCommunesDetail — Tableau récap communes (page Territoire)
+// ═══════════════════════════════════════════════════════════
+function TableCommunesDetail({fd}){
+  if(!fd||fd.length===0)return CE(NoData,null);
+  const byC={};
+  fd.forEach(e=>{
+    const c=e.commune||'Inconnue';
+    if(!byC[c])byC[c]={total:0,realises:0,planifies:0,annules:0,presents:0,inscrits:0};
+    byC[c].total++;
+    if(e.statut==='Réalisé'){byC[c].realises++;byC[c].presents+=(parseInt(e.presents)||0);byC[c].inscrits+=(parseInt(e.inscrits)||0);}
+    else if(e.statut==='Planifié')byC[c].planifies++;
+    else if(e.statut==='Annulé')byC[c].annules++;
+  });
+  const rows=Object.entries(byC)
+    .sort((a,b)=>b[1].total-a[1].total)
+    .map(([nom,d])=>({nom,tx:d.inscrits>0?Math.round(d.presents/d.inscrits*100):0,...d}));
+  const thStyle={padding:'6px 8px',textAlign:'left',fontWeight:700,fontSize:10,color:'var(--text-muted)',borderBottom:'2px solid var(--border)',whiteSpace:'nowrap',textTransform:'uppercase',letterSpacing:'.06em'};
+  const tdStyle={padding:'6px 8px',fontSize:11,borderBottom:'1px solid var(--border)'};
+  return CE('div',{style:{overflowX:'auto'}},
+    CE('table',{style:{width:'100%',borderCollapse:'collapse',fontSize:11}},
+      CE('thead',null,CE('tr',null,
+        ['Commune','Total','Réal.','Plan.','Ann.','Présents','Tx'].map(h=>CE('th',{key:h,style:thStyle},h))
+      )),
+      CE('tbody',null,rows.map((r,i)=>{
+        const txColor=r.tx>=70?'#22c55e':r.tx>=40?'#f97316':'#ef4444';
+        return CE('tr',{key:r.nom,style:{background:i%2?'rgba(255,255,255,.02)':'transparent'}},
+          CE('td',{style:{...tdStyle,fontWeight:700,color:'var(--text)'}},r.nom),
+          CE('td',{style:{...tdStyle,fontWeight:700,color:'var(--neon)',textShadow:'var(--neon-glow-sm)'}},r.total),
+          CE('td',{style:{...tdStyle,color:'#22c55e',fontWeight:600}},r.realises),
+          CE('td',{style:{...tdStyle,color:'#60a5fa'}},r.planifies),
+          CE('td',{style:{...tdStyle,color:'#ef4444'}},r.annules),
+          CE('td',{style:tdStyle},r.presents),
+          CE('td',{style:{...tdStyle,fontWeight:700,color:txColor}},r.inscrits>0?r.tx+'%':'—')
+        );
+      }))
+    )
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
 // VuePowerBI — Dashboard Territoire (commun index + admin)
 // ═══════════════════════════════════════════════════════════
 // ── VuePowerBI ──────────────────────────────────────────────
@@ -2281,7 +2321,7 @@ function VuePowerBI({entries, conseillers: conseillersList}){
         ),
 
         CE(CardPBI,{title:'Détail communes'},
-          CE(TableCommunes,{fd})
+          CE(TableCommunesDetail,{fd})
         )
       ),
 
