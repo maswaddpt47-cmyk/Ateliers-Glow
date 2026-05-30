@@ -524,11 +524,12 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
   const LblG=({t})=>CE('span',{style:{fontSize:11,fontWeight:700,letterSpacing:'.08em',textTransform:'uppercase',color:'var(--text-muted)',display:'block',marginBottom:6}},t);
 
   // ── Style inputs ─────────────────────────────────────────
-  const iStyle=(err)=>({width:'100%',padding:'11px 14px',border:`2px solid ${err?'#e53e3e':'#e2e8f0'}`,borderRadius:10,fontSize:14,color:'var(--text)',background:err?'#fff5f5':'#f8fafc',outline:'none',boxSizing:'border-box'});
+  const _isDark=document.documentElement.getAttribute('data-theme')!=='neutral';
+  const iStyle=(err)=>({width:'100%',padding:'11px 14px',border:`2px solid ${err?'#e53e3e':(_isDark?'rgba(255,255,255,.18)':'#e2e8f0')}`,borderRadius:10,fontSize:14,color:_isDark?'#f1f5f9':'#1a202c',background:err?(_isDark?'rgba(239,68,68,.15)':'#fff5f5'):(_isDark?'rgba(255,255,255,.07)':'#f8fafc'),outline:'none',boxSizing:'border-box'});
   const sStyle=(err)=>({...iStyle(err),cursor:'pointer',appearance:'auto'});
   const nStyle=()=>({...iStyle(false),fontSize:18,fontWeight:700,textAlign:'center'});
   const taStyle=(err)=>({...iStyle(err),minHeight:84,resize:'vertical'});
-  const secStyle={background:'var(--card-bg)',borderRadius:14,padding:'18px 20px',marginBottom:12,boxShadow:'0 1px 4px rgba(0,0,0,.07)',borderTop:`3px solid ${ac}`};
+  const secStyle={background:'var(--bg-card)',borderRadius:14,padding:'18px 20px',marginBottom:12,boxShadow:'var(--card-shadow)',borderTop:`3px solid ${ac}`};
 
   // ── Statut pills ─────────────────────────────────────────
   const SDOTS={'Planifié':'#3b82f6','Réalisé':'#22c55e','Annulé':'#ef4444','Reporté':'#f59e0b','Non réalisé':'#94a3b8'};
@@ -684,7 +685,7 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
           const rErr=lotRowErrors[row.id]||{};
           const hasErr=Object.keys(rErr).length>0;
           const brd=(err)=>`2px solid ${err?'#e53e3e':'#e2e8f0'}`;
-          const inp=(type,val,key,err,ph)=>CE('input',{type,value:val,placeholder:ph||'',onChange:e=>setRow(row.id,key,e.target.value),style:{width:'100%',padding:'8px 10px',border:brd(err),borderRadius:8,fontSize:12,background:err?'#fff5f5':'#f8fafc',outline:'none',boxSizing:'border-box'}});
+          const inp=(type,val,key,err,ph)=>CE('input',{type,value:val,placeholder:ph||'',onChange:e=>setRow(row.id,key,e.target.value),style:{width:'100%',padding:'8px 10px',border:brd(err),borderRadius:8,fontSize:12,background:err?(_isDark?'rgba(239,68,68,.15)':'#fff5f5'):(_isDark?'rgba(255,255,255,.07)':'#f8fafc'),color:_isDark?'#f1f5f9':'#1a202c',outline:'none',boxSizing:'border-box'}});
           return CE('div',{key:row.id,style:{display:'grid',gridTemplateColumns:'140px 100px 64px 1fr 32px',gap:8,alignItems:'start',padding:'9px 10px',borderRadius:10,border:`1.5px solid ${hasErr?'#fc8181':acLight}`,marginBottom:6,background:hasErr?'#fff5f5':acLight}},
             inp('date',row.date,'date',rErr.date),
             inp('time',row.horaire,'horaire',rErr.horaire),
