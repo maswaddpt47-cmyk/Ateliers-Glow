@@ -1,0 +1,343 @@
+/* ═══════════════════════════════════════════════════════════════
+   admin.css — Vue Administration v2.0
+   Utilise gdin-theme.css comme base
+   Gère : sidebar pinned via .sidebar--pinned, dark/light natif
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── La sidebar admin scrolle en overflow (plus d'items) ────── */
+.sidebar {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+.sidebar::-webkit-scrollbar       { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+/* ── Pinned via classe (admin utilise .sidebar--pinned) ──────── */
+.sidebar--pinned                    { width: var(--sidebar-w-open) !important; }
+.sidebar--pinned .sidebar-sep       { width: calc(100% - 24px); }
+.sidebar--pinned .sidebar-group-label { max-height: 22px; opacity: 1; margin: 6px 0 2px; }
+.sidebar--pinned .sidebar-btn       { width: calc(var(--sidebar-w-open) - 20px); margin: 1px 10px; justify-content: flex-start; }
+.sidebar--pinned .sidebar-btn-ico   { width: 38px; }
+.sidebar--pinned .sidebar-btn-lbl   { max-width: 160px; opacity: 1; }
+.sidebar--pinned .sidebar-year      { width: calc(var(--sidebar-w-open) - 20px); }
+.sidebar--pinned .sidebar-notif-btn { width: calc(var(--sidebar-w-open) - 20px); flex-direction: row; margin: 0 10px; }
+.sidebar--pinned .sidebar-pin-btn   { display: flex; }
+.sidebar--pinned .sidebar-sep       { width: calc(100% - 24px); }
+.sidebar--pinned .sidebar-accueil-btn { width: calc(var(--sidebar-w-open) - 20px); margin: 0 10px; }
+.sidebar--pinned .sidebar-accueil-lbl { max-width: 100px; opacity: 1; }
+
+.app-content--pinned { margin-left: var(--sidebar-w-open); }
+
+/* ── Admin badge dans la sidebar ────────────────────────────── */
+.sidebar-admin-badge {
+  font-family: var(--font-mono);
+  background: var(--red);
+  box-shadow: 0 2px 8px rgba(239,68,68,0.4);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 5px;
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
+  position: relative; z-index: 1;
+  text-transform: uppercase;
+}
+
+/* ── Topbar admin — badge ADMIN ──────────────────────────────── */
+.admin-badge {
+  background: var(--red);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  letter-spacing: 0.06em;
+}
+
+/* Bouton "Changer" d'identité dans la topbar */
+.app-topbar-right button[title="Changer d'identité"],
+.app-topbar-right button[title^="Changer"] {
+  background: var(--bg-3) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--r-sm) !important;
+  padding: 3px 8px !important;
+  font-size: 11px !important;
+  color: var(--text-3) !important;
+  cursor: pointer !important;
+  transition: all var(--t-fast) !important;
+  font-family: var(--font-ui) !important;
+}
+.app-topbar-right button[title^="Changer"]:hover {
+  background: var(--bg-4) !important;
+  color: var(--text) !important;
+}
+
+/* Syncing indicator */
+.topbar-syncing {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--blue);
+  display: flex; align-items: center; gap: 4px;
+  animation: syncpulse 1.2s ease infinite;
+}
+@keyframes syncpulse { 0%,100%{opacity:.5} 50%{opacity:1} }
+
+/* Status badges topbar */
+.topbar-status-badges { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+.status-badge {
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 10px; white-space: nowrap;
+  cursor: default;
+}
+
+/* ── Confirm modal (delete) ──────────────────────────────────── */
+.confirm-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.15s ease;
+  backdrop-filter: blur(3px);
+}
+.confirm-card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 28px 28px 22px;
+  max-width: 420px; width: 90%;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.18s ease;
+  position: relative; overflow: hidden;
+}
+.confirm-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--red), var(--orange));
+}
+.confirm-card h3 {
+  font-family: var(--font-head);
+  margin: 0 0 8px; font-size: 16px; color: var(--text);
+}
+.confirm-card p {
+  font-size: 13px; color: var(--text-2); margin: 0 0 22px; line-height: 1.55;
+  background: var(--bg-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: 10px 14px;
+  font-family: var(--font-mono);
+}
+.confirm-actions { display: flex; gap: 10px; justify-content: flex-end; }
+@keyframes slideUp { from{transform:translateY(12px);opacity:0} to{transform:translateY(0);opacity:1} }
+
+/* ── VueAdmin — sections ─────────────────────────────────────── */
+.admin-section {
+  border: 1px solid rgba(239,68,68,0.2);
+  background: var(--bg-1);
+  border-radius: var(--r-lg);
+  padding: 20px; margin-bottom: 16px;
+  position: relative; overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: background var(--t-med), border-color var(--t-med);
+}
+.admin-section::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--red), var(--orange));
+}
+.admin-section h3 {
+  font-family: var(--font-head);
+  font-size: 15px; font-weight: 700; color: var(--red);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+
+/* ── KPI cards admin (inline styles dans app.js) ─────────────── */
+/* On surcharge les inline-styles hardcodés avec des classes thémées */
+.kpi { text-align: left; }
+.kpi .val {
+  font-family: var(--font-mono);
+  font-size: 28px; font-weight: 700; line-height: 1; margin: 4px 0;
+}
+.kpi .lbl { font-size: 12px; color: var(--text-3); margin-top: 4px; }
+
+/* ── Couleurs conseiller inline hardcodé (#f8fafc etc) ──────── */
+/* Surcharge pour dark mode les éléments avec bg hardcodé dans VueAdmin */
+[data-theme="dark"] .admin-section [style*="background:#f8fafc"],
+[data-theme="dark"] .admin-section [style*="background: #f8fafc"] {
+  background: var(--bg-2) !important;
+  border-color: var(--border) !important;
+}
+[data-theme="dark"] [style*="background:#f0f4ff"],
+[data-theme="dark"] [style*="background:#f0fdf4"],
+[data-theme="dark"] [style*="background:#f5f3ff"] {
+  background: var(--bg-2) !important;
+}
+[data-theme="dark"] [style*="color:#1a202c"] { color: var(--text) !important; }
+[data-theme="dark"] [style*="color:#4a5568"] { color: var(--text-2) !important; }
+[data-theme="dark"] [style*="color:#718096"] { color: var(--text-3) !important; }
+[data-theme="dark"] [style*="color:#9ca3af"] { color: var(--text-3) !important; }
+[data-theme="dark"] [style*="background:#fff;"] { background: var(--bg-1) !important; }
+[data-theme="dark"] [style*="background:#fff "] { background: var(--bg-1) !important; }
+[data-theme="dark"] [style*="background: #fff"] { background: var(--bg-1) !important; }
+[data-theme="dark"] [style*="border: 1.5px solid #e2e8f0"],
+[data-theme="dark"] [style*="border:1.5px solid #e2e8f0"],
+[data-theme="dark"] [style*="border: 1px solid #e2e8f0"],
+[data-theme="dark"] [style*="border:1px solid #e2e8f0"] { border-color: var(--border) !important; }
+
+/* Logs dans VueLogs — override inline backgrounds */
+[data-theme="dark"] [style*="background:#f8fafc"][style*="cursor:pointer"] {
+  background: var(--bg-2) !important;
+  border-color: var(--border) !important;
+}
+
+/* ── Import preview modal ─────────────────────────────────────── */
+.import-preview-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 900; padding: 16px;
+  backdrop-filter: blur(4px);
+}
+.import-preview-modal {
+  background: var(--bg-1); border: 1px solid var(--border);
+  border-radius: var(--r-xl); width: 760px; max-width: 100%;
+  max-height: 90vh; display: flex; flex-direction: column;
+  box-shadow: var(--shadow-lg); overflow: hidden;
+}
+.import-preview-header {
+  background: var(--bg-2); border-bottom: 1px solid var(--border);
+  padding: 18px 22px; flex-shrink: 0; position: relative;
+}
+.import-preview-header::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--green), var(--cyan));
+}
+.import-preview-header h3 {
+  font-family: var(--font-head);
+  font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px;
+}
+.import-preview-body { flex: 1; overflow-y: auto; padding: 16px 22px; }
+.import-preview-footer {
+  padding: 14px 22px; border-top: 1px solid var(--border);
+  display: flex; justify-content: flex-end; gap: 10px;
+  background: var(--bg-2); flex-shrink: 0;
+}
+
+/* ── Rapport import modal ────────────────────────────────────── */
+.import-rapport-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 900; padding: 16px;
+  backdrop-filter: blur(4px);
+}
+.import-rapport-modal {
+  background: var(--bg-1); border: 1px solid var(--border);
+  border-radius: var(--r-xl); width: 560px; max-width: 100%;
+  max-height: 85vh; display: flex; flex-direction: column;
+  box-shadow: var(--shadow-lg); overflow: hidden;
+}
+.import-rapport-header {
+  background: var(--bg-2); border-bottom: 1px solid var(--border);
+  padding: 16px 22px; flex-shrink: 0; position: relative;
+}
+.import-rapport-header::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--violet));
+}
+.import-rapport-header h3 {
+  font-family: var(--font-head);
+  font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 0;
+}
+.import-rapport-body   { flex: 1; overflow-y: auto; padding: 16px 22px; }
+.import-rapport-footer { padding: 14px 22px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; background: var(--bg-2); flex-shrink: 0; }
+
+/* ── Log panel ───────────────────────────────────────────────── */
+.logs-wrap {
+  background: var(--bg-base); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: 12px 14px;
+  max-height: 380px; overflow-y: auto;
+  font-family: var(--font-mono);
+}
+
+/* Log filter buttons */
+.log-filter-bar { display: flex; gap: 4px; flex-wrap: wrap; }
+.log-filter-btn {
+  font-family: var(--font-mono);
+  font-size: 11px; padding: 3px 10px; border-radius: var(--r-sm);
+  cursor: pointer; font-weight: 400; transition: all var(--t-fast);
+  border: 1px solid var(--border); background: var(--bg-2); color: var(--text-3);
+}
+.log-filter-btn:hover { background: var(--bg-3); color: var(--text); }
+.log-filter-btn.active {
+  border-color: var(--cyan); background: var(--cyan-dim);
+  color: var(--cyan); font-weight: 700;
+}
+/* Override hardcoded styles in log filter buttons */
+[data-theme="dark"] [style*="background:#eff6ff"] { background: var(--blue-dim) !important; }
+[data-theme="dark"] [style*="color:#1e3a8a"]      { color: var(--blue) !important; }
+[data-theme="dark"] [style*="background:#f9fafb"]  { background: var(--bg-2) !important; }
+[data-theme="dark"] [style*="background:#fffbeb"]  { background: var(--orange-dim) !important; }
+[data-theme="dark"] [style*="color:#b45309"]       { color: var(--orange) !important; }
+
+/* ── Agenda / semaine cards (renderCard inline) ──────────────── */
+[data-theme="dark"] .card [style*="background:#fff"][style*="borderRadius:8px"],
+[data-theme="dark"] .card [style*="background: #fff"][style*="border-radius:8px"] {
+  background: var(--bg-2) !important;
+}
+[data-theme="dark"] [style*="background:#f8fafc"][style*="border-right"] {
+  background: var(--bg-2) !important;
+}
+
+/* ── Période / mois chips (VueDashboard inline styles) ───────── */
+[data-theme="dark"] [style*="background:#fff"][style*="border:1.5px solid #e2e8f0"] {
+  background: var(--bg-2) !important;
+  border-color: var(--border) !important;
+  color: var(--text-3) !important;
+}
+
+/* ── Roadmap period presets ──────────────────────────────────── */
+[data-theme="dark"] [style*="background:#f1f5f9"][style*="borderRadius:8px"] {
+  background: var(--bg-3) !important;
+}
+[data-theme="dark"] [style*="background:#f8fafc"][style*="borderRadius:8px"] {
+  background: var(--bg-2) !important;
+}
+
+/* ── Progress bar ────────────────────────────────────────────── */
+.progress-bar  { height: 6px; background: var(--bg-3); border-radius: 3px; overflow: hidden; margin-top: 8px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--green)); border-radius: 3px; transition: width var(--t-fast); }
+
+/* ── KPIs inline dans VueAdmin (FadeItem wrappers) ───────────── */
+/* Neutralise les backgrounds hardcodés des KPI admin */
+[data-theme="dark"] .kpi[style*="background:#f0f4ff"] { background: var(--bg-2) !important; border-left-color: var(--blue) !important; }
+[data-theme="dark"] .kpi[style*="background:#f0fdf4"] { background: var(--bg-2) !important; border-left-color: var(--green) !important; }
+[data-theme="dark"] .kpi[style*="background:#f5f3ff"] { background: var(--bg-2) !important; border-left-color: var(--violet) !important; }
+[data-theme="dark"] .kpi[style*="background:#fff5f5"] { background: var(--bg-2) !important; border-left-color: var(--red) !important; }
+[data-theme="dark"] .kpi[style*="background:#fffbeb"] { background: var(--bg-2) !important; border-left-color: var(--orange) !important; }
+
+/* ── Grille admin 2 colonnes ─────────────────────────────────── */
+.admin-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media(min-width:1024px){ .admin-grid { grid-template-columns: 1fr 1fr; } }
+
+/* ── Dashboard tabs (même que app.js) ───────────────────────── */
+[data-theme="dark"] [style*="borderBottom:2px solid #e5e7eb"],
+[data-theme="dark"] [style*="border-bottom:2px solid #e5e7eb"],
+[data-theme="dark"] [style*="borderBottom: 2px solid #e5e7eb"] {
+  border-color: var(--border) !important;
+}
+[data-theme="dark"] [style*="color:#6b7280"] { color: var(--text-3) !important; }
+
+/* ── TableCommunes headers (inline hardcodé) ─────────────────── */
+[data-theme="dark"] th[style*="background:#f9fafb"],
+[data-theme="dark"] th[style*="background: #f9fafb"] { background: var(--bg-2) !important; }
+[data-theme="dark"] th[style*="background:#eff6ff"],
+[data-theme="dark"] th[style*="background: #eff6ff"] { background: var(--blue-dim) !important; color: var(--blue) !important; }
+[data-theme="dark"] tr[style*="background:#f9fafb"] { background: var(--bg-2) !important; }
+[data-theme="dark"] tr[style*="background:#fff"] td { background: var(--bg-1) !important; }
+
+/* ── Mobile ──────────────────────────────────────────────────── */
+@media(max-width:640px){
+  .sidebar--pinned { width: 100% !important; }
+  .app-content--pinned { margin-left: 0 !important; }
+}

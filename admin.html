@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Administration — Ateliers de médiation numérique — Conseil Départemental du Lot-et-Garonne"/>
+<meta name="color-scheme" content="dark light"/>
+<title>Ateliers Inclusion Numérique — Admin</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+<!-- Libs -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="xlsxstyle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js" defer></script>
+
+<!-- Styles — ordre important -->
+<link rel="stylesheet" href="gdin-theme.css"/>
+<link rel="stylesheet" href="admin.css"/>
+
+<!-- ── Anti-flash : applique le thème AVANT le premier paint ── -->
+<script>
+(function(){
+  // admin_app.js stocke le thème dans 'adm_dark' (1/0)
+  // On le lit en priorité, sinon 'gdin_theme', sinon préférence OS
+  const admDark = localStorage.getItem('adm_dark');
+  let theme;
+  if(admDark !== null){
+    theme = admDark === '1' ? 'dark' : 'light';
+  } else {
+    const saved = localStorage.getItem('gdin_theme');
+    theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
+
+<script src="shared.js"></script>
+<script src="admin_config.js"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- ── ECharts themes + pont React ↔ GDIN_THEME ────────────── -->
+<script>
+// ────────────────────────────────────────────────────────────
+// GDIN_THEME — pont entre admin_app.js (darkMode React state)
+// et le data-theme sur <html>
+// admin_app.js gère déjà le data-theme via son useEffect.
+// On lui fournit juste getEChartsTheme() pour les charts.
+// ────────────────────────────────────────────────────────────
+window.GDIN_THEME = {
+  get current(){
+    return document.documentElement.getAttribute('data-theme') || 'dark';
+  },
+  getEChartsTheme: function(){
+    return this.current === 'dark' ? 'gdin-dark' : 'gdin-light';
+  },
+  // Permet à admin_app.js d'appeler GDIN_THEME.apply() si besoin
+  apply: function(theme){
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('gdin_theme', theme);
+    localStorage.setItem('adm_dark', theme === 'dark' ? '1' : '0');
+  }
+};
+
+// ── Enregistrement thèmes ECharts ─────────────────────────────
+document.addEventListener('DOMContentLoaded', function(){
+  if(!window.echarts) return;
+
+  const PALETTE_DARK  = ['#22d3ee','#3b82f6','#10b981','#f97316','#8b5cf6','#ef4444','#eab308','#ec4899'];
+  const PALETTE_LIGHT = ['#0891b2','#1d4ed8','#059669','#ea580c','#7c3aed','#dc2626','#ca8a04','#be185d'];
+
+  function makeTheme(dark){
+    const pal = dark ? PALETTE_DARK : PALETTE_LIGHT;
+    return {
+      color: pal,
+      backgroundColor: 'transparent',
+      textStyle:  { color: dark ? '#94a3b8' : '#6b7280', fontFamily: 'IBM Plex Mono, monospace' },
+      title:      { textStyle: { color: dark ? '#e8f0fe' : '#0d1220', fontFamily: 'Syne, sans-serif' } },
+      legend:     { textStyle: { color: dark ? '#94a3b8' : '#6b7280', fontSize: 10 }, pageTextStyle: { color: dark ? '#94a3b8' : '#6b7280' } },
+      tooltip: {
+        backgroundColor: dark ? '#1a2235' : '#1f2937',
+        borderColor:     dark ? '#1e2d45' : '#374151',
+        textStyle:       { color: dark ? '#e8f0fe' : '#f9fafb', fontSize: 12 },
+        extraCssText:    'box-shadow:0 8px 28px rgba(0,0,0,.5);border-radius:10px;'
+      },
+      categoryAxis: {
+        axisLine:  { show: false },
+        axisTick:  { show: false },
+        axisLabel: { color: dark ? '#94a3b8' : '#9ca3af', fontSize: 10, fontFamily: 'IBM Plex Mono, monospace' },
+        splitLine: { lineStyle: { color: dark ? '#1e2d45' : '#e5e7eb', type: 'dashed' } }
+      },
+      valueAxis: {
+        axisLine:  { show: false },
+        axisTick:  { show: false },
+        axisLabel: { color: dark ? '#94a3b8' : '#9ca3af', fontSize: 10, fontFamily: 'IBM Plex Mono, monospace' },
+        splitLine: { lineStyle: { color: dark ? '#1e2d45' : '#e5e7eb', type: 'dashed' } }
+      },
+      bar:  { itemStyle: { borderRadius: [3,3,0,0] } },
+      line: { smooth: false, symbol: 'none', lineStyle: { width: 2 } },
+      pie:  { itemStyle: { borderRadius: 4, borderWidth: 2, borderColor: dark ? '#0d1220' : '#ffffff' } }
+    };
+  }
+
+  echarts.registerTheme('gdin-dark',  makeTheme(true));
+  echarts.registerTheme('gdin-light', makeTheme(false));
+
+  // Quand admin_app.js change data-theme, on rafraîchit les charts
+  const observer = new MutationObserver(function(){
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.querySelectorAll('[_echarts_instance_]').forEach(el => {
+      try {
+        const chart = echarts.getInstanceByDom(el);
+        if(chart){
+          // Juste un resize pour forcer le re-render avec le theme CSS
+          chart.resize();
+        }
+      } catch(e) {}
+    });
+  });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+});
+</script>
+
+<script src="admin_app.js"></script>
+</body>
+</html>
