@@ -1700,3 +1700,33 @@ nav button.notif:hover { filter: brightness(.9); }
   border-color: #e2e8f0 !important;
   color: #1a202c !important;
 }
+
+/* ── Texte saisi dans inputs — lisibilité maximale dark ── */
+:not([data-theme="neutral"]) input:not([type="color"]):not([type="checkbox"]):not([type="radio"]),
+:not([data-theme="neutral"]) select,
+:not([data-theme="neutral"]) textarea {
+  color: #f1f5f9 !important;
+  -webkit-text-fill-color: #f1f5f9 !important;
+}
+:not([data-theme="neutral"]) input:not([type="color"]):not([type="checkbox"]):not([type="radio"])::placeholder,
+:not([data-theme="neutral"]) textarea::placeholder {
+  color: rgba(241,245,249,.3) !important;
+  -webkit-text-fill-color: rgba(241,245,249,.3) !important;
+}
+/* Autofill webkit — évite le fond bleu/jaune natif */
+:not([data-theme="neutral"]) input:-webkit-autofill,
+:not([data-theme="neutral"]) input:-webkit-autofill:hover,
+:not([data-theme="neutral"]) input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #f1f5f9 !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(255,255,255,.07) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+/* Date/time inputs — la couleur du texte system peut résister */
+:not([data-theme="neutral"]) input[type="date"],
+:not([data-theme="neutral"]) input[type="time"] {
+  color-scheme: dark;
+}
+[data-theme="neutral"] input[type="date"],
+[data-theme="neutral"] input[type="time"] {
+  color-scheme: light;
+}
