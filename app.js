@@ -19,9 +19,9 @@ function VueAgendaSemaine({entries,onEdit,onDelete,onDuplicate,canDelete,initCon
   function fmtWeekLabel(){const d1=weekDays[0];const d5=weekDays[4];if(d1.getMonth()===d5.getMonth())return`${d1.getDate()} – ${d5.getDate()} ${MOIS_LONG[d5.getMonth()]} ${d5.getFullYear()}`;return`${d1.getDate()} ${MOIS_LONG[d1.getMonth()]} – ${d5.getDate()} ${MOIS_LONG[d5.getMonth()]} ${d5.getFullYear()}`;}
   const todayStr=todayLocal();
   const totalW=filtered.length;const planifies=filtered.filter(e=>e.statut==='Planifié').length;const realises=filtered.filter(e=>e.statut==='Réalisé').length;const retards=filtered.filter(e=>isRetard(e)).length;
-  function renderCard(e){const color=conseillerColor(e.conseiller);const statColor=STATUT_COLORS[e.statut]||'#94a3b8';const retard=isRetard(e);return CE('div',{key:e._id,onClick:()=>setSelectedEntry(e),style:{background:'#fff',borderRadius:8,borderLeft:`4px solid ${color}`,padding:'6px 8px',marginBottom:4,cursor:'pointer',boxShadow:'0 1px 4px rgba(0,0,0,.09)',fontSize:11,outline:retard?`1.5px solid #fca5a5`:'none'}},CE('div',{style:{display:'flex',alignItems:'center',gap:4,marginBottom:2}},CE('span',{style:{width:6,height:6,borderRadius:'50%',background:statColor,flexShrink:0,display:'inline-block'}}),CE('span',{style:{fontWeight:700,color,fontSize:10,flex:1,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},e.conseiller||'—')),CE('div',{style:{fontWeight:600,color:'#1a202c',lineHeight:1.25,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',marginBottom:1}},e.thematique||e.commune||'—'),e.commune&&e.thematique&&CE('div',{style:{color:'#718096',fontSize:10,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},e.commune),e.horaire&&CE('div',{style:{color:'#a0aec0',fontSize:10,marginTop:1}},e.horaire),retard&&CE('div',{style:{color:'#dc2626',fontSize:9,fontWeight:700,marginTop:2}},'⚠ À mettre à jour'));}
-  function SidePanel(){if(!selectedEntry)return null;const e=selectedEntry;const color=conseillerColor(e.conseiller);return CE(React.Fragment,null,CE('div',{className:'side-panel-overlay',onClick:()=>setSelectedEntry(null)}),CE('div',{className:'side-panel open'},CE('div',{className:'side-panel-header'},CE('h3',{style:{fontSize:14}},e.thematique||e.commune||'Atelier'),CE('button',{onClick:()=>setSelectedEntry(null),style:{background:'none',border:'none',cursor:'pointer',fontSize:18,color:'#718096',padding:0}},'✕')),CE('div',{className:'side-panel-body'},CE('div',{className:'sp-field'},CE('label',null,'Statut'),badgePill(e.statut,isRetard(e))),CE('div',{className:'sp-field'},CE('label',null,'Conseiller'),CE('div',{style:{fontWeight:700,color,fontSize:13}},e.conseiller||'—')),CE('div',{className:'sp-field'},CE('label',null,'Date & Créneau'),CE('div',{style:{fontWeight:600}},fmtDate(e.date)+(e.horaire?' — '+e.horaire:'')+(e.ampm?' ('+e.ampm+')':''))),CE('div',{className:'sp-field'},CE('label',null,'Commune'),CE('div',null,e.commune||'—')),CE('div',{className:'sp-field'},CE('label',null,'Thématique'),CE('div',null,e.thematique||'—')),e.orienteur&&CE('div',{className:'sp-field'},CE('label',null,'Orienteur'),CE('div',null,e.orienteur)),(e.inscrits||e.presents)&&CE('div',{className:'sp-field'},CE('label',null,'Participants'),CE('div',null,(e.presents||'—')+' présents / '+(e.inscrits||'—')+' inscrits')),e.remarques&&CE('div',{className:'sp-field'},CE('label',null,'Remarques'),CE('div',{style:{fontSize:12,color:'#4a5568',fontStyle:'italic',lineHeight:1.5}},e.remarques))),CE('div',{className:'side-panel-footer'},onEdit&&CE('button',{className:'btn btn-primary btn-sm',onClick:()=>{onEdit(e._id);setSelectedEntry(null);}},'✏️ Modifier'),onDuplicate&&CE('button',{className:'btn btn-secondary btn-sm',onClick:()=>{onDuplicate(e);setSelectedEntry(null);}},'📋 Dupliquer'),canDelete&&CE('button',{className:'btn btn-danger btn-sm',onClick:()=>{setConfirmDel({id:e._id,label:`${fmtDate(e.date)} — ${e.thematique||e.commune||e._id}`});setSelectedEntry(null);}},'🗑️ Supprimer'))));}
-  return CE('div',null,CE('div',{className:'card'},CE('div',{style:{display:'flex',alignItems:'center',gap:8,marginBottom:14,flexWrap:'wrap'}},CE('div',{style:{display:'flex',gap:4}},CE('button',{className:'btn btn-secondary btn-sm',onClick:()=>setWeekOffset(w=>w-1)},'← Préc.'),CE('button',{className:'btn btn-secondary btn-sm',onClick:()=>setWeekOffset(0),disabled:weekOffset===0,style:{opacity:weekOffset===0?.4:1}},'Auj.'),CE('button',{className:'btn btn-secondary btn-sm',onClick:()=>setWeekOffset(w=>w+1)},'Suiv. →')),CE('h2',{style:{margin:0,flex:1,textAlign:'center',fontSize:14,fontWeight:700,color:'#1a202c'}},'🗓️ Semaine du '+fmtWeekLabel()),CE('div',{style:{display:'flex',gap:5,flexWrap:'wrap'}},CE('span',{style:{fontSize:11,background:'#f1f5f9',borderRadius:20,padding:'3px 10px',color:'#475569'}},totalW+' atelier'+(totalW!==1?'s':'')),planifies>0&&CE('span',{style:{fontSize:11,background:'#dbeafe',borderRadius:20,padding:'3px 10px',color:'#1d4ed8'}},planifies+' planifié'+(planifies>1?'s':'')),realises>0&&CE('span',{style:{fontSize:11,background:'#dcfce7',borderRadius:20,padding:'3px 10px',color:'#166534'}},realises+' réalisé'+(realises>1?'s':'')),retards>0&&CE('span',{style:{fontSize:11,background:'#fee2e2',borderRadius:20,padding:'3px 10px',color:'#991b1b',fontWeight:700}},'⚠ '+retards+' retard'+(retards>1?'s':'')))),CE('div',{className:'chip-bar',style:{marginBottom:14}},CE('span',{className:'chip chip-all'+(filterConseiller==='Tous'?' active':''),onClick:()=>setFilterConseiller('Tous')},CE('span',{className:'chip-dot'}),'Tous'),conseillers.map(c=>CE('span',{key:c,className:'chip'+(filterConseiller===c?' active':''),style:{color:conseillerColor(c)},onClick:()=>setFilterConseiller(f=>f===c?'Tous':c)},CE('span',{className:'chip-dot',style:{background:conseillerColor(c)}}),c))),CE('div',{style:{overflowX:'auto'}},CE('table',{style:{width:'100%',borderCollapse:'separate',borderSpacing:'4px 0',tableLayout:'fixed',minWidth:580}},CE('thead',null,CE('tr',null,CE('th',{style:{width:36,border:'none',background:'transparent'}}),weekDays.map(d=>{const dkey=dk(d);const isToday=dkey===todayStr;const count=slots[dkey]?slots[dkey].AM.length+slots[dkey].PM.length:0;const acc=isToday?accentColor:'#6b7280';return CE('th',{key:dkey,style:{padding:'10px 6px 8px',textAlign:'center',border:'none',background:isToday?accentColor+'15':'#f8fafc',borderRadius:'12px 12px 0 0',fontWeight:400}},CE('div',{style:{fontSize:10,fontWeight:800,textTransform:'uppercase',letterSpacing:'.08em',color:acc}},JOURS[d.getDay()]),CE('div',{style:{fontSize:26,fontWeight:800,lineHeight:1.1,color:isToday?accentColor:'#1a202c',margin:'2px 0'}},d.getDate()),CE('div',{style:{fontSize:10,color:'#9ca3af',marginBottom:4}},MOIS[d.getMonth()]),count>0&&CE('span',{style:{display:'inline-block',background:isToday?accentColor:'#e2e8f0',color:isToday?'#fff':'#4a5568',borderRadius:20,fontSize:10,fontWeight:700,padding:'1px 8px'}},count));}))),CE('tbody',null,['AM','PM'].map((slot,si)=>CE('tr',{key:slot},CE('td',{style:{textAlign:'center',fontWeight:800,fontSize:11,color:slot==='AM'?'#2563eb':'#d97706',background:slot==='AM'?'#eff6ff':'#fffbeb',borderRadius:8,padding:'6px 2px',verticalAlign:'middle',width:36}},slot),weekDays.map(d=>{const dkey=dk(d);const isToday=dkey===todayStr;const items=slots[dkey]?slots[dkey][slot]:[];return CE('td',{key:dkey+slot,style:{verticalAlign:'top',padding:4,background:isToday?(slot==='AM'?accentColor+'12':accentColor+'08'):(slot==='AM'?'#f8fafc':'#fafafa'),borderBottom:si===0?`1px dashed ${isToday?accentColor+'40':'#e2e8f0'}`:'none',borderRadius:si===1?'0 0 10px 10px':'0',minHeight:70}},items.length>0?items.map(e=>renderCard(e)):CE('div',{style:{height:66,display:'flex',alignItems:'center',justifyContent:'center'}},CE('span',{style:{fontSize:14,color:'#e2e8f0'}},slot==='AM'?'☀️':'🌙')));}))))))),CE(SidePanel,null),confirmDel&&CE(ConfirmModal,{item:confirmDel,onConfirm:async()=>{if(onDelete)await onDelete(confirmDel.id);setConfirmDel(null);},onCancel:()=>setConfirmDel(null)}));
+  function renderCard(e){const color=conseillerColor(e.conseiller);const statColor=STATUT_COLORS[e.statut]||'#94a3b8';const retard=isRetard(e);return CE('div',{key:e._id,onClick:()=>setSelectedEntry(e),style:{background:'var(--input-bg,#fff)',borderRadius:8,borderLeft:`4px solid ${color}`,padding:'6px 8px',marginBottom:4,cursor:'pointer',boxShadow:'0 1px 4px rgba(0,0,0,.09)',fontSize:11,outline:retard?`1.5px solid #fca5a5`:'none'}},CE('div',{style:{display:'flex',alignItems:'center',gap:4,marginBottom:2}},CE('span',{style:{width:6,height:6,borderRadius:'50%',background:statColor,flexShrink:0,display:'inline-block'}}),CE('span',{style:{fontWeight:700,color,fontSize:10,flex:1,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},e.conseiller||'—')),CE('div',{style:{fontWeight:600,color:'var(--text,#1a202c)',lineHeight:1.25,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',marginBottom:1}},e.thematique||e.commune||'—'),e.commune&&e.thematique&&CE('div',{style:{color:'var(--text-3,#718096)',fontSize:10,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},e.commune),e.horaire&&CE('div',{style:{color:'#a0aec0',fontSize:10,marginTop:1}},e.horaire),retard&&CE('div',{style:{color:'#dc2626',fontSize:9,fontWeight:700,marginTop:2}},'⚠ À mettre à jour'));}
+  function SidePanel(){if(!selectedEntry)return null;const e=selectedEntry;const color=conseillerColor(e.conseiller);return CE(React.Fragment,null,CE('div',{className:'side-panel-overlay',onClick:()=>setSelectedEntry(null)}),CE('div',{className:'side-panel open'},CE('div',{className:'side-panel-header'},CE('h3',{style:{fontSize:14}},e.thematique||e.commune||'Atelier'),CE('button',{onClick:()=>setSelectedEntry(null),style:{background:'none',border:'none',cursor:'pointer',fontSize:18,color:'var(--text-3,#718096)',padding:0}},'✕')),CE('div',{className:'side-panel-body'},CE('div',{className:'sp-field'},CE('label',null,'Statut'),badgePill(e.statut,isRetard(e))),CE('div',{className:'sp-field'},CE('label',null,'Conseiller'),CE('div',{style:{fontWeight:700,color,fontSize:13}},e.conseiller||'—')),CE('div',{className:'sp-field'},CE('label',null,'Date & Créneau'),CE('div',{style:{fontWeight:600}},fmtDate(e.date)+(e.horaire?' — '+e.horaire:'')+(e.ampm?' ('+e.ampm+')':''))),CE('div',{className:'sp-field'},CE('label',null,'Commune'),CE('div',null,e.commune||'—')),CE('div',{className:'sp-field'},CE('label',null,'Thématique'),CE('div',null,e.thematique||'—')),e.orienteur&&CE('div',{className:'sp-field'},CE('label',null,'Orienteur'),CE('div',null,e.orienteur)),(e.inscrits||e.presents)&&CE('div',{className:'sp-field'},CE('label',null,'Participants'),CE('div',null,(e.presents||'—')+' présents / '+(e.inscrits||'—')+' inscrits')),e.remarques&&CE('div',{className:'sp-field'},CE('label',null,'Remarques'),CE('div',{style:{fontSize:12,color:'var(--text-2,#4a5568)',fontStyle:'italic',lineHeight:1.5}},e.remarques))),CE('div',{className:'side-panel-footer'},onEdit&&CE('button',{className:'btn btn-primary btn-sm',onClick:()=>{onEdit(e._id);setSelectedEntry(null);}},'✏️ Modifier'),onDuplicate&&CE('button',{className:'btn btn-secondary btn-sm',onClick:()=>{onDuplicate(e);setSelectedEntry(null);}},'📋 Dupliquer'),canDelete&&CE('button',{className:'btn btn-danger btn-sm',onClick:()=>{setConfirmDel({id:e._id,label:`${fmtDate(e.date)} — ${e.thematique||e.commune||e._id}`});setSelectedEntry(null);}},'🗑️ Supprimer'))));}
+  return CE('div',null,CE('div',{className:'card'},CE('div',{style:{display:'flex',alignItems:'center',gap:8,marginBottom:14,flexWrap:'wrap'}},CE('div',{style:{display:'flex',gap:4}},CE('button',{className:'btn btn-secondary btn-sm',onClick:()=>setWeekOffset(w=>w-1)},'← Préc.'),CE('button',{className:'btn btn-secondary btn-sm',onClick:()=>setWeekOffset(0),disabled:weekOffset===0,style:{opacity:weekOffset===0?.4:1}},'Auj.'),CE('button',{className:'btn btn-secondary btn-sm',onClick:()=>setWeekOffset(w=>w+1)},'Suiv. →')),CE('h2',{style:{margin:0,flex:1,textAlign:'center',fontSize:14,fontWeight:700,color:'var(--text,#1a202c)'}},'🗓️ Semaine du '+fmtWeekLabel()),CE('div',{style:{display:'flex',gap:5,flexWrap:'wrap'}},CE('span',{style:{fontSize:11,background:'#f1f5f9',borderRadius:20,padding:'3px 10px',color:'#475569'}},totalW+' atelier'+(totalW!==1?'s':'')),planifies>0&&CE('span',{style:{fontSize:11,background:'#dbeafe',borderRadius:20,padding:'3px 10px',color:'#1d4ed8'}},planifies+' planifié'+(planifies>1?'s':'')),realises>0&&CE('span',{style:{fontSize:11,background:'#dcfce7',borderRadius:20,padding:'3px 10px',color:'#166534'}},realises+' réalisé'+(realises>1?'s':'')),retards>0&&CE('span',{style:{fontSize:11,background:'#fee2e2',borderRadius:20,padding:'3px 10px',color:'#991b1b',fontWeight:700}},'⚠ '+retards+' retard'+(retards>1?'s':'')))),CE('div',{className:'chip-bar',style:{marginBottom:14}},CE('span',{className:'chip chip-all'+(filterConseiller==='Tous'?' active':''),onClick:()=>setFilterConseiller('Tous')},CE('span',{className:'chip-dot'}),'Tous'),conseillers.map(c=>CE('span',{key:c,className:'chip'+(filterConseiller===c?' active':''),style:{color:conseillerColor(c)},onClick:()=>setFilterConseiller(f=>f===c?'Tous':c)},CE('span',{className:'chip-dot',style:{background:conseillerColor(c)}}),c))),CE('div',{style:{overflowX:'auto'}},CE('table',{style:{width:'100%',borderCollapse:'separate',borderSpacing:'4px 0',tableLayout:'fixed',minWidth:580}},CE('thead',null,CE('tr',null,CE('th',{style:{width:36,border:'none',background:'transparent'}}),weekDays.map(d=>{const dkey=dk(d);const isToday=dkey===todayStr;const count=slots[dkey]?slots[dkey].AM.length+slots[dkey].PM.length:0;const acc=isToday?accentColor:'#6b7280';return CE('th',{key:dkey,style:{padding:'10px 6px 8px',textAlign:'center',border:'none',background:isToday?accentColor+'15':'#f8fafc',borderRadius:'12px 12px 0 0',fontWeight:400}},CE('div',{style:{fontSize:10,fontWeight:800,textTransform:'uppercase',letterSpacing:'.08em',color:acc}},JOURS[d.getDay()]),CE('div',{style:{fontSize:26,fontWeight:800,lineHeight:1.1,color:isToday?accentColor:'#1a202c',margin:'2px 0'}},d.getDate()),CE('div',{style:{fontSize:10,color:'var(--text-muted,#9ca3af)',marginBottom:4}},MOIS[d.getMonth()]),count>0&&CE('span',{style:{display:'inline-block',background:isToday?accentColor:'#e2e8f0',color:isToday?'#fff':'#4a5568',borderRadius:20,fontSize:10,fontWeight:700,padding:'1px 8px'}},count));}))),CE('tbody',null,['AM','PM'].map((slot,si)=>CE('tr',{key:slot},CE('td',{style:{textAlign:'center',fontWeight:800,fontSize:11,color:slot==='AM'?'#2563eb':'#d97706',background:slot==='AM'?'#eff6ff':'#fffbeb',borderRadius:8,padding:'6px 2px',verticalAlign:'middle',width:36}},slot),weekDays.map(d=>{const dkey=dk(d);const isToday=dkey===todayStr;const items=slots[dkey]?slots[dkey][slot]:[];return CE('td',{key:dkey+slot,style:{verticalAlign:'top',padding:4,background:isToday?(slot==='AM'?accentColor+'12':accentColor+'08'):(slot==='AM'?'#f8fafc':'#fafafa'),borderBottom:si===0?`1px dashed ${isToday?accentColor+'40':'#e2e8f0'}`:'none',borderRadius:si===1?'0 0 10px 10px':'0',minHeight:70}},items.length>0?items.map(e=>renderCard(e)):CE('div',{style:{height:66,display:'flex',alignItems:'center',justifyContent:'center'}},CE('span',{style:{fontSize:14,color:'#e2e8f0'}},slot==='AM'?'☀️':'🌙')));}))))))),CE(SidePanel,null),confirmDel&&CE(ConfirmModal,{item:confirmDel,onConfirm:async()=>{if(onDelete)await onDelete(confirmDel.id);setConfirmDel(null);},onCancel:()=>setConfirmDel(null)}));
 }
 
 // ── App Frontend (conseillers) v10.0 ─────────────────────────
@@ -278,7 +278,7 @@ function App(){
                   return CE('div',{key:c,className:'accueil-stat-chip',style:{background:color+'12',border:`1px solid ${color}30`,color}},
                     CE('span',{style:{fontWeight:700}},c.split(' ')[0]),
                     CE('span',{className:'accueil-stat-count',style:{background:color}},n),
-                    CE('span',{style:{fontSize:10,color:'#9ca3af'}},'ce mois'),
+                    CE('span',{style:{fontSize:10,color:'var(--text-muted,#9ca3af)'}},'ce mois'),
                     taux!==null&&CE('span',{style:{fontSize:10,fontWeight:700,color:tauxColor}},taux+'%'),
                     prev>0&&CE('span',{className:'accueil-stat-trend',style:{color:trendColor}},`${trendIco}${Math.abs(diff)}`)
                   );
@@ -566,11 +566,11 @@ function VueRoadmap({entries,annee,conseillers}){
       // ── Sélecteur de période ────────────────────────────────
       CE('div',{style:{
         display:'flex',gap:10,alignItems:'center',flexWrap:'wrap',
-        background:'#f8fafc',borderRadius:8,padding:'10px 14px',
+        background:'var(--surface,#f8fafc)',borderRadius:8,padding:'10px 14px',
         border:'1px solid '+(dateError?'#fca5a5':'#e2e8f0'),
         marginBottom:14
       }},
-        CE('span',{style:{fontSize:11,fontWeight:700,color:'#4a5568',whiteSpace:'nowrap'}},'📅 Période'),
+        CE('span',{style:{fontSize:11,fontWeight:700,color:'var(--text-2,#4a5568)',whiteSpace:'nowrap'}},'📅 Période'),
         // Raccourcis
         CE('div',{style:{display:'flex',gap:4,flexWrap:'wrap'}},
           PRESETS.map(p=>CE('button',{key:p.label,onClick:()=>{setDateFrom(p.from);setDateTo(p.to);},style:{
@@ -588,16 +588,16 @@ function VueRoadmap({entries,annee,conseillers}){
           CE('input',{type:'date',value:dateFrom,
             onChange:e=>{setDateFrom(e.target.value);},
             style:{
-              padding:'4px 8px',border:'1.5px solid '+(dateError?'#fca5a5':'#e2e8f0'),
-              borderRadius:6,fontSize:12,color:'#1a202c',background:'#fff',cursor:'pointer',outline:'none'
+              padding:'4px 8px',border:'1.5px solid '+(dateError?'#fca5a5':'var(--border,#e2e8f0)'),
+              borderRadius:6,fontSize:12,color:'var(--text,#1a202c)',background:'var(--input-bg,#fff)',cursor:'pointer',outline:'none'
             }
           }),
-          CE('span',{style:{fontSize:12,color:'#9ca3af',fontWeight:600}},'→'),
+          CE('span',{style:{fontSize:12,color:'var(--text-muted,#9ca3af)',fontWeight:600}},'→'),
           CE('input',{type:'date',value:dateTo,
             onChange:e=>{setDateTo(e.target.value);},
             style:{
-              padding:'4px 8px',border:'1.5px solid '+(dateError?'#fca5a5':'#e2e8f0'),
-              borderRadius:6,fontSize:12,color:'#1a202c',background:'#fff',cursor:'pointer',outline:'none'
+              padding:'4px 8px',border:'1.5px solid '+(dateError?'#fca5a5':'var(--border,#e2e8f0)'),
+              borderRadius:6,fontSize:12,color:'var(--text,#1a202c)',background:'var(--input-bg,#fff)',cursor:'pointer',outline:'none'
             }
           }),
           dateError&&CE('span',{style:{fontSize:11,color:'#dc2626',fontWeight:600}},'⚠ Date de début > fin')
@@ -612,18 +612,18 @@ function VueRoadmap({entries,annee,conseillers}){
           {label:'Participants',value:kpis.presents,color:'#d97706'},
           {label:'Taux réalisation',value:kpis.taux+'%',color:kpis.taux>=75?'#16a34a':kpis.taux>=50?'#d97706':'#dc2626'},
         ].map((k,ki)=>CE('div',{key:k.label,style:{
-          background:'#f8fafc',borderRadius:8,padding:'10px 14px',
+          background:'var(--surface,#f8fafc)',borderRadius:8,padding:'10px 14px',
           borderLeft:'3px solid '+k.color,animation:`fadeInUp .35s ease ${ki*0.08}s both`
         }},
           CE('div',{style:{fontSize:22,fontWeight:800,color:k.color}},k.value),
-          CE('div',{style:{fontSize:11,color:'#718096',marginTop:2}},k.label)
+          CE('div',{style:{fontSize:11,color:'var(--text-3,#718096)',marginTop:2}},k.label)
         ))
       ),
 
       // Filtres conseiller + statut
       CE('div',{style:{display:'flex',gap:12,flexWrap:'wrap',alignItems:'center'}},
         CE('div',{style:{display:'flex',gap:5,alignItems:'center',flexWrap:'wrap'}},
-          CE('span',{style:{fontSize:11,color:'#9ca3af',fontWeight:600}},'Conseiller :'),
+          CE('span',{style:{fontSize:11,color:'var(--text-muted,#9ca3af)',fontWeight:600}},'Conseiller :'),
           ['Tous',...(conseillers||[])].map(c=>CE('button',{key:c,onClick:()=>setFilterConseiller(c),style:{
             padding:'3px 10px',borderRadius:20,cursor:'pointer',fontSize:11,
             fontWeight:filterConseiller===c?700:400,
@@ -634,7 +634,7 @@ function VueRoadmap({entries,annee,conseillers}){
           }},c==='Tous'?'Tous':c.split(' ')[0]))
         ),
         CE('div',{style:{display:'flex',gap:5,alignItems:'center',flexWrap:'wrap'}},
-          CE('span',{style:{fontSize:11,color:'#9ca3af',fontWeight:600}},'Statut :'),
+          CE('span',{style:{fontSize:11,color:'var(--text-muted,#9ca3af)',fontWeight:600}},'Statut :'),
           ['Tous',...Object.keys(STATUT_STYLE)].map(s=>CE('button',{key:s,onClick:()=>setFilterStatut(s),style:{
             padding:'3px 10px',borderRadius:20,cursor:'pointer',fontSize:11,
             fontWeight:filterStatut===s?700:400,
@@ -650,19 +650,19 @@ function VueRoadmap({entries,annee,conseillers}){
     // ── GANTT ────────────────────────────────────────────────
     viewMode==='gantt'&&CE('div',{className:'card',style:{padding:0,overflow:'hidden'}},
       // En-tête mois
-      CE('div',{style:{display:'flex',borderBottom:'1px solid #e2e8f0',background:'#f8fafc'}},
-        CE('div',{style:{width:170,minWidth:170,padding:'8px 16px',fontSize:10,fontWeight:700,color:'#9ca3af',textTransform:'uppercase',letterSpacing:'.08em',borderRight:'1px solid #e2e8f0'}},'Conseiller'),
+      CE('div',{style:{display:'flex',borderBottom:'1px solid var(--border,#e2e8f0)',background:'var(--surface,#f8fafc)'}},
+        CE('div',{style:{width:170,minWidth:170,padding:'8px 16px',fontSize:10,fontWeight:700,color:'var(--text-muted,#9ca3af)',textTransform:'uppercase',letterSpacing:'.08em',borderRight:'1px solid var(--border,#e2e8f0)'}},'Conseiller'),
         CE('div',{style:{flex:1,position:'relative',height:32}},
           monthMarkers.map((m,i)=>CE('div',{key:i,style:{
             position:'absolute',left:m.pos+'%',top:0,height:'100%',
             borderLeft:'1px dashed #e2e8f0',display:'flex',alignItems:'center',paddingLeft:5
-          }},CE('span',{style:{fontSize:10,fontWeight:700,color:'#9ca3af',whiteSpace:'nowrap'}},m.label))),
+          }},CE('span',{style:{fontSize:10,fontWeight:700,color:'var(--text-muted,#9ca3af)',whiteSpace:'nowrap'}},m.label))),
           todayPos!==null&&CE('div',{style:{
             position:'absolute',left:todayPos+'%',top:0,height:'100%',
             borderLeft:'2px solid #dc2626',pointerEvents:'none'
           }},CE('span',{style:{
             position:'absolute',top:6,left:4,fontSize:9,color:'#dc2626',
-            fontWeight:700,whiteSpace:'nowrap',background:'#fff',padding:'0 2px',borderRadius:2
+            fontWeight:700,whiteSpace:'nowrap',background:'var(--input-bg,#fff)',padding:'0 2px',borderRadius:2
           }},'Auj.'))
         )
       ),
@@ -672,17 +672,17 @@ function VueRoadmap({entries,annee,conseillers}){
         const items=filtered.filter(e=>e.conseiller===conseiller);
         return CE('div',{key:conseiller,style:{
           display:'flex',background:ci%2===0?'#fff':'#fafbfc',
-          borderBottom:'1px solid #f0f4f8',minHeight:58,animation:`fadeInUp .3s ease ${ci*0.06}s both`
+          borderBottom:'1px solid var(--border-light,#f0f4f8)',minHeight:58,animation:`fadeInUp .3s ease ${ci*0.06}s both`
         }},
           CE('div',{style:{
             width:170,minWidth:170,padding:'10px 16px',
-            borderRight:'1px solid #e2e8f0',
+            borderRight:'1px solid var(--border,#e2e8f0)',
             display:'flex',alignItems:'center',gap:8
           }},
             CE('div',{style:{width:8,height:8,borderRadius:'50%',background:col,flexShrink:0,boxShadow:'0 0 4px '+col+'88'}}),
             CE('div',null,
-              CE('div',{style:{fontSize:12,fontWeight:700,color:'#1a202c',lineHeight:1.2}},conseiller.split(' ')[0]),
-              CE('div',{style:{fontSize:10,color:'#9ca3af'}},conseiller.split(' ').slice(1).join(' '))
+              CE('div',{style:{fontSize:12,fontWeight:700,color:'var(--text,#1a202c)',lineHeight:1.2}},conseiller.split(' ')[0]),
+              CE('div',{style:{fontSize:10,color:'var(--text-muted,#9ca3af)'}},conseiller.split(' ').slice(1).join(' '))
             ),
             CE('span',{style:{
               marginLeft:'auto',fontSize:10,fontWeight:700,
@@ -724,12 +724,12 @@ function VueRoadmap({entries,annee,conseillers}){
         );
       }),
       // Légende
-      CE('div',{style:{display:'flex',gap:14,padding:'10px 16px',background:'#f8fafc',borderTop:'1px solid #e2e8f0',flexWrap:'wrap'}},
-        Object.entries(STATUT_STYLE).map(([s,st])=>CE('div',{key:s,style:{display:'flex',alignItems:'center',gap:5,fontSize:11,color:'#4a5568'}},
+      CE('div',{style:{display:'flex',gap:14,padding:'10px 16px',background:'var(--surface,#f8fafc)',borderTop:'1px solid #e2e8f0',flexWrap:'wrap'}},
+        Object.entries(STATUT_STYLE).map(([s,st])=>CE('div',{key:s,style:{display:'flex',alignItems:'center',gap:5,fontSize:11,color:'var(--text-2,#4a5568)'}},
           CE('div',{style:{width:14,height:14,borderRadius:3,background:st.bg,display:'flex',alignItems:'center',justifyContent:'center',fontSize:7,color:'#fff',fontWeight:700}},st.label),
           s
         )),
-        filtered.length===0&&CE('span',{style:{fontSize:12,color:'#9ca3af',marginLeft:'auto'}},'Aucun atelier pour cette période')
+        filtered.length===0&&CE('span',{style:{fontSize:12,color:'var(--text-muted,#9ca3af)',marginLeft:'auto'}},'Aucun atelier pour cette période')
       )
     ),
 
@@ -764,19 +764,19 @@ function VueRoadmap({entries,annee,conseillers}){
 
       return CE('div',{className:'card'},
         CE('div',{style:{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}},
-          CE('h3',{style:{margin:0,fontSize:14,color:'#1a202c'}},'Ateliers par mois & conseiller'),
-          CE('div',{style:{display:'flex',gap:12,fontSize:11,color:'#9ca3af'}},
+          CE('h3',{style:{margin:0,fontSize:14,color:'var(--text,#1a202c)'}},'Ateliers par mois & conseiller'),
+          CE('div',{style:{display:'flex',gap:12,fontSize:11,color:'var(--text-muted,#9ca3af)'}},
             CE('span',null,'▪ Clair = planifiés/autres'),
             CE('span',null,'▪ Plein = réalisés')
           )
         ),
         visibleMonths.length===0
-          ?CE('p',{style:{color:'#9ca3af',fontSize:13}},'Aucune période sélectionnée.')
+          ?CE('p',{style:{color:'var(--text-muted,#9ca3af)',fontSize:13}},'Aucune période sélectionnée.')
           :CE('div',{style:{overflowX:'auto'}},
             CE('table',{style:{width:'100%',borderCollapse:'collapse',minWidth:Math.max(400,visibleMonths.length*52+140)}},
               CE('thead',null,CE('tr',null,
-                CE('th',{style:{width:140,minWidth:140,textAlign:'left',padding:'6px 10px',fontSize:11,fontWeight:700,color:'#9ca3af',borderBottom:'2px solid #e2e8f0'}},'Conseiller'),
-                visibleMonths.map(({label},i)=>CE('th',{key:i,style:{textAlign:'center',padding:'6px 8px',fontSize:11,fontWeight:700,color:'#9ca3af',borderBottom:'2px solid #e2e8f0',whiteSpace:'nowrap'}},label))
+                CE('th',{style:{width:140,minWidth:140,textAlign:'left',padding:'6px 10px',fontSize:11,fontWeight:700,color:'var(--text-muted,#9ca3af)',borderBottom:'2px solid #e2e8f0'}},'Conseiller'),
+                visibleMonths.map(({label},i)=>CE('th',{key:i,style:{textAlign:'center',padding:'6px 8px',fontSize:11,fontWeight:700,color:'var(--text-muted,#9ca3af)',borderBottom:'2px solid #e2e8f0',whiteSpace:'nowrap'}},label))
               )),
               CE('tbody',null,
                 displayedConseillers.map(conseiller=>{
@@ -790,17 +790,17 @@ function VueRoadmap({entries,annee,conseillers}){
                     return{count:inMonth.length,realises:inMonth.filter(e=>e.statut==='Réalisé').length};
                   });
                   return CE('tr',{key:conseiller},
-                    CE('td',{style:{padding:'8px 10px',borderBottom:'1px solid #f0f4f8',whiteSpace:'nowrap'}},
+                    CE('td',{style:{padding:'8px 10px',borderBottom:'1px solid var(--border-light,#f0f4f8)',whiteSpace:'nowrap'}},
                       CE('div',{style:{display:'flex',alignItems:'center',gap:6}},
                         CE('div',{style:{width:8,height:8,borderRadius:'50%',background:col,flexShrink:0}}),
-                        CE('span',{style:{fontSize:12,fontWeight:700,color:'#1a202c'}},conseiller.split(' ')[0])
+                        CE('span',{style:{fontSize:12,fontWeight:700,color:'var(--text,#1a202c)'}},conseiller.split(' ')[0])
                       )
                     ),
                     byMonth.map((m,mi)=>{
                       const mLabel=visibleMonths[mi].label;
                       const planifies=m.count-m.realises;
                       return CE('td',{key:mi,style:{
-                        padding:'8px 4px',borderBottom:'1px solid #f0f4f8',
+                        padding:'8px 4px',borderBottom:'1px solid var(--border-light,#f0f4f8)',
                         verticalAlign:'bottom',textAlign:'center',position:'relative',cursor:m.count>0?'pointer':'default'
                       },
                       onMouseEnter:m.count>0?e=>{const r=e.currentTarget.getBoundingClientRect();setTooltip({conseiller,mois:mLabel,total:m.count,realises:m.realises,planifies,col,x:r.left+r.width/2,y:r.top});}:null,
@@ -886,7 +886,7 @@ function VueRoadmap({entries,annee,conseillers}){
 
 
 function VueDashboard({entries}){
-  if(!window.echarts)return CE('div',{className:'card'},CE('p',{style:{color:'#718096',textAlign:'center',padding:'40px 0'}},'⚠️ ECharts non chargé.'));
+  if(!window.echarts)return CE('div',{className:'card'},CE('p',{style:{color:'var(--text-3,#718096)',textAlign:'center',padding:'40px 0'}},'⚠️ ECharts non chargé.'));
 
   const[periodeIdx,setPeriodeIdx]=React.useState(0); // défaut : tout
   const[selectedMonths,setSelectedMonths]=React.useState([]); // mois sélectionnés (1-12)
@@ -976,17 +976,17 @@ function VueDashboard({entries}){
     // ── Barre période ──
     CE('div',{className:'card',style:{marginBottom:12,padding:'12px 16px'}},
       CE('div',{style:{display:'flex',alignItems:'center',gap:8,flexWrap:'wrap'}},
-        CE('span',{style:{fontSize:12,fontWeight:700,color:'#718096'}},'Période :'),
+        CE('span',{style:{fontSize:12,fontWeight:700,color:'var(--text-3,#718096)'}},'Période :'),
         PERIODES.map((p,i)=>CE('button',{key:i,onClick:()=>setPeriodeIdx(i),style:{
           padding:'4px 13px',borderRadius:20,fontSize:12,fontWeight:600,cursor:'pointer',
           border:`1.5px solid ${periodeIdx===i?accent:'#e2e8f0'}`,
           background:periodeIdx===i?accent:'#fff',
           color:periodeIdx===i?'#fff':'#718096',transition:'all .15s'
         }},p.l)),
-        CE('span',{style:{marginLeft:'auto',fontSize:11,color:'#9ca3af'}},filtered.length+' ateliers · '+now.toLocaleDateString('fr-FR'))
+        CE('span',{style:{marginLeft:'auto',fontSize:11,color:'var(--text-muted,#9ca3af)'}},filtered.length+' ateliers · '+now.toLocaleDateString('fr-FR'))
       ),
       CE('div',{style:{display:'flex',alignItems:'center',gap:6,flexWrap:'wrap',marginTop:8,paddingTop:8,borderTop:'1px solid #f1f5f9'}},
-        CE('span',{style:{fontSize:12,fontWeight:700,color:'#718096'}},'Mois :'),
+        CE('span',{style:{fontSize:12,fontWeight:700,color:'var(--text-3,#718096)'}},'Mois :'),
         MOIS_LABELS.map((m,i)=>{const mo=i+1;return CE('button',{key:mo,onClick:()=>toggleMonth(mo),style:{
           padding:'3px 10px',borderRadius:20,fontSize:11,fontWeight:600,cursor:'pointer',
           border:`1.5px solid ${selectedMonths.includes(mo)?accent:'#e2e8f0'}`,
@@ -995,7 +995,7 @@ function VueDashboard({entries}){
         }},m);}),
         selectedMonths.length>0&&CE('button',{onClick:()=>setSelectedMonths([]),style:{
           padding:'3px 10px',borderRadius:20,fontSize:11,cursor:'pointer',
-          border:'1.5px solid #fca5a5',background:'#fff',color:'#ef4444',fontWeight:600
+          border:'1.5px solid #fca5a5',background:'var(--input-bg,#fff)',color:'#ef4444',fontWeight:600
         }},'✕ Effacer')
       )
     ),

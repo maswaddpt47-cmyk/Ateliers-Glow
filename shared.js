@@ -1374,20 +1374,20 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
       ),
       CE('hr',{style:{border:'none',borderTop:'1px solid #f0f4f8',margin:'10px 0'}}),
       CE('div',{style:{display:'flex',gap:8,flexWrap:'wrap',alignItems:'center'}},
-        CE('input',{type:'text',value:search,placeholder:'🔍 Recherche…',style:{flex:'1 1 160px',padding:'6px 10px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:13},onChange:e=>setSearch(e.target.value)}),
-        CE('select',{style:{padding:'6px 8px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:12},value:filtMois,onChange:e=>setFiltMois(e.target.value)},
+        CE('input',{type:'text',value:search,placeholder:'🔍 Recherche…',style:{flex:'1 1 160px',padding:'6px 10px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:13,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'},onChange:e=>setSearch(e.target.value)}),
+        CE('select',{style:{padding:'6px 8px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:12,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'},value:filtMois,onChange:e=>setFiltMois(e.target.value)},
           CE('option',{value:'Tous'},'Tous les mois'),moisDispo.map(m=>CE('option',{key:m,value:m},m))),
-        CE('select',{style:{padding:'6px 8px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:12},value:filtCommune,onChange:e=>setFiltCommune(e.target.value)},
+        CE('select',{style:{padding:'6px 8px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:12,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'},value:filtCommune,onChange:e=>setFiltCommune(e.target.value)},
           CE('option',{value:'Toutes'},'Toutes communes'),COMMUNES.map(c=>CE('option',{key:c,value:c},c))),
-        CE('select',{style:{padding:'6px 8px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:12},value:filtConseiller,onChange:e=>{setFiltConseiller(e.target.value);if(onChangeConseiller)onChangeConseiller(e.target.value);}},
+        CE('select',{style:{padding:'6px 8px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:12,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'},value:filtConseiller,onChange:e=>{setFiltConseiller(e.target.value);if(onChangeConseiller)onChangeConseiller(e.target.value);}},
           CE('option',{value:'Tous'},'Tous conseillers'),CONSEILLERS.map(c=>CE('option',{key:c,value:c},c)))
       ),
       CE('div',{style:{display:'flex',gap:8,flexWrap:'wrap',alignItems:'center',marginTop:8}},
         CE('div',{style:{display:'flex',alignItems:'center',gap:4}},
           CE('span',{style:{fontSize:11,fontWeight:700,color:'#718096',whiteSpace:'nowrap'}},'Du'),
-          CE('input',{type:'date',value:dateFrom,onChange:e=>setDateFrom(e.target.value),style:{padding:'6px 8px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:12}}),
+          CE('input',{type:'date',value:dateFrom,onChange:e=>setDateFrom(e.target.value),style:{padding:'6px 8px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:12,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'}}),
           CE('span',{style:{fontSize:11,fontWeight:700,color:'#718096',whiteSpace:'nowrap'}},'Au'),
-          CE('input',{type:'date',value:dateTo,onChange:e=>setDateTo(e.target.value),style:{padding:'6px 8px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:12}})
+          CE('input',{type:'date',value:dateTo,onChange:e=>setDateTo(e.target.value),style:{padding:'6px 8px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:12,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'}})
         ),
         CE('button',{className:'btn btn-secondary btn-sm',onClick:()=>setSortDir(d=>-d)},sortDir===1?'↑ Date':'↓ Date'),
         CE('button',{className:'btn btn-secondary btn-sm',onClick:exportXLSX},'📥 XLSX'),
@@ -1430,7 +1430,7 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
               CLOTURE_PRESETS.map(p=>CE('button',{key:p.statut,className:'cloture-btn',style:{background:p.bg,color:p.color},onClick:()=>setPanelStatut(p.statut)},p.label))
             )
           ),
-          CE('div',{style:{fontSize:13,fontWeight:700,color:'#1a202c',marginBottom:8}},panel.thematique),
+          CE('div',{style:{fontSize:13,fontWeight:700,color:'var(--text,#1a202c)',marginBottom:8}},panel.thematique),
           CE('div',{className:'sp-info-row'},CE('span',null,'Date'),CE('span',null,fmtDate(panel.date),' ',panel.horaire)),
           CE('div',{className:'sp-info-row'},CE('span',null,'Commune'),CE('span',null,panel.commune)),
           CE('div',{className:'sp-info-row'},CE('span',null,'Lieu'),CE('span',null,panel.lieu)),
@@ -1443,14 +1443,14 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
           ),
           CE('hr',{style:{border:'none',borderTop:'1px solid #e2e8f0',margin:'12px 0'}}),
           CE('div',{className:'sp-field'},CE('label',null,'Statut *'),
-            CE('select',{value:panelStatut,onChange:e=>setPanelStatut(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:13}},
+            CE('select',{value:panelStatut,onChange:e=>setPanelStatut(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:13,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'}},
               STATUTS.map(s=>CE('option',{key:s,value:s},s)))),
           CE('div',{className:'sp-field'},CE('label',null,"Nombre d'inscrits"),
-            CE('input',{type:'number',min:0,value:panelInscrits,onChange:e=>setPanelInscrits(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:13},placeholder:'0'})),
+            CE('input',{type:'number',min:0,value:panelInscrits,onChange:e=>setPanelInscrits(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:13,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'},placeholder:'0'})),
           CE('div',{className:'sp-field'},CE('label',null,'Nombre de présents'),
-            CE('input',{type:'number',min:0,value:panelPresents,onChange:e=>setPanelPresents(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:13},placeholder:'0'})),
+            CE('input',{type:'number',min:0,value:panelPresents,onChange:e=>setPanelPresents(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:13,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'},placeholder:'0'})),
           CE('div',{className:'sp-field'},CE('label',null,'Remarques'),
-            CE('textarea',{value:panelNote,onChange:e=>setPanelNote(e.target.value),rows:3,placeholder:'Ajouter une note…',style:{width:'100%',padding:'8px 10px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:13,resize:'vertical'}}))
+            CE('textarea',{value:panelNote,onChange:e=>setPanelNote(e.target.value),rows:3,placeholder:'Ajouter une note…',style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:13,resize:'vertical',background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'}}))
         ),
         CE('div',{className:'side-panel-footer'},
           canDelete&&CE('button',{className:'btn btn-danger btn-sm',onClick:()=>{setConfirmDel(panel);closePanel();}},'Supprimer'),
@@ -1571,7 +1571,7 @@ function VueCalendrier({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
         ),
         CE('div',{style:{display:'flex',alignItems:'center',gap:8}},
           CE('label',{style:{fontSize:12,fontWeight:600,color:'#4a5568',margin:0,whiteSpace:'nowrap'}},'Conseiller :'),
-          CE('select',{value:filtConseiller,onChange:e=>{setFiltConseiller(e.target.value);if(onChangeConseiller)onChangeConseiller(e.target.value);},style:{padding:'5px 10px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:13}},
+          CE('select',{value:filtConseiller,onChange:e=>{setFiltConseiller(e.target.value);if(onChangeConseiller)onChangeConseiller(e.target.value);},style:{padding:'5px 10px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:13,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'}},
             CE('option',{value:'Tous'},'Tous'),
             CONSEILLERS.map(c=>CE('option',{key:c,value:c},c))
           )
@@ -1637,7 +1637,7 @@ function VueCalendrier({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
               CLOTURE_PRESETS.map(p=>CE('button',{key:p.statut,className:'cloture-btn',style:{background:p.bg,color:p.color},onClick:()=>setPanelStatut(p.statut)},p.label))
             )
           ),
-          CE('div',{style:{fontSize:13,fontWeight:700,color:'#1a202c',marginBottom:8}},panel.thematique),
+          CE('div',{style:{fontSize:13,fontWeight:700,color:'var(--text,#1a202c)',marginBottom:8}},panel.thematique),
           CE('div',{className:'sp-info-row'},CE('span',null,'Date'),CE('span',null,fmtDate(panel.date),' ',panel.horaire)),
           CE('div',{className:'sp-info-row'},CE('span',null,'Commune'),CE('span',null,panel.commune)),
           CE('div',{className:'sp-info-row'},CE('span',null,'Lieu'),CE('span',null,panel.lieu)),
@@ -1650,14 +1650,14 @@ function VueCalendrier({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
           ),
           CE('hr',{style:{border:'none',borderTop:'1px solid #e2e8f0',margin:'12px 0'}}),
           CE('div',{className:'sp-field'},CE('label',null,'Statut *'),
-            CE('select',{value:panelStatut,onChange:e=>setPanelStatut(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:13}},
+            CE('select',{value:panelStatut,onChange:e=>setPanelStatut(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:13,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'}},
               STATUTS.map(s=>CE('option',{key:s,value:s},s)))),
           CE('div',{className:'sp-field'},CE('label',null,"Nombre d'inscrits"),
-            CE('input',{type:'number',min:0,value:panelInscrits,onChange:e=>setPanelInscrits(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:13},placeholder:'0'})),
+            CE('input',{type:'number',min:0,value:panelInscrits,onChange:e=>setPanelInscrits(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:13,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'},placeholder:'0'})),
           CE('div',{className:'sp-field'},CE('label',null,'Nombre de présents'),
-            CE('input',{type:'number',min:0,value:panelPresents,onChange:e=>setPanelPresents(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:13},placeholder:'0'})),
+            CE('input',{type:'number',min:0,value:panelPresents,onChange:e=>setPanelPresents(e.target.value),style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:13,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'},placeholder:'0'})),
           CE('div',{className:'sp-field'},CE('label',null,'Remarques'),
-            CE('textarea',{value:panelNote,onChange:e=>setPanelNote(e.target.value),rows:3,placeholder:'Ajouter une note…',style:{width:'100%',padding:'8px 10px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:13,resize:'vertical'}}))
+            CE('textarea',{value:panelNote,onChange:e=>setPanelNote(e.target.value),rows:3,placeholder:'Ajouter une note…',style:{width:'100%',padding:'8px 10px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:13,resize:'vertical',background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'}}))
         ),
         CE('div',{className:'side-panel-footer'},
           canDelete&&CE('button',{className:'btn btn-danger btn-sm',onClick:()=>{setConfirmDel(panel);closePanel();}},'Supprimer'),
@@ -2152,9 +2152,9 @@ function VueGraphiques({entries}){
         // Saisie manuelle
         CE('div',{style:{display:'flex',alignItems:'center',gap:6,marginLeft:4}},
           CE('span',{style:{fontSize:12,color:'#718096'}},'Du'),
-          CE('input',{type:'date',value:dateFrom,onChange:e=>setDateFrom(e.target.value),style:{padding:'5px 8px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:12}}),
+          CE('input',{type:'date',value:dateFrom,onChange:e=>setDateFrom(e.target.value),style:{padding:'5px 8px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:12,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'}}),
           CE('span',{style:{fontSize:12,color:'#718096'}},'Au'),
-          CE('input',{type:'date',value:dateTo,onChange:e=>setDateTo(e.target.value),style:{padding:'5px 8px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:12}})
+          CE('input',{type:'date',value:dateTo,onChange:e=>setDateTo(e.target.value),style:{padding:'5px 8px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:6,fontSize:12,background:'var(--input-bg,#fff)',color:'var(--text,#1a202c)'}})
         ),
         hasFilter&&CE('span',{style:{fontSize:12,color:'#1e3a8a',fontWeight:600,background:'#eff6ff',padding:'4px 10px',borderRadius:6}},`${filtered.length} / ${entries.length}`),
         CE('button',{className:'btn btn-print btn-sm',style:{marginLeft:'auto'},onClick:()=>window.print()},'🖨️ Imprimer')
@@ -2384,7 +2384,7 @@ function VueAdmin({entries,onRefresh,addLog,conseillersList,onSaveColors}){
       CE('div',{style:{display:'flex',flexDirection:'column',gap:10}},
         (conseillersList||Object.keys(CONSEILLER_COLORS)).map(c=>{
           const hexVal=(colorDraft[c]||'#6B7280').toUpperCase();
-          return CE('div',{key:c,style:{display:'flex',alignItems:'center',gap:12,padding:'10px 14px',background:'#f8fafc',borderRadius:10,border:'1.5px solid #e2e8f0'}},
+          return CE('div',{key:c,style:{display:'flex',alignItems:'center',gap:12,padding:'10px 14px',background:'var(--surface,#f8fafc)',borderRadius:10,border:'1.5px solid var(--border,#e2e8f0)'}},
             // Color picker visuel
             CE('input',{type:'color',value:(colorDraft[c]||'#6B7280').toLowerCase(),
               onChange:e=>setColorDraft(d=>({...d,[c]:e.target.value.toUpperCase()})),
@@ -2392,7 +2392,7 @@ function VueAdmin({entries,onRefresh,addLog,conseillersList,onSaveColors}){
             // Preview carré
             CE('div',{style:{width:36,height:36,borderRadius:8,background:colorDraft[c]||'#6B7280',flexShrink:0,boxShadow:'0 2px 6px rgba(0,0,0,.15)'}}),
             // Nom
-            CE('span',{style:{flex:1,fontWeight:700,fontSize:14,color:'#1a202c'}},c),
+            CE('span',{style:{flex:1,fontWeight:700,fontSize:14,color:'var(--text,#1a202c)'}},c),
             // Input hex éditable
             CE('input',{type:'text',value:hexVal,maxLength:7,
               onChange:e=>{
@@ -2405,7 +2405,7 @@ function VueAdmin({entries,onRefresh,addLog,conseillersList,onSaveColors}){
                 if(/^#[0-9A-Fa-f]{6}$/.test(v))setColorDraft(d=>({...d,[c]:v.toUpperCase()}));
                 else setColorDraft(d=>({...d,[c]:colorDraft[c]||'#6B7280'}));
               },
-              style:{width:88,fontFamily:'monospace',fontSize:13,fontWeight:700,color:'#1a202c',padding:'6px 10px',border:'1.5px solid #e2e8f0',borderRadius:8,background:'#fff',textAlign:'center'}}),
+              style:{width:88,fontFamily:'monospace',fontSize:13,fontWeight:700,color:'var(--text,#1a202c)',padding:'6px 10px',border:'1.5px solid var(--border,#e2e8f0)',borderRadius:8,background:'var(--input-bg,#fff)',textAlign:'center'}}),
             // Bouton reset
             CE('button',{onClick:()=>{const orig=CONSEILLER_COLORS[c]||'#6B7280';setColorDraft(d=>({...d,[c]:orig}));},
               style:{padding:'4px 10px',border:'1px solid #e2e8f0',borderRadius:6,fontSize:11,color:'#718096',cursor:'pointer',background:'#fff',flexShrink:0}},'↩ Reset')
