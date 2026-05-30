@@ -70,9 +70,9 @@
   --panel-bg:     var(--bg-card2);
 
   /* Formulaires */
-  --input-bg:     rgba(255,255,255,.09);
-  --input-border: rgba(255,255,255,.2);
-  --input-color:  var(--text);
+  --input-bg:     rgba(255,255,255,.06);
+  --input-border: rgba(255,255,255,.16);
+  --input-color:  #e2e8f0;
   --label-color:  var(--text-muted);
 
   /* Badges statuts */
@@ -178,9 +178,9 @@
   --card-bg:     var(--bg-card);
   --card-shadow: 0 1px 8px rgba(0,0,0,.4);
   --panel-bg:    var(--bg-card2);
-  --input-bg:    rgba(255,255,255,.09);
-  --input-border:rgba(255,255,255,.2);
-  --input-color: var(--text);
+  --input-bg:    rgba(255,255,255,.06);
+  --input-border:rgba(255,255,255,.16);
+  --input-color: #e2e8f0;
   --label-color: var(--text-muted);
   --badge-realise-bg:    rgba(34,197,94,.15);
   --badge-realise-color: #4ade80;
@@ -262,9 +262,9 @@
   --card-bg:    var(--bg-card);
   --card-shadow:0 1px 8px rgba(0,0,0,.4);
   --panel-bg:   var(--bg-card2);
-  --input-bg:   rgba(255,255,255,.09);
-  --input-border:rgba(255,255,255,.2);
-  --input-color:var(--text);
+  --input-bg:   rgba(255,255,255,.06);
+  --input-border:rgba(255,255,255,.16);
+  --input-color:#e2e8f0;
   --label-color:var(--text-muted);
   --badge-realise-bg:    rgba(34,197,94,.18);
   --badge-realise-color: #4ade80;
@@ -346,9 +346,9 @@
   --card-bg:    var(--bg-card);
   --card-shadow:0 1px 8px rgba(0,0,0,.4);
   --panel-bg:   var(--bg-card2);
-  --input-bg:   rgba(255,255,255,.09);
-  --input-border:rgba(255,255,255,.2);
-  --input-color:var(--text);
+  --input-bg:   rgba(255,255,255,.06);
+  --input-border:rgba(255,255,255,.16);
+  --input-color:#e2e8f0;
   --label-color:var(--text-muted);
   --badge-realise-bg:    rgba(34,197,94,.15);
   --badge-realise-color: #4ade80;
@@ -430,9 +430,9 @@
   --card-bg:    var(--bg-card);
   --card-shadow:0 1px 8px rgba(0,0,0,.35);
   --panel-bg:   var(--bg-card2);
-  --input-bg:   rgba(255,255,255,.09);
-  --input-border:rgba(255,255,255,.2);
-  --input-color:var(--text);
+  --input-bg:   rgba(255,255,255,.06);
+  --input-border:rgba(255,255,255,.16);
+  --input-color:#e2e8f0;
   --label-color:var(--text-muted);
   --badge-realise-bg:    rgba(34,197,94,.15);
   --badge-realise-color: #4ade80;
@@ -596,6 +596,17 @@ input, select, textarea {
   background: var(--input-bg);
   transition: border .2s;
   font-family: inherit;
+}
+input::placeholder, textarea::placeholder {
+  color: rgba(255,255,255,.28);
+}
+[data-theme="neutral"] input::placeholder,
+[data-theme="neutral"] textarea::placeholder {
+  color: #a0aec0;
+}
+select option {
+  background: var(--bg-card2);
+  color: var(--text);
 }
 input:focus, select:focus, textarea:focus {
   outline: none;
@@ -1024,12 +1035,12 @@ nav button.notif:hover { filter: brightness(.9); }
 .sf-section-accent { border-top: 3px solid var(--ac); }
 .sf-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ac); margin-bottom: 8px; display: block; }
 .sf-label-gray { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: block; }
-.sf-input { width: 100%; padding: 11px 14px; border: 2px solid var(--input-border); border-radius: 10px; font-size: 14px; color: var(--input-color); background: var(--input-bg); transition: all .2s; outline: none; font-family: inherit; }
+.sf-input { width: 100%; padding: 11px 14px; border: 2px solid var(--input-border); border-radius: 10px; font-size: 14px; color: #e2e8f0; background: rgba(255,255,255,.07); transition: all .2s; outline: none; font-family: inherit; }
 .sf-input:focus { border-color: var(--ac); box-shadow: 0 0 0 3px var(--ac-light); }
 .sf-input.err { border-color: var(--danger); }
-.sf-textarea { width: 100%; padding: 11px 14px; border: 2px solid var(--input-border); border-radius: 10px; font-size: 14px; color: var(--input-color); background: var(--input-bg); transition: all .2s; outline: none; resize: vertical; min-height: 80px; font-family: inherit; }
+.sf-textarea { width: 100%; padding: 11px 14px; border: 2px solid var(--input-border); border-radius: 10px; font-size: 14px; color: #e2e8f0; background: rgba(255,255,255,.07); transition: all .2s; outline: none; resize: vertical; min-height: 80px; font-family: inherit; }
 .sf-textarea:focus { border-color: var(--ac); box-shadow: 0 0 0 3px var(--ac-light); }
-.sf-select { width: 100%; padding: 11px 14px; border: 2px solid var(--input-border); border-radius: 10px; font-size: 14px; color: var(--input-color); background: var(--input-bg); transition: all .2s; outline: none; cursor: pointer; appearance: auto; font-family: inherit; }
+.sf-select { width: 100%; padding: 11px 14px; border: 2px solid var(--input-border); border-radius: 10px; font-size: 14px; color: #e2e8f0; background: rgba(255,255,255,.07); transition: all .2s; outline: none; cursor: pointer; appearance: auto; font-family: inherit; }
 .sf-select:focus { border-color: var(--ac); box-shadow: 0 0 0 3px var(--ac-light); }
 .sf-select.err { border-color: var(--danger); }
 .sf-pills { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -1040,7 +1051,7 @@ nav button.notif:hover { filter: brightness(.9); }
 .sf-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .sf-grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 .sf-grid-date { display: grid; grid-template-columns: 1fr 1fr 80px; gap: 12px; }
-.sf-num { width: 100%; padding: 11px 14px; border: 2px solid var(--input-border); border-radius: 10px; font-size: 18px; font-weight: 700; color: var(--input-color); background: var(--input-bg); text-align: center; transition: all .2s; outline: none; font-family: inherit; }
+.sf-num { width: 100%; padding: 11px 14px; border: 2px solid var(--input-border); border-radius: 10px; font-size: 18px; font-weight: 700; color: #e2e8f0; background: rgba(255,255,255,.07); text-align: center; transition: all .2s; outline: none; font-family: inherit; }
 .sf-num:focus { border-color: var(--ac); box-shadow: 0 0 0 3px var(--ac-light); }
 .sf-mat-checks { display: flex; flex-wrap: wrap; gap: 10px; }
 .sf-mat-chip { display: flex; align-items: center; gap: 6px; padding: 7px 12px; border: 2px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--text-muted); background: var(--btn-secondary-bg); transition: all .15s; user-select: none; font-family: inherit; }
@@ -1662,9 +1673,9 @@ nav button.notif:hover { filter: brightness(.9); }
 .side-panel-body input,
 .side-panel-body select,
 .side-panel-body textarea {
-  background: rgba(255,255,255,.1) !important;
-  border-color: rgba(255,255,255,.22) !important;
-  color: var(--text) !important;
+  background: rgba(255,255,255,.07) !important;
+  border-color: rgba(255,255,255,.18) !important;
+  color: #e2e8f0 !important;
 }
 [data-theme="neutral"] .side-panel-body input,
 [data-theme="neutral"] .side-panel-body select,
@@ -1676,3 +1687,16 @@ nav button.notif:hover { filter: brightness(.9); }
 
 /* ── Clôture presets — boutons lisibles sur tous thèmes ── */
 .cloture-btn { font-weight: 800 !important; }
+
+/* ── Thème neutre — inputs couleurs light ───────── */
+[data-theme="neutral"] input,
+[data-theme="neutral"] select,
+[data-theme="neutral"] textarea,
+[data-theme="neutral"] .sf-input,
+[data-theme="neutral"] .sf-textarea,
+[data-theme="neutral"] .sf-select,
+[data-theme="neutral"] .sf-num {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #1a202c !important;
+}
