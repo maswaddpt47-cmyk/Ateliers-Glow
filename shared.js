@@ -2038,13 +2038,13 @@ function VuePowerBI({entries, conseillers: conseillersList}){
 
   // ── Sous-composants ────────────────────────────────────────
   // Couleurs dark-aware pour VuePowerBI
-  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
-  const PBI_BG    = isDark?'#1a1d27':'#ffffff';
-  const PBI_BG2   = isDark?'#252836':'#f3f4f6';
-  const PBI_BORDER= isDark?'#2d3148':'#e5e7eb';
-  const PBI_TEXT  = isDark?'#e2e8f0':'#111827';
-  const PBI_TEXT2 = isDark?'#94a3b8':'#6b7280';
-  const PBI_CONT  = isDark?'rgba(255,255,255,0.06)':'#f3f4f6';
+  const isDark=document.documentElement.getAttribute('data-theme')!=='neutral';
+  const PBI_BG    = 'var(--bg-card)';
+  const PBI_BG2   = 'var(--bg-card2)';
+  const PBI_BORDER= 'var(--border)';
+  const PBI_TEXT  = 'var(--text)';
+  const PBI_TEXT2 = 'var(--text-muted)';
+  const PBI_CONT  = 'var(--chip-bg)';
 
   function KpiPBI({label,value,sub,color,icon,delay=0}){
     return CE(FadeItem,{delay},CE('div',{style:{background:PBI_BG,borderRadius:6,padding:'14px',borderLeft:`4px solid ${color}`,boxShadow:'0 1px 6px rgba(0,0,0,.15)'}},
@@ -2052,7 +2052,7 @@ function VuePowerBI({entries, conseillers: conseillersList}){
         CE('div',null,
           CE('div',{style:{fontSize:10,color:PBI_TEXT2,fontWeight:700,textTransform:'uppercase',letterSpacing:'.06em',marginBottom:5}},label),
           CE('div',{style:{fontSize:28,fontWeight:800,color:PBI_TEXT,lineHeight:1}},value),
-          sub&&CE('div',{style:{fontSize:11,color:'var(--text-muted)',marginTop:4}},sub)
+          sub&&CE('div',{style:{fontSize:11,color:'#94a3b8',marginTop:4}},sub)
         ),
         CE('div',{style:{width:38,height:38,borderRadius:8,background:color+'22',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20}},icon)
       )
@@ -2110,7 +2110,7 @@ function VuePowerBI({entries, conseillers: conseillersList}){
       ),
       CE('div',{style:{flex:1,minWidth:0}},
         CE('span',{style:{fontSize:12,fontWeight:700,color:'#f2c811'}},'Power BI '),
-        CE('span',{style:{fontSize:11,color:'var(--text-muted)'}}),'· Ateliers Inclusion Numérique'
+        CE('span',{style:{fontSize:11,color:'#94a3b8'}}),'· Ateliers Inclusion Numérique'
       ),
       hasF&&CE('button',{
         onClick:()=>{setFCons([]);setFStat([]);setFMois([]);},
@@ -2151,7 +2151,7 @@ function VuePowerBI({entries, conseillers: conseillersList}){
     ),
 
     // ── Contenu ──
-    CE('div',{style:{padding:14,background:isDark?'#0f1117':PBI_BG2,borderRadius:'0 0 6px 6px'}},
+    CE('div',{style:{padding:14,background:'var(--bg-app)',borderRadius:'0 0 6px 6px'}},
 
       // PAGE GÉNÉRAL
       page==='general'&&CE(React.Fragment,null,
@@ -2166,9 +2166,9 @@ function VuePowerBI({entries, conseillers: conseillersList}){
           CE(PBIChart,{height:180,option:{backgroundColor:'transparent',
             grid:{top:8,right:4,bottom:36,left:0,containLabel:true},
             tooltip:{trigger:'axis',..._ecAPN,...ecTT},
-            legend:{data:['Réalisés','Planifiés','Annulés'],textStyle:{color:'var(--text-muted)',fontSize:9},bottom:0,icon:'roundRect',itemWidth:8,itemHeight:6},
-            xAxis:{data:pMois.map(d=>d.mois),axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'var(--text-muted)',fontSize:9}},
-            yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'var(--text-muted)',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
+            legend:{data:['Réalisés','Planifiés','Annulés'],textStyle:{color:'#94a3b8',fontSize:9},bottom:0,icon:'roundRect',itemWidth:8,itemHeight:6},
+            xAxis:{data:pMois.map(d=>d.mois),axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'#94a3b8',fontSize:9}},
+            yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
             series:[
               {name:'Réalisés',type:'bar',barMaxWidth:16,data:pMois.map(d=>d['Réalisés']),itemStyle:{color:mkGradPBI('#34d399','#16a34a'),..._bar3D,borderRadius:[3,3,0,0]}},
               {name:'Planifiés',type:'bar',barMaxWidth:16,data:pMois.map(d=>d['Planifiés']),itemStyle:{color:mkGradPBI('#60a5fa','#2563eb'),..._bar3D,borderRadius:[3,3,0,0]}},
@@ -2197,8 +2197,8 @@ function VuePowerBI({entries, conseillers: conseillersList}){
             CE(PBIChart,{height:150,option:{backgroundColor:'transparent',
               grid:{top:8,right:4,bottom:22,left:0,containLabel:true},
               tooltip:{trigger:'axis',..._ecAPN,...ecTT},
-              xAxis:{data:pMoisFilt.map(d=>d.mois),axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'var(--text-muted)',fontSize:9}},
-              yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'var(--text-muted)',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
+              xAxis:{data:pMoisFilt.map(d=>d.mois),axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'#94a3b8',fontSize:9}},
+              yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
               series:[{type:'line',data:pMoisFilt.map(d=>d['Présents']),smooth:true,symbol:'none',
                 lineStyle:{width:2,color:'#22c55e'},
                 areaStyle:{color:mkGradPBI('rgba(34,197,94,0.35)','rgba(34,197,94,0.02)')}}]}}))
@@ -2208,11 +2208,11 @@ function VuePowerBI({entries, conseillers: conseillersList}){
           CE(PBIChart,{height:Math.max(180,pTheme.length*24),option:{backgroundColor:'transparent',
             grid:{top:8,right:50,bottom:8,left:8,containLabel:true},
             tooltip:{trigger:'axis',..._ecAPN,...ecTT},
-            xAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'var(--text-muted)',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
-            yAxis:{type:'category',data:pTheme.map(d=>d.name),axisLabel:{color:'var(--text-muted)',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
+            xAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
+            yAxis:{type:'category',data:pTheme.map(d=>d.name),axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
             series:[{type:'bar',barMaxWidth:14,
               data:pTheme.map((d,i)=>({value:d.count,itemStyle:{color:mkGradPBI(`hsl(${230+i*10},70%,65%)`,`hsl(${230+i*10},70%,45%)`,'h'),borderRadius:[0,4,4,0]}})),
-              label:{show:true,position:'right',color:'var(--text-muted)',fontSize:9,fontWeight:'bold'}
+              label:{show:true,position:'right',color:'#94a3b8',fontSize:9,fontWeight:'bold'}
             }]}})
         ),
 
@@ -2220,11 +2220,11 @@ function VuePowerBI({entries, conseillers: conseillersList}){
           CE(PBIChart,{height:160,option:{backgroundColor:'transparent',
             grid:{top:8,right:4,bottom:48,left:0,containLabel:true},
             tooltip:{trigger:'axis',..._ecAPN,...ecTT},
-            xAxis:{data:pOri.map(d=>d.name),axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'var(--text-muted)',fontSize:8,rotate:-20,interval:0}},
-            yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'var(--text-muted)',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
+            xAxis:{data:pOri.map(d=>d.name),axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'#94a3b8',fontSize:8,rotate:-20,interval:0}},
+            yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
             series:[{type:'bar',barMaxWidth:20,data:pOri.map(d=>d.count),
               itemStyle:{color:mkGradPBI('#fdba74','#f97316'),..._bar3D,borderRadius:[3,3,0,0]},
-              label:{show:true,position:'top',color:'var(--text-muted)',fontSize:8}}]}}))
+              label:{show:true,position:'top',color:'#94a3b8',fontSize:8}}]}}))
       ),
 
       // PAGE CONSEILLERS
@@ -2255,9 +2255,9 @@ function VuePowerBI({entries, conseillers: conseillersList}){
           CE(PBIChart,{height:200,option:{backgroundColor:'transparent',
             grid:{top:8,right:4,bottom:44,left:0,containLabel:true},
             tooltip:{trigger:'axis',..._ecAPN,...ecTT},
-            legend:{data:CONS.map(c=>c.split(' ')[0]),textStyle:{color:'var(--text-muted)',fontSize:9},bottom:0,icon:'roundRect',itemWidth:8,itemHeight:6},
-            xAxis:{data:pConsMois.map(d=>d.mois),axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'var(--text-muted)',fontSize:9}},
-            yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'var(--text-muted)',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
+            legend:{data:CONS.map(c=>c.split(' ')[0]),textStyle:{color:'#94a3b8',fontSize:9},bottom:0,icon:'roundRect',itemWidth:8,itemHeight:6},
+            xAxis:{data:pConsMois.map(d=>d.mois),axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'#94a3b8',fontSize:9}},
+            yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
             series:CONS.map((c,ci)=>({name:c.split(' ')[0],type:'bar',stackId:'a',barMaxWidth:30,data:pConsMois.map(d=>d[c]||0),itemStyle:{color:cColor(c),..._bar3D,borderRadius:ci===CONS.length-1?[3,3,0,0]:[0,0,0,0]}}))}}),
 
         CE(CardPBI,{title:'Tableau récapitulatif'},
@@ -2301,11 +2301,11 @@ function VuePowerBI({entries, conseillers: conseillersList}){
           CE(PBIChart,{height:220,option:{backgroundColor:'transparent',
             grid:{top:8,right:50,bottom:8,left:8,containLabel:true},
             tooltip:{trigger:'axis',..._ecAPN,...ecTT},
-            xAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'var(--text-muted)',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
-            yAxis:{type:'category',data:pComm.map(d=>d.name),axisLabel:{color:'var(--text-muted)',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
+            xAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
+            yAxis:{type:'category',data:pComm.map(d=>d.name),axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
             series:[{type:'bar',barMaxWidth:18,
               data:pComm.map((d,i)=>({value:d.presents,itemStyle:{color:mkGradPBI(`hsl(${210+i*12},70%,60%)`,`hsl(${210+i*12},70%,40%)`,'h'),borderRadius:[0,4,4,0]}})),
-              label:{show:true,position:'right',color:'var(--text-muted)',fontSize:9,fontWeight:'bold'}
+              label:{show:true,position:'right',color:'#94a3b8',fontSize:9,fontWeight:'bold'}
             }]}})
         ),
 
@@ -2313,11 +2313,11 @@ function VuePowerBI({entries, conseillers: conseillersList}){
           CE(PBIChart,{height:180,option:{backgroundColor:'transparent',
             grid:{top:8,right:4,bottom:48,left:0,containLabel:true},
             tooltip:{trigger:'axis',..._ecAPN,...ecTT},
-            xAxis:{data:pComm.map(d=>d.name),axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'var(--text-muted)',fontSize:8,rotate:-20,interval:0}},
-            yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'var(--text-muted)',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
+            xAxis:{data:pComm.map(d=>d.name),axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'#94a3b8',fontSize:8,rotate:-20,interval:0}},
+            yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
             series:[{type:'bar',barMaxWidth:22,data:pComm.map(d=>d.ateliers),
               itemStyle:{color:mkGradPBI('#c084fc','#7c3aed'),..._bar3D,borderRadius:[3,3,0,0]},
-              label:{show:true,position:'top',color:'var(--text-muted)',fontSize:8}}]}})        
+              label:{show:true,position:'top',color:'#94a3b8',fontSize:8}}]}})        
         ),
 
         CE(CardPBI,{title:'Détail communes'},
@@ -2325,17 +2325,12 @@ function VuePowerBI({entries, conseillers: conseillersList}){
         )
       ),
 
-      CE('div',{style:{textAlign:'right',fontSize:10,color:'var(--text-muted)',marginTop:8}},
+      CE('div',{style:{textAlign:'right',fontSize:10,color:'#94a3b8',marginTop:8}},
         fd.length+'/'+entries.length+' ateliers affichés · CD47 Inclusion Numérique'
       )
     )
   );
 }
-
-
-// ═══════════════════════════════════════════════════════
-// VueThemePicker — Sélecteur de thème (modale + dots topbar)
-// ═══════════════════════════════════════════════════════
 function VueThemePicker({onClose}){
   const[sel,setSel]=React.useState(()=>localStorage.getItem('gdin_theme')||'teal');
 
