@@ -70,8 +70,8 @@
   --panel-bg:     var(--bg-card2);
 
   /* Formulaires */
-  --input-bg:     rgba(255,255,255,.05);
-  --input-border: rgba(255,255,255,.12);
+  --input-bg:     rgba(255,255,255,.09);
+  --input-border: rgba(255,255,255,.2);
   --input-color:  var(--text);
   --label-color:  var(--text-muted);
 
@@ -178,8 +178,8 @@
   --card-bg:     var(--bg-card);
   --card-shadow: 0 1px 8px rgba(0,0,0,.4);
   --panel-bg:    var(--bg-card2);
-  --input-bg:    rgba(255,255,255,.05);
-  --input-border:rgba(255,255,255,.12);
+  --input-bg:    rgba(255,255,255,.09);
+  --input-border:rgba(255,255,255,.2);
   --input-color: var(--text);
   --label-color: var(--text-muted);
   --badge-realise-bg:    rgba(34,197,94,.15);
@@ -262,8 +262,8 @@
   --card-bg:    var(--bg-card);
   --card-shadow:0 1px 8px rgba(0,0,0,.4);
   --panel-bg:   var(--bg-card2);
-  --input-bg:   rgba(255,255,255,.05);
-  --input-border:rgba(255,255,255,.12);
+  --input-bg:   rgba(255,255,255,.09);
+  --input-border:rgba(255,255,255,.2);
   --input-color:var(--text);
   --label-color:var(--text-muted);
   --badge-realise-bg:    rgba(34,197,94,.18);
@@ -346,8 +346,8 @@
   --card-bg:    var(--bg-card);
   --card-shadow:0 1px 8px rgba(0,0,0,.4);
   --panel-bg:   var(--bg-card2);
-  --input-bg:   rgba(255,255,255,.05);
-  --input-border:rgba(255,255,255,.12);
+  --input-bg:   rgba(255,255,255,.09);
+  --input-border:rgba(255,255,255,.2);
   --input-color:var(--text);
   --label-color:var(--text-muted);
   --badge-realise-bg:    rgba(34,197,94,.15);
@@ -430,8 +430,8 @@
   --card-bg:    var(--bg-card);
   --card-shadow:0 1px 8px rgba(0,0,0,.35);
   --panel-bg:   var(--bg-card2);
-  --input-bg:   rgba(255,255,255,.05);
-  --input-border:rgba(255,255,255,.12);
+  --input-bg:   rgba(255,255,255,.09);
+  --input-border:rgba(255,255,255,.2);
   --input-color:var(--text);
   --label-color:var(--text-muted);
   --badge-realise-bg:    rgba(34,197,94,.15);
@@ -1657,3 +1657,22 @@ nav button.notif:hover { filter: brightness(.9); }
   /* Assure que le panel ne dépasse pas la hauteur de l'écran */
   max-height:100dvh;
 }
+
+/* ── Inputs dans side panel — contraste garanti ─── */
+.side-panel-body input,
+.side-panel-body select,
+.side-panel-body textarea {
+  background: rgba(255,255,255,.1) !important;
+  border-color: rgba(255,255,255,.22) !important;
+  color: var(--text) !important;
+}
+[data-theme="neutral"] .side-panel-body input,
+[data-theme="neutral"] .side-panel-body select,
+[data-theme="neutral"] .side-panel-body textarea {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #1a202c !important;
+}
+
+/* ── Clôture presets — boutons lisibles sur tous thèmes ── */
+.cloture-btn { font-weight: 800 !important; }
