@@ -1,20 +1,12 @@
 // ═══════════════════════════════════════════════════════════
-// shared.js — Ateliers CD47 v15.1
-// Code commun frontend + admin
-// Design system : gdin-theme.css (variables CSS)
+// shared.js — Ateliers CD47 v16.0
+// Code commun frontend + admin — Design system : gdin-theme.css
 // ═══════════════════════════════════════════════════════════
 
-// ── CSS injection — complément au gdin-theme.css ───────────
-// Ce bloc ne contient QUE les styles spécifiques aux composants
-// React qui ne sont pas couverts par gdin-theme.css.
-// Tous les tokens visuels (couleurs, fonts, spacing) viennent
-// des variables CSS définies dans gdin-theme.css.
 (function injectCSS(){
   const s=document.createElement('style');
   s.textContent=`
-/* ── Surcharges spécifiques composants ── */
-
-/* Calendrier — styles de cellule d'événement */
+/* ── Calendrier events ── */
 .cal-event{display:flex;align-items:center;gap:3px;padding:2px 5px;border-radius:3px;font-size:9.5px;cursor:pointer;margin-bottom:2px;transition:filter .1s;overflow:hidden;max-width:100%;line-height:1.3}
 .cal-event:hover{filter:brightness(.9)}
 .cal-event-time{font-weight:700;flex-shrink:0;font-size:9px}
@@ -29,205 +21,85 @@
 .cal-today-num{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:var(--blue);color:#fff;border-radius:50%;font-size:11px;font-weight:700}
 .cal-year-sel{padding:4px 8px;border:1.5px solid rgba(255,255,255,.35);border-radius:6px;background:rgba(255,255,255,.12);color:#fff;font-size:12px;font-weight:700;cursor:pointer;outline:none;font-family:'IBM Plex Mono',monospace}
 .cal-year-sel option{background:var(--bg-2);color:var(--text)}
-
-/* Saisie — composants spécifiques */
-.sf-mat-checks{display:flex;flex-wrap:wrap;gap:10px}
-.sf-mat-chip{display:flex!important;align-items:center;gap:6px;padding:7px 12px!important;border:2px solid var(--border)!important;border-radius:20px!important;cursor:pointer;font-size:12px;font-weight:600;color:var(--text-2)!important;background:var(--bg-2)!important;transition:all var(--t-fast);user-select:none}
-.sf-mat-chip.checked{border-color:var(--ac,var(--cyan))!important;background:var(--ac-light,var(--cyan-dim))!important;color:var(--ac,var(--cyan))!important}
+/* ── Saisie ── */
+.sf-section-inner{background:var(--bg-1);border-radius:14px;padding:18px 20px;margin-bottom:12px;box-shadow:0 1px 8px rgba(0,0,0,.15);border:1px solid var(--border)}
+.sf-mat-chip{display:flex;align-items:center;gap:6px;padding:7px 12px;border:2px solid var(--border);border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;color:var(--text-2);background:var(--bg-2);transition:all .15s;user-select:none}
+.sf-mat-chip.checked{border-color:currentColor;background:var(--bg-3)}
 .sf-mat-chip input{display:none}
-.sf-err{color:var(--red);font-size:11px;font-weight:600;margin-top:4px;display:block}
-.sf-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text);margin-bottom:2px;letter-spacing:-.02em}
-.sf-subtitle{font-size:12px;color:var(--text-3);margin-bottom:16px}
-.sf-btn-primary{padding:13px 28px;border:none;border-radius:12px;cursor:pointer;font-size:14px;font-weight:700;color:#fff;background:var(--ac,var(--cyan));transition:filter var(--t-fast);display:flex;align-items:center;gap:8px}
-.sf-btn-primary:hover:not(:disabled){filter:brightness(1.1)}
-.sf-btn-primary:disabled{opacity:.6;cursor:not-allowed}
-.sf-btn-secondary{padding:13px 24px;border:2px solid var(--border);border-radius:12px;cursor:pointer;font-size:14px;font-weight:600;color:var(--text-2);background:var(--bg-2);transition:all var(--t-fast)}
-.sf-btn-secondary:hover{border-color:var(--border-2);color:var(--text)}
-.sf-conseiller-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;color:#fff;background:var(--ac,var(--cyan));margin-bottom:14px}
-.sf-num{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:10px;font-size:18px;font-weight:700;color:var(--text);background:var(--bg-2);text-align:center;transition:all var(--t-fast);outline:none;font-family:'IBM Plex Mono',monospace}
-.sf-num:focus{border-color:var(--ac,var(--cyan));background:var(--bg-1);box-shadow:0 0 0 3px var(--ac-light,var(--cyan-dim))}
-
-/* Saisie grid */
-.sf-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.sf-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.sf-grid-date{display:grid;grid-template-columns:1fr 1fr 80px;gap:12px}
-@media(min-width:768px){.sf-grid2{gap:16px}.sf-grid3{gap:16px}.sf-grid-date{grid-template-columns:1fr 1fr 100px;gap:16px}}
-
-/* Historique filtre banner */
-.filtre-banner{background:var(--blue-dim);border:1px solid rgba(59,130,246,.2);border-radius:var(--r-md);padding:9px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;font-size:13px;color:var(--blue);font-weight:600}
-.filtre-banner button{background:var(--blue);color:#fff;border:none;border-radius:var(--r-sm);padding:4px 12px;font-size:12px;font-weight:600;cursor:pointer}
-
-/* Cloture rapide */
-.cloture-banner{background:var(--orange-dim);border:1px solid rgba(249,115,22,.2);border-radius:var(--r-md);padding:14px;margin-bottom:16px}
-.cloture-title{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--orange);margin-bottom:10px;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.06em}
-.cloture-btns{display:flex;gap:7px}
-.cloture-btn{flex:1;padding:9px 6px;border:none;border-radius:var(--r-md);cursor:pointer;font-size:12px;font-weight:700;transition:filter var(--t-fast)}
-.cloture-btn:hover{filter:brightness(.9)}
-
-/* Duplication badge */
-.dup-badge{background:var(--blue-dim);border:1px solid rgba(59,130,246,.25);color:var(--blue);font-size:12px;font-weight:600;padding:4px 10px;border-radius:var(--r-sm);display:inline-flex;align-items:center;gap:5px;margin-bottom:12px}
-
-/* Mode lot saisie */
-.mode-toggle{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;margin-bottom:16px;width:fit-content}
-.mode-toggle button{padding:7px 18px;background:var(--bg-2);border:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--text-3);transition:all var(--t-fast);font-family:inherit}
-.mode-toggle button.active{background:var(--cyan);color:var(--text-inv)}
-.mode-toggle button:not(.active):hover{background:var(--bg-3);color:var(--text)}
-.lot-row{display:grid;grid-template-columns:140px 100px 64px 1fr 32px;gap:8px;align-items:end;padding:10px 12px;border-radius:var(--r-md);border:1px solid var(--border);margin-bottom:6px;background:var(--bg-2)}
-.lot-row:hover{background:var(--cyan-dim);border-color:var(--border-glow)}
-.lot-row-err{border-color:var(--red)!important;background:var(--red-dim)!important}
-.lot-add-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;background:var(--bg-2);border:1.5px dashed var(--border-2);border-radius:var(--r-md);cursor:pointer;font-size:13px;color:var(--cyan);font-weight:600;width:100%;transition:all var(--t-fast);margin-top:4px}
-.lot-add-btn:hover{background:var(--cyan-dim);border-color:var(--border-glow)}
-.lot-summary{background:var(--blue-dim);border:1px solid rgba(59,130,246,.2);border-radius:var(--r-md);padding:10px 14px;font-size:13px;color:var(--blue);font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.lot-del-btn{background:none;border:1px solid var(--border);border-radius:var(--r-sm);color:var(--red);cursor:pointer;font-size:15px;height:32px;width:32px;display:flex;align-items:center;justify-content:center;transition:all var(--t-fast);flex-shrink:0}
-.lot-del-btn:hover{background:var(--red-dim);border-color:rgba(239,68,68,.3)}
-
-/* Bingo */
+.sf-lbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);display:block;margin-bottom:6px;font-family:'IBM Plex Mono',monospace}
+.sf-err-msg{color:var(--red);font-size:11px;font-weight:600;display:block;margin-top:3px}
+.sf-input-base{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:10px;font-size:14px;color:var(--text);background:var(--bg-2);outline:none;box-sizing:border-box;transition:border-color .15s,background .15s}
+.sf-input-base:focus{border-color:var(--cyan);background:var(--bg-1)}
+.sf-input-err{border-color:var(--red)!important;background:var(--red-dim)!important}
+.sf-btn-cancel{padding:13px 24px;border:2px solid var(--border);border-radius:12px;cursor:pointer;font-size:14px;font-weight:600;color:var(--text-2);background:var(--bg-2);font-family:inherit;transition:all .15s}
+.sf-btn-cancel:hover{border-color:var(--border-2);color:var(--text)}
+.sf-pill-statut{padding:8px 16px;border-radius:20px;border:2px solid var(--border);background:var(--bg-2);font-size:13px;font-weight:600;color:var(--text-2);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .15s}
+.sf-pill-statut.active{color:#fff}
+.sf-lot-header{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700}
+.sf-lot-row{display:grid;grid-template-columns:140px 100px 64px 1fr 32px;gap:8px;align-items:start;padding:9px 10px;border-radius:10px;border:1.5px solid var(--border);margin-bottom:6px;background:var(--bg-2)}
+.sf-lot-row.err{border-color:var(--red)!important;background:var(--red-dim)!important}
+.sf-lot-del{background:none;border:1px solid var(--border);border-radius:6px;color:var(--red);cursor:pointer;font-size:15px;height:32px;width:32px;display:flex;align-items:center;justify-content:center}
+/* ── KPI mini ── */
+.kpi-mini-card{background:var(--bg-1);border-radius:8px;padding:10px 8px;text-align:center;border:1px solid var(--border);flex:1;min-width:60px}
+.kpi-mini-card .v{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:700;line-height:1}
+.kpi-mini-card .l{font-size:10px;color:var(--text-3);margin-top:2px}
+.kpi-mini-card .p{font-size:10px;font-weight:600;margin-top:1px}
+/* ── Panels / modales ── */
+.panel-close{background:none;border:none;font-size:18px;cursor:pointer;color:var(--text-3);padding:0;line-height:1}
+.panel-close:hover{color:var(--text)}
+.panel-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px}
+.panel-sublbl{font-size:11px;font-weight:700;color:var(--text-3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;font-family:'IBM Plex Mono',monospace}
+.panel-irrev{font-size:12px;color:var(--text-3);margin-bottom:16px}
+.btn-dupliquer{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(59,130,246,.3)}
+.btn-dupliquer:hover{background:var(--blue);color:#fff}
+/* ── Historique filters ── */
+.hist-filter-lbl{font-size:11px;font-weight:700;color:var(--text-3);letter-spacing:.06em;margin-bottom:6px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase}
+.hist-count{font-size:11px;color:var(--text-3);margin-top:8px}
+.hist-du-au{font-size:11px;font-weight:700;color:var(--text-3);white-space:nowrap}
+/* ── Retard banner ── */
+.retard-banner{background:var(--orange-dim);border:1px solid rgba(249,115,22,.3);border-radius:10px;padding:10px 14px;margin-bottom:10px;display:flex;gap:10px;align-items:center}
+.retard-banner-title{font-weight:700;color:var(--orange);font-size:13px}
+.retard-banner-sub{font-size:12px;color:var(--text-2)}
+/* ── Roadmap ── */
+.rm-month-nav{font-size:18px;font-weight:800;color:var(--text);min-width:170px;text-align:center;font-family:'Syne',sans-serif}
+.rm-filter-lbl{font-size:12px;font-weight:600;color:var(--text-2);margin:0;white-space:nowrap}
+/* ── Period chips ── */
+.period-btn{padding:4px 13px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--bg-2);color:var(--text-3);font-family:inherit;transition:all .15s}
+.period-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.period-btn:hover:not(.active){border-color:var(--border-2);color:var(--text)}
+/* ── VueListes ── */
+.listes-email-row{display:flex;padding:'8px 14px';margin-bottom:8px;background:var(--bg-2);border:1.5px solid var(--border);border-radius:8px;align-items:center;justify-content:space-between}
+.listes-email-lbl{font-size:12px;font-weight:700;color:var(--text-2)}
+.listes-email-input{flex:'1 1 140px';min-width:0;padding:'5px 8px';border:'1.5px solid var(--border)';border-radius:6px;font-size:12px;color:var(--blue);background:var(--bg-1);font-family:'IBM Plex Mono',monospace}
+.listes-suppr-btn{background:var(--red-dim);color:var(--red);border:none;border-radius:4px;padding:4px 10px;font-size:12px;cursor:pointer}
+/* ── VueAdmin couleurs ── */
+.admin-color-row{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg-2);border-radius:10px;border:1.5px solid var(--border)}
+.admin-color-name{flex:1;font-weight:700;font-size:14px;color:var(--text)}
+.admin-color-hex{width:88px;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:var(--text);padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg-1);text-align:center}
+.admin-color-reset{padding:4px 10px;border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--text-3);cursor:pointer;background:var(--bg-2)}
+/* ── Animations ── */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.view-anim{animation:fadeSlideIn .28s ease both}
+/* ── Bingo ── */
 .bingo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin-bottom:20px}
-.bingo-card{background:var(--bg-1);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 12px;text-align:center;cursor:pointer;transition:all var(--t-fast)}
+.bingo-card{background:var(--bg-1);border:1px solid var(--border);border-radius:14px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .15s}
 .bingo-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--border-2)}
 .bingo-card.selected{border-color:var(--cyan);box-shadow:0 0 16px var(--cyan-glow)}
 .bingo-circle{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:22px;font-weight:800;border:2px solid}
 .bingo-nom{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.2}
 .bingo-pct{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700}
-.bingo-list{margin-top:16px}
 .bingo-list-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--border);font-size:13px}
 .bingo-list-item:last-child{border-bottom:none}
 .bingo-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .bingo-list-date{color:var(--text-3);font-size:12px;min-width:80px;font-family:'IBM Plex Mono',monospace}
 .bingo-list-theme{flex:1;color:var(--text);font-weight:500}
-.bingo-list-badge{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
 @media(min-width:768px){.bingo-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px}.bingo-card{padding:20px 16px}.bingo-circle{width:72px;height:72px;font-size:26px}}
-
-/* Roadmap Gantt */
-.gantt-table{font-size:13px}
-.gantt-bar{-webkit-print-color-adjust:exact!important}
-
-/* Accueil stat chips */
-.accueil-stats{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;padding:0 20px}
-.accueil-stat-chip{display:flex;align-items:center;gap:6px;border-radius:var(--r-md);padding:6px 12px;font-size:12px}
+/* ── Misc ── */
 .accueil-stat-count{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:800;border-radius:10px;padding:1px 7px;color:#fff}
 .accueil-stat-trend{font-size:10px;font-weight:700;opacity:.8}
-
-/* Animations */
-@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeSlideIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
-.view-anim{animation:fadeSlideIn .28s ease both}
-/* Force dark sur sf-pill et sf-mat-chip quelle que soit la spécificité */
-[data-theme="dark"] .sf-pill:not(.active) { background:var(--bg-2)!important; color:var(--text-2)!important; border-color:var(--border)!important; }
-[data-theme="dark"] .sf-mat-chip:not(.checked) { background:var(--bg-2)!important; color:var(--text-2)!important; border-color:var(--border)!important; }
-
-
-/* ═══════════════════════════════════════════════════════════
-   DARK MODE — Surcharge des inline styles hardcodés React
-   Tous les composants qui utilisent des couleurs claires
-   fixes sont neutralisés ici pour le mode sombre.
-   ═══════════════════════════════════════════════════════════ */
-
-/* KPI mini cards (VueHistorique, VueCalendrier, VueRoadmap) */
-[data-theme="dark"] .kpi-mini { background:var(--bg-1) !important; }
-[data-theme="dark"] .kpi-mini .v { color:var(--text) !important; }
-[data-theme="dark"] .kpi-mini .l { color:var(--text-3) !important; }
-[data-theme="dark"] .kpi-mini .p { opacity:.9; }
-
-/* Filtres / labels texte hardcodés */
-[data-theme="dark"] .card [style*="color:#718096"],
-[data-theme="dark"] .card [style*="color: #718096"] { color:var(--text-3) !important; }
-[data-theme="dark"] .card [style*="color:#4a5568"],
-[data-theme="dark"] .card [style*="color: #4a5568"] { color:var(--text-2) !important; }
-[data-theme="dark"] .card [style*="color:#475569"] { color:var(--text-2) !important; }
-[data-theme="dark"] .card [style*="color:#1a202c"],
-[data-theme="dark"] .card [style*="color: #1a202c"] { color:var(--text) !important; }
-[data-theme="dark"] .card [style*="color:#1e3a8a"] { color:var(--blue) !important; }
-[data-theme="dark"] .card [style*="color:#166534"] { color:var(--green) !important; }
-[data-theme="dark"] .card [style*="color:#991b1b"] { color:var(--red) !important; }
-
-/* Backgrounds clairs dans les cards */
-[data-theme="dark"] .card [style*="background:#fff;"],
-[data-theme="dark"] .card [style*="background: #fff;"],
-[data-theme="dark"] .card [style*="background:#fff}"],
-[data-theme="dark"] .card [style*="background:#ffffff"] { background:var(--bg-1) !important; }
-[data-theme="dark"] .card [style*="background:#f8fafc"] { background:var(--bg-2) !important; }
-[data-theme="dark"] .card [style*="background:#f0f4ff"] { background:var(--bg-2) !important; }
-[data-theme="dark"] .card [style*="background:#f0fdf4"] { background:var(--bg-2) !important; }
-[data-theme="dark"] .card [style*="background:#fff5f5"] { background:var(--bg-2) !important; }
-[data-theme="dark"] .card [style*="background:#fffbeb"] { background:var(--bg-2) !important; }
-[data-theme="dark"] .card [style*="background:#faf5ff"] { background:var(--bg-2) !important; }
-[data-theme="dark"] .card [style*="background:#ecfeff"] { background:var(--bg-2) !important; }
-[data-theme="dark"] .card [style*="background:#f1f5f9"] { background:var(--bg-2) !important; }
-
-/* Borders claires dans les cards */
-[data-theme="dark"] .card [style*="border:1px solid #e2e8f0"],
-[data-theme="dark"] .card [style*="border: 1px solid #e2e8f0"],
-[data-theme="dark"] .card [style*="border:1.5px solid #e2e8f0"],
-[data-theme="dark"] .card [style*="border:2px solid #e2e8f0"],
-[data-theme="dark"] .card [style*="border-bottom:1px solid #e2e8f0"],
-[data-theme="dark"] .card [style*="border-bottom:2px solid #e2e8f0"] { border-color:var(--border) !important; }
-
-/* Saisie formulaire — secStyle / iStyle hardcodés */
-[data-theme="dark"] .sf-section,
-[data-theme="dark"] [class*="sf-section"] { background:var(--bg-1) !important; }
-[data-theme="dark"] .sf-wrap [style*="background:#fff"],
-[data-theme="dark"] .sf-wrap [style*="background: #fff"] { background:var(--bg-1) !important; }
-[data-theme="dark"] .sf-wrap [style*="background:#f8fafc"] { background:var(--bg-2) !important; }
-[data-theme="dark"] .sf-wrap input,
-[data-theme="dark"] .sf-wrap select,
-[data-theme="dark"] .sf-wrap textarea { background:var(--bg-2) !important; border-color:var(--border) !important; color:var(--text) !important; }
-[data-theme="dark"] .sf-wrap [style*="color:#718096"] { color:var(--text-3) !important; }
-[data-theme="dark"] .sf-wrap [style*="color:#1a202c"] { color:var(--text) !important; }
-
-/* Boutons reset / annuler hardcodés */
-[data-theme="dark"] [style*="background:#fff"][style*="border:2px solid #e2e8f0"] {
-  background:var(--bg-2) !important;
-  border-color:var(--border) !important;
-  color:var(--text-2) !important;
-}
-
-/* Bannière retards (fffbeb/fcd34d) */
-[data-theme="dark"] [style*="background:#fffbeb"][style*="border:1px solid #fcd34d"] {
-  background:var(--orange-dim) !important;
-  border-color:rgba(249,115,22,.3) !important;
-}
-
-/* Panel latéral — textes hardcodés */
-[data-theme="dark"] .side-panel [style*="color:#1a202c"] { color:var(--text) !important; }
-[data-theme="dark"] .side-panel [style*="color:#718096"] { color:var(--text-3) !important; }
-[data-theme="dark"] .side-panel [style*="color:#4a5568"] { color:var(--text-2) !important; }
-[data-theme="dark"] .side-panel [style*="background:none"] { background:none !important; }
-
-/* NoData / messages vides */
-[data-theme="dark"] [style*="color:#718096"][style*="textAlign:center"] { color:var(--text-3) !important; }
-
-/* Lot saisie — add button */
-[data-theme="dark"] [style*="background:#fff"][style*="border:"][style*="dashed"] {
-  background:var(--bg-2) !important;
-}
-
-/* Période chips VueDashboard / VueGraphiques hardcodés */
-[data-theme="dark"] [style*="background:#fff"][style*="border:1.5px solid #e2e8f0"][style*="borderRadius:20px"] {
-  background:var(--bg-2) !important;
-  border-color:var(--border) !important;
-  color:var(--text-3) !important;
-}
-
-/* Roadmap — fond section KPI */
-[data-theme="dark"] [style*="background:#f8fafc"][style*="borderRadius:8px"],
-[data-theme="dark"] [style*="background:#f8fafc"][style*="border-radius:8px"] {
-  background:var(--bg-2) !important;
-  border-color:var(--border) !important;
-}
-
-/* VueListes — items inline */
-[data-theme="dark"] .listes-add-row input { background:var(--bg-2) !important; border-color:var(--border) !important; color:var(--text) !important; }
-
-/* Agenda semaine — fond cellules */
-[data-theme="dark"] table td[style*="background:#f8fafc"],
-[data-theme="dark"] table td[style*="background:#fafafa"] { background:var(--bg-2) !important; }
-[data-theme="dark"] table th[style*="background:#f8fafc"] { background:var(--bg-2) !important; }
-
-/* Accueil — carte conseiller */
-[data-theme="dark"] .accueil-card [style*="background:#fff"],
-[data-theme="dark"] .login-card [style*="background:#fff"] { background:var(--bg-1) !important; }
-
+.accueil-stats{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;padding:0 20px}
+.accueil-stat-chip{display:flex;align-items:center;gap:6px;border-radius:var(--r-md);padding:6px 12px;font-size:12px}
 `;
   document.head.appendChild(s);
 })();
@@ -245,9 +117,7 @@ window.addEventListener('afterprint',()=>{
 
 if(!window.React||!window.ReactDOM){throw new Error('React/ReactDOM non chargé — vérifiez les CDN dans le HTML');}
 const CE = React.createElement;
-
-// ── Helper thème pour les composants React ─────────────────
-function isDarkMode(){ return document.documentElement.getAttribute('data-theme')!=='light'; }
+function isDark(){return document.documentElement.getAttribute('data-theme')!=='light';}
 
 function FadeItem({children,delay=0,style={}}){
   const[v,setV]=React.useState(false);
@@ -493,8 +363,8 @@ function VueListes({lists,onSave,onClose,emails,onSaveEmails}){
       ),
       CE('div',{className:'listes-tabs'},TABS.map(t=>CE('div',{key:t.key,className:'listes-tab'+(activeTab===t.key?' active':''),onClick:()=>setActiveTab(t.key)},t.label,CE('span',{className:'tab-count'},draft[t.key].length)))),
       CE('div',{className:'listes-body'},
-        activeTab==='conseillers'&&CE('div',{style:{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'8px 14px',marginBottom:8,background:'var(--bg-2)',border:'1.5px solid var(--border)',borderRadius:8}},
-          CE('span',{style:{fontSize:12,fontWeight:700,color:'#4a5568'}},'📧 Rappels email'),
+        activeTab==='conseillers'&&CE('div',{className:'listes-email-row',style:{display:'flex',alignItems:'center',justifyContent:'space-between'}},
+          CE('span',{className:'listes-email-lbl'},'📧 Rappels email'),
           CE('button',{
             style:{fontSize:11,padding:'4px 10px',borderRadius:6,border:'1.5px solid var(--border)',background:'var(--bg-2)',cursor:'pointer',color:'var(--text-2)'},
             disabled:rappelsSaving,
@@ -523,7 +393,7 @@ function VueListes({lists,onSave,onClose,emails,onSaveEmails}){
               value:emailDraft[item]||'',
               onChange:e=>setEmailDraft(d=>({...d,[item]:e.target.value})),
               title:'Email pour les rappels automatiques',
-              style:{flex:'1 1 140px',minWidth:0,padding:'5px 8px',border:'1.5px solid #bee3f8',borderRadius:6,fontSize:12,color:'#2a69ac',background:'#ebf8ff'}
+              className:'sf-input-base',style:{flex:'1 1 140px',minWidth:0,padding:'5px 8px',fontSize:12,color:'var(--blue)'}
             }),
             CE('label',{className:'tgl',title:rappelsActif[item]!==false?'Rappels activés — cliquer pour désactiver':'Rappels désactivés — cliquer pour activer',style:{flexShrink:0}},
               CE('input',{type:'checkbox',checked:rappelsActif[item]!==false,disabled:rappelsSaving,
@@ -535,7 +405,7 @@ function VueListes({lists,onSave,onClose,emails,onSaveEmails}){
             editIdx===i
               ?CE('button',{className:'btn btn-primary btn-sm',onClick:()=>saveEdit(i)},'✓ OK')
               :CE('button',{className:'btn btn-secondary btn-sm',onClick:()=>startEdit(i)},'Modifier'),
-            CE('button',{className:'btn btn-sm',style:{background:'#fee2e2',color:'#991b1b',border:'none'},onClick:()=>remove(i)},'Suppr.')
+            CE('button',{className:'listes-suppr-btn',onClick:()=>remove(i)},'Suppr.')
           )
         )),
         CE('div',{className:'listes-add-row'},
@@ -694,29 +564,30 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
 
   // ── Labels ───────────────────────────────────────────────
   const Lbl=({t,err})=>CE('span',{style:{fontSize:11,fontWeight:700,letterSpacing:'.08em',textTransform:'uppercase',color:err?'#e53e3e':ac,display:'block',marginBottom:6}},t);
-  const LblG=({t})=>CE('span',{style:{fontSize:11,fontWeight:700,letterSpacing:'.08em',textTransform:'uppercase',color:'var(--text-3)',display:'block',marginBottom:6,fontFamily:"'IBM Plex Mono',monospace",textTransform:'uppercase',letterSpacing:'.06em'}},t);
+  const LblG=({t})=>CE('span',{className:'sf-lbl'},t);
 
   // ── Style inputs ─────────────────────────────────────────
-  const iStyle=(err)=>({width:'100%',padding:'11px 14px',border:`2px solid ${err?'var(--red)':'var(--border)'}`,borderRadius:10,fontSize:14,color:'var(--text)',background:err?'var(--red-dim)':'var(--bg-2)',outline:'none',boxSizing:'border-box'});
-  const sStyle=(err)=>({...iStyle(err),cursor:'pointer',appearance:'auto'});
-  const nStyle=()=>({...iStyle(false),fontSize:18,fontWeight:700,textAlign:'center'});
-  const taStyle=(err)=>({...iStyle(err),minHeight:84,resize:'vertical'});
-  const secStyle={background:'var(--bg-1)',borderRadius:14,padding:'18px 20px',marginBottom:12,boxShadow:'0 1px 8px rgba(0,0,0,.15)',borderTop:`3px solid ${ac}`,border:'1px solid var(--border)'};
+  const iStyle=(err)=>({});
+const iClass=(err)=>'sf-input-base'+(err?' sf-input-err':'');
+  const sStyle=(err)=>({cursor:'pointer',appearance:'auto'});
+const sClass=(err)=>'sf-input-base'+(err?' sf-input-err':'');
+  const nStyle=()=>({});
+const nClass='sf-input-base sf-num';
+  const taStyle=(err)=>({minHeight:84,resize:'vertical'});
+const taClass=(err)=>'sf-input-base'+(err?' sf-input-err':'');
+  const secStyle={borderTop:`3px solid ${ac}`};
+const secClass='sf-section-inner';
 
   // ── Statut pills ─────────────────────────────────────────
   const SDOTS={'Planifié':'#3b82f6','Réalisé':'#22c55e','Annulé':'#ef4444','Reporté':'#f59e0b','Non réalisé':'#94a3b8'};
-  const statutPills=CE('div',{style:secStyle},
+  const statutPills=CE('div',{className:secClass,style:secStyle},
     Lbl({t:'Statut *',err:!!errors.statut}),
-    errors.statut&&CE('span',{style:{color:'#e53e3e',fontSize:11,fontWeight:600,display:'block',marginBottom:6}},errors.statut),
+    errors.statut&&CE('span',{className:'sf-err-msg'},errors.statut),
     CE('div',{style:{display:'flex',flexWrap:'wrap',gap:8}},
       statuts.map(s=>{
         const active=form.statut===s;
         return CE('button',{key:s,type:'button',
-          className:'sf-pill'+(active?' active':''),style:(()=>{
-            const dark=isDarkMode();
-            if(active) return{borderColor:ac,background:ac,color:'#fff'};
-            return{borderColor:'var(--border)',background:'var(--bg-2)',color:'var(--text-2)'};
-          })(),
+          className:'sf-pill-statut'+(active?' active':''),style:{borderColor:active?ac:'var(--border)',background:active?ac:'var(--bg-2)'},
           onClick:()=>set('statut',s)},
           CE('span',{style:{width:7,height:7,borderRadius:'50%',background:active?'rgba(255,255,255,.7)':SDOTS[s]||'#94a3b8',display:'inline-block'}}),s);
       })
@@ -729,50 +600,47 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
       CE('div',null,
         Lbl({t:'Orienteur *',err:!!errs.orienteur}),
         CE(ComboOrienteur,{value:frm.orienteur,onChange:v=>setFn('orienteur',v),entries:entries_,hasError:!!errs.orienteur}),
-        errs.orienteur&&CE('span',{style:{color:'#e53e3e',fontSize:11,fontWeight:600}},errs.orienteur)),
+        errs.orienteur&&CE('span',{className:'sf-err-msg'},errs.orienteur)),
       CE('div',null,
         Lbl({t:'Commune *',err:!!errs.commune}),
         CE(ComboCommune,{value:frm.commune,onChange:v=>setFn('commune',v),hasError:!!errs.commune}),
-        errs.commune&&CE('span',{style:{color:'#e53e3e',fontSize:11,fontWeight:600}},errs.commune))
+        errs.commune&&CE('span',{className:'sf-err-msg'},errs.commune))
     ),
     CE('div',{style:{marginTop:12}},
       Lbl({t:'Lieu de l\'atelier *',err:!!errs.lieu}),
-      CE('input',{type:'text',style:iStyle(errs.lieu),value:frm.lieu,placeholder:'Salle, médiathèque, établissement…',onChange:e=>setFn('lieu',e.target.value)}),
-      errs.lieu&&CE('span',{style:{color:'#e53e3e',fontSize:11,fontWeight:600}},errs.lieu)
+      CE('input',{type:'text',className:iClass(errs.lieu),value:frm.lieu,placeholder:'Salle, médiathèque, établissement…',onChange:e=>setFn('lieu',e.target.value)}),
+      errs.lieu&&CE('span',{className:'sf-err-msg'},errs.lieu)
     ),
     CE('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:12,marginTop:12}},
       CE('div',null,
         Lbl({t:'Conseiller *',err:!!errs.conseiller}),
-        CE('select',{style:sStyle(errs.conseiller),value:frm.conseiller,onChange:e=>setFn('conseiller',e.target.value)},
+        CE('select',{className:sClass(errs.conseiller),value:frm.conseiller,onChange:e=>setFn('conseiller',e.target.value)},
           CE('option',{value:'',disabled:true},'— Choisir —'),
           conseillers.map(c=>CE('option',{key:c,value:c},c))),
-        errs.conseiller&&CE('span',{style:{color:'#e53e3e',fontSize:11,fontWeight:600}},errs.conseiller)),
+        errs.conseiller&&CE('span',{className:'sf-err-msg'},errs.conseiller)),
       CE('div',null,
         Lbl({t:'Type de public *',err:!!errs.public}),
-        CE('select',{style:sStyle(errs.public),value:frm.public,onChange:e=>setFn('public',e.target.value)},
+        CE('select',{className:sClass(errs.public),value:frm.public,onChange:e=>setFn('public',e.target.value)},
           CE('option',{value:'',disabled:true},'— Choisir —'),
           publics.map(p=>CE('option',{key:p,value:p},p))),
-        errs.public&&CE('span',{style:{color:'#e53e3e',fontSize:11,fontWeight:600}},errs.public)),
+        errs.public&&CE('span',{className:'sf-err-msg'},errs.public)),
       CE('div',null,
         LblG({t:'Résidence'}),
-        CE('input',{type:'text',style:iStyle(false),value:frm.residence,placeholder:'Commune d\'origine',onChange:e=>setFn('residence',e.target.value)}))
+        CE('input',{type:'text',className:iClass(false),value:frm.residence,placeholder:'Commune d\'origine',onChange:e=>setFn('residence',e.target.value)}))
     ),
     CE('div',{style:{marginTop:12}},
       LblG({t:'Matériel utilisé'}),
       CE('div',{style:{display:'flex',flexWrap:'wrap',gap:8}},
         materiels.map(m=>{
           const chk=frm.materiel.includes(m);
-          return CE('label',{key:m,className:'sf-mat-chip'+(chk?' checked':''),style:(()=>{
-              if(chk) return{borderColor:ac,background:acLight,color:ac};
-              return{borderColor:'var(--border)',background:'var(--bg-2)',color:'var(--text-2)'};
-            })(),
+          return CE('label',{key:m,className:'sf-mat-chip'+(chk?' checked':''),style:{borderColor:chk?ac:'var(--border)',color:chk?ac:'var(--text-2)',background:chk?acLight:'var(--bg-2)'}},
             CE('input',{type:'checkbox',checked:chk,style:{display:'none'},onChange:()=>(modeLot?toggleLotMat:toggleMat)(m)}),m);
         })
       )
     ),
     CE('div',{style:{marginTop:12}},
       LblG({t:'Remarques'}),
-      CE('input',{type:'text',style:iStyle(false),value:frm.remarques,placeholder:'Notes libres',onChange:e=>setFn('remarques',e.target.value)}))
+      CE('input',{type:'text',className:iClass(false),value:frm.remarques,placeholder:'Notes libres',onChange:e=>setFn('remarques',e.target.value)}))
   );
 
   return CE('div',{style:{padding:'4px 0'}},
@@ -783,8 +651,8 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
 
     // Toggle One Shot / Cycle
     canToggle&&CE('div',{style:{display:'flex',gap:0,border:'1.5px solid #e2e8f0',borderRadius:8,overflow:'hidden',marginBottom:16,width:'fit-content'}},
-      CE('button',{style:{padding:'8px 20px',background:!modeLot?ac:'#fff',border:'none',cursor:'pointer',fontSize:13,fontWeight:700,color:!modeLot?'#fff':'#718096',transition:'all .15s'},onClick:()=>{setModeLot(false);resetLot();}},'⚡ Saisie One Shot'),
-      CE('button',{style:{padding:'8px 20px',background:modeLot?ac:'#fff',border:'none',cursor:'pointer',fontSize:13,fontWeight:700,color:modeLot?'#fff':'#718096',transition:'all .15s'},onClick:()=>{setModeLot(true);reset();}},'🔄 Saisie par cycle')
+      CE('button',{style:{padding:'8px 20px',background:!modeLot?ac:'var(--bg-2)',border:'none',cursor:'pointer',fontSize:13,fontWeight:700,color:!modeLot?'#fff':'var(--text-3)',transition:'all .15s'},onClick:()=>{setModeLot(false);resetLot();}},'⚡ Saisie One Shot'),
+      CE('button',{style:{padding:'8px 20px',background:modeLot?ac:'var(--bg-2)',border:'none',cursor:'pointer',fontSize:13,fontWeight:700,color:modeLot?'#fff':'var(--text-3)',transition:'all .15s'},onClick:()=>{setModeLot(true);reset();}},'🔄 Saisie par cycle')
     ),
 
     isDup&&CE('div',{className:'dup-badge'},'📋 Duplication — vérifiez et complétez avant d\'enregistrer'),
@@ -796,48 +664,48 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
       // Statut pills
       statutPills,
       // Date / Horaire / AM-PM
-      CE('div',{style:secStyle},
+      CE('div',{className:secClass,style:secStyle},
         CE('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 80px',gap:12}},
           CE('div',null,
             Lbl({t:'Date *',err:!!errors.date}),
-            CE('input',{type:'date',style:iStyle(errors.date),value:form.date,onChange:e=>set('date',e.target.value)}),
-            errors.date&&CE('span',{style:{color:'#e53e3e',fontSize:11,fontWeight:600}},errors.date)),
+            CE('input',{type:'date',className:iClass(errors.date),value:form.date,onChange:e=>set('date',e.target.value)}),
+            errors.date&&CE('span',{className:'sf-err-msg'},errors.date)),
           CE('div',null,
             Lbl({t:'Horaire *',err:!!errors.horaire}),
-            CE('input',{type:'time',style:iStyle(errors.horaire),value:form.horaire,onChange:e=>set('horaire',e.target.value)}),
-            errors.horaire&&CE('span',{style:{color:'#e53e3e',fontSize:11,fontWeight:600}},errors.horaire)),
+            CE('input',{type:'time',className:iClass(errors.horaire),value:form.horaire,onChange:e=>set('horaire',e.target.value)}),
+            errors.horaire&&CE('span',{className:'sf-err-msg'},errors.horaire)),
           CE('div',null,
             Lbl({t:'AM/PM *',err:!!errors.ampm}),
-            CE('select',{style:sStyle(errors.ampm),value:form.ampm,onChange:e=>set('ampm',e.target.value)},
+            CE('select',{className:sClass(errors.ampm),value:form.ampm,onChange:e=>set('ampm',e.target.value)},
               CE('option',{value:'',disabled:true},'—'),CE('option',{value:'AM'},'AM'),CE('option',{value:'PM'},'PM')),
-            errors.ampm&&CE('span',{style:{color:'#e53e3e',fontSize:11,fontWeight:600}},errors.ampm))
+            errors.ampm&&CE('span',{className:'sf-err-msg'},errors.ampm))
         )
       ),
       // Champs communs
-      CE('div',{style:secStyle},champsCommuns(form,set,errors,entries)),
+      CE('div',{className:secClass,style:secStyle},champsCommuns(form,set,errors,entries)),
       // Thématique
-      CE('div',{style:secStyle},
+      CE('div',{className:secClass,style:secStyle},
         Lbl({t:'Thématique *',err:!!errors.thematique}),
-        CE('textarea',{style:taStyle(errors.thematique),value:form.thematique,placeholder:"Thème abordé lors de l'atelier…",onChange:e=>set('thematique',e.target.value)}),
-        errors.thematique&&CE('span',{style:{color:'#e53e3e',fontSize:11,fontWeight:600}},errors.thematique)
+        CE('textarea',{className:taClass(errors.thematique),value:form.thematique,placeholder:"Thème abordé lors de l'atelier…",onChange:e=>set('thematique',e.target.value)}),
+        errors.thematique&&CE('span',{className:'sf-err-msg'},errors.thematique)
       ),
       // Inscrits / Présents
-      CE('div',{style:secStyle},
+      CE('div',{className:secClass,style:secStyle},
         CE('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}},
           CE('div',null,
             Lbl({t:'Inscrits *',err:!!errors.inscrits}),
             CE('input',{type:'number',min:0,style:{...nStyle(),border:`2px solid ${errors.inscrits?'#e53e3e':'#e2e8f0'}`},value:form.inscrits,placeholder:'0',onChange:e=>set('inscrits',e.target.value)}),
-            errors.inscrits&&CE('span',{style:{color:'#e53e3e',fontSize:11,fontWeight:600}},errors.inscrits)),
+            errors.inscrits&&CE('span',{className:'sf-err-msg'},errors.inscrits)),
           CE('div',null,
             LblG({t:'Présents'}),
-            CE('input',{type:'number',min:0,style:nStyle(),value:form.presents,placeholder:'0',onChange:e=>set('presents',e.target.value)}))
+            CE('input',{type:'number',min:0,className:nClass,value:form.presents,placeholder:'0',onChange:e=>set('presents',e.target.value)}))
         )
       ),
       // Boutons
       CE('div',{style:{display:'flex',gap:12,marginTop:4}},
         CE('button',{style:{padding:'13px 28px',border:'none',borderRadius:12,cursor:saving?'not-allowed':'pointer',fontSize:14,fontWeight:700,color:'#fff',background:saving?'#94a3b8':ac,opacity:saving?.7:1,display:'flex',alignItems:'center',gap:8},onClick:handleSubmit,disabled:saving},
           saving?CE('span',null,CE('span',{className:'spinner'}),'Enregistrement…'):(editId?'💾 Modifier l\'atelier':'💾 Enregistrer l\'atelier')),
-        CE('button',{style:{padding:'13px 24px',border:'2px solid var(--border)',borderRadius:12,cursor:'pointer',fontSize:14,fontWeight:600,color:'var(--text-2)',background:'var(--bg-2)'},onClick:reset},isDup||editId?'✖ Annuler':'✖ Réinitialiser')
+        CE('button',{className:'sf-btn-cancel',onClick:reset},isDup||editId?'✖ Annuler':'✖ Réinitialiser')
       )
     ),
 
@@ -845,33 +713,33 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
     // MODE CYCLE — même design
     // ══════════════════════════════
     modeLot&&CE('div',null,
-      CE('div',{style:{...secStyle,background:acLight,borderTop:`3px solid ${ac}`,display:'flex',alignItems:'center',gap:8,fontSize:13,fontWeight:700,color:ac}},
+      CE('div',{className:secClass,style:{...secStyle,background:acLight,borderTop:`3px solid ${ac}`,display:'flex',alignItems:'center',gap:8,fontSize:13,fontWeight:700,color:ac}},
         '🔄 ',lotRows.length,' atelier(s) à créer — tous "Planifié", inscrits/présents à compléter après'
       ),
       // Champs communs
-      CE('div',{style:secStyle},champsCommuns(lotForm,setLot,lotErrors,entries)),
+      CE('div',{className:secClass,style:secStyle},champsCommuns(lotForm,setLot,lotErrors,entries)),
       // Tableau des dates
-      CE('div',{style:secStyle},
+      CE('div',{className:secClass,style:secStyle},
         CE('div',{style:{fontSize:13,fontWeight:700,color:ac,marginBottom:12}},'📅 Dates du cycle'),
         CE('div',{style:{display:'grid',gridTemplateColumns:'140px 100px 64px 1fr 32px',gap:8,padding:'0 4px',marginBottom:6}},
-          CE('span',{style:{fontSize:11,fontWeight:700,color:'#718096'}},'DATE *'),
-          CE('span',{style:{fontSize:11,fontWeight:700,color:'#718096'}},'HORAIRE *'),
-          CE('span',{style:{fontSize:11,fontWeight:700,color:'#718096'}},'AM/PM'),
-          CE('span',{style:{fontSize:11,fontWeight:700,color:'#718096'}},'THÉMATIQUE *'),
+          CE('span',{className:'sf-lbl'},'DATE *'),
+          CE('span',{className:'sf-lbl'},'HORAIRE *'),
+          CE('span',{className:'sf-lbl'},'AM/PM'),
+          CE('span',{className:'sf-lbl'},'THÉMATIQUE *'),
           CE('span',null)
         ),
         lotRows.map((row)=>{
           const rErr=lotRowErrors[row.id]||{};
           const hasErr=Object.keys(rErr).length>0;
           const brd=(err)=>`2px solid ${err?'#e53e3e':'#e2e8f0'}`;
-          const inp=(type,val,key,err,ph)=>CE('input',{type,value:val,placeholder:ph||'',onChange:e=>setRow(row.id,key,e.target.value),style:{width:'100%',padding:'8px 10px',border:brd(err),borderRadius:8,fontSize:12,background:err?'#fff5f5':'#f8fafc',outline:'none',boxSizing:'border-box'}});
-          return CE('div',{key:row.id,style:{display:'grid',gridTemplateColumns:'140px 100px 64px 1fr 32px',gap:8,alignItems:'start',padding:'9px 10px',borderRadius:10,border:`1.5px solid ${hasErr?'var(--red)':acLight}`,marginBottom:6,background:hasErr?'var(--red-dim)':acLight}},
+          const inp=(type,val,key,err,ph)=>CE('input',{type,value:val,placeholder:ph||'',onChange:e=>setRow(row.id,key,e.target.value),className:iClass(err)});
+          return CE('div',{key:row.id,className:'sf-lot-row'+(hasErr?' err':''),style:{borderColor:hasErr?'var(--red)':acLight,background:hasErr?'var(--red-dim)':acLight}},
             inp('date',row.date,'date',rErr.date),
             inp('time',row.horaire,'horaire',rErr.horaire),
-            CE('select',{value:row.ampm,onChange:e=>setRow(row.id,'ampm',e.target.value),style:{width:'100%',padding:'8px 4px',border:brd(rErr.ampm),borderRadius:8,fontSize:12,background:'var(--bg-2)',color:'var(--text)'}},
+            CE('select',{value:row.ampm,onChange:e=>setRow(row.id,'ampm',e.target.value),className:'sf-input-base'+(rErr.ampm?' sf-input-err':''),style:{padding:'8px 4px'},},
               CE('option',{value:'',disabled:true},'—'),CE('option',{value:'AM'},'AM'),CE('option',{value:'PM'},'PM')),
             inp('text',row.thematique,'thematique',rErr.thematique,"Thème de la séance"),
-            CE('button',{onClick:()=>removeRow(row.id),disabled:lotRows.length===1,style:{background:'none',border:`1px solid ${acLight}`,borderRadius:6,color:'var(--red)',cursor:'pointer',fontSize:15,height:32,width:32,display:'flex',alignItems:'center',justifyContent:'center'}},'×')
+            CE('button',{onClick:()=>removeRow(row.id),disabled:lotRows.length===1,className:'sf-lot-del',style:{borderColor:acLight}},'×')
           );
         }),
         CE('button',{onClick:addRow,style:{display:'flex',alignItems:'center',justifyContent:'center',gap:6,padding:10,background:'var(--bg-2)',border:`2px dashed ${ac}`,borderRadius:10,cursor:'pointer',fontSize:13,color:ac,fontWeight:700,width:'100%',marginTop:6}},'＋ Ajouter une date')
@@ -880,7 +748,7 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
       CE('div',{style:{display:'flex',gap:12,marginTop:4}},
         CE('button',{style:{padding:'13px 28px',border:'none',borderRadius:12,cursor:saving?'not-allowed':'pointer',fontSize:14,fontWeight:700,color:'#fff',background:saving?'#94a3b8':ac,opacity:saving?.7:1,display:'flex',alignItems:'center',gap:8},onClick:handleSubmitLot,disabled:saving},
           saving?CE('span',null,CE('span',{className:'spinner'}),'Création…'):`💾 Créer ${lotRows.length} atelier(s)`),
-        CE('button',{style:{padding:'13px 24px',border:'2px solid var(--border)',borderRadius:12,cursor:'pointer',fontSize:14,fontWeight:600,color:'var(--text-2)',background:'var(--bg-2)'},onClick:resetLot},'✖ Réinitialiser')
+        CE('button',{className:'sf-btn-cancel',onClick:resetLot},'✖ Réinitialiser')
       )
     )
   );
@@ -977,18 +845,18 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
   return CE('div',null,
     // KPIs
     CE('div',{className:'kpi-row'},
-      CE(FadeItem,{delay:0,style:{flex:'1 1 0',minWidth:0}},CE('div',{className:'kpi-mini',style:{borderLeft:'3px solid var(--blue)',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'#1e3a8a'}},kpi.total),CE('div',{className:'l'},'Total'))),
-      CE(FadeItem,{delay:0.08,style:{flex:'1 1 0',minWidth:0}},CE('div',{className:'kpi-mini',style:{borderLeft:'3px solid var(--green)',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'#166534'}},kpi.realises),CE('div',{className:'l'},'Réalisés'),CE('div',{className:'p',style:{color:'#166534'}},kpi.total?Math.round(kpi.realises/kpi.total*100)+'%':'-'))),
-      CE(FadeItem,{delay:0.16,style:{flex:'1 1 0',minWidth:0}},CE('div',{className:'kpi-mini',style:{borderLeft:'3px solid var(--red)',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'#991b1b'}},kpi.annules),CE('div',{className:'l'},'Annulés'),CE('div',{className:'p',style:{color:'#991b1b'}},kpi.total?Math.round(kpi.annules/kpi.total*100)+'%':'-'))),
-      CE(FadeItem,{delay:0.24,style:{flex:'1 1 0',minWidth:0}},CE('div',{className:'kpi-mini',style:{borderLeft:'3px solid #2563eb',background:'#eff6ff'}},CE('div',{className:'v',style:{color:'#2563eb'}},kpi.inscrits),CE('div',{className:'l'},'Inscrits'))),
-      CE(FadeItem,{delay:0.32,style:{flex:'1 1 0',minWidth:0}},CE('div',{className:'kpi-mini',style:{borderLeft:'3px solid var(--orange)',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'#d97706'}},kpi.presents),CE('div',{className:'l'},'Présents'),CE('div',{className:'p',style:{color:'#d97706'}},kpi.tx+'%')))
+      CE(FadeItem,{delay:0,style:{flex:'1 1 0',minWidth:0}},CE('div',{className:'kpi-mini-card',style:{borderLeft:'3px solid 'var(--blue)'',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--blue)'}},kpi.total),CE('div',{className:'l'},'Total'))),
+      CE(FadeItem,{delay:0.08,style:{flex:'1 1 0',minWidth:0}},CE('div',{className:'kpi-mini-card',style:{borderLeft:'3px solid '#16a34a'',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--green)'}},kpi.realises),CE('div',{className:'l'},'Réalisés'),CE('div',{className:'p',style:{color:'var(--green)'}},kpi.total?Math.round(kpi.realises/kpi.total*100)+'%':'-'))),
+      CE(FadeItem,{delay:0.16,style:{flex:'1 1 0',minWidth:0}},CE('div',{className:'kpi-mini-card',style:{borderLeft:'3px solid '#dc2626'',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--red)'}},kpi.annules),CE('div',{className:'l'},'Annulés'),CE('div',{className:'p',style:{color:'var(--red)'}},kpi.total?Math.round(kpi.annules/kpi.total*100)+'%':'-'))),
+      CE(FadeItem,{delay:0.24,style:{flex:'1 1 0',minWidth:0}},CE('div',{className:'kpi-mini-card',style:{borderLeft:'3px solid 'var(--blue)'',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--blue)'}},kpi.inscrits),CE('div',{className:'l'},'Inscrits'))),
+      CE(FadeItem,{delay:0.32,style:{flex:'1 1 0',minWidth:0}},CE('div',{className:'kpi-mini-card',style:{borderLeft:'3px solid 'var(--orange)'',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--orange)'}},kpi.presents),CE('div',{className:'l'},'Présents'),CE('div',{className:'p',style:{color:'var(--orange)'}},kpi.tx+'%')))
     ),
     // Alerte retards
-    nRetard>0&&CE('div',{style:{background:'#fffbeb',border:'1px solid #fcd34d',borderRadius:10,padding:'10px 14px',marginBottom:10,display:'flex',gap:10,alignItems:'center'}},
+    nRetard>0&&CE('div',{style:{background:'var(--bg-1)',border:'1px solid #fcd34d',borderRadius:10,padding:'10px 14px',marginBottom:10,display:'flex',gap:10,alignItems:'center'}},
       CE('span',{style:{fontSize:20}},'⚠️'),
       CE('div',null,
-        CE('div',{style:{fontWeight:700,color:'#92400e',fontSize:13}},`${nRetard} atelier(s) en attente de mise à jour`),
-        CE('div',{style:{fontSize:12,color:'#b45309'}},'Statut "Planifié" mais date déjà passée — cliquez sur un atelier pour le clôturer rapidement')
+        CE('div',{className:'retard-banner-title'},`${nRetard} atelier(s) en attente de mise à jour`),
+        CE('div',{className:'retard-banner-sub'},'Statut "Planifié" mais date déjà passée — cliquez sur un atelier pour le clôturer rapidement')
       )
     ),
     // Filtre conseiller (frontend)
@@ -998,7 +866,7 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
     ),
     // Filtres
     CE('div',{className:'card',style:{marginBottom:10}},
-      CE('div',{style:{fontSize:11,fontWeight:700,color:'var(--text-3)',letterSpacing:'.06em',marginBottom:6,fontFamily:"'IBM Plex Mono',monospace",textTransform:'uppercase'}},'STATUT'),
+      CE('div',{className:'hist-filter-lbl'},'STATUT'),
       CE('div',{className:'chip-bar'},
         CHIP_STATUTS.map(c=>CE('button',{key:c.key,className:`chip ${c.cls}${filtStatut===c.key?' active':''}`,onClick:()=>setFiltStatut(c.key)},
           c.dot&&CE('span',{className:'chip-dot',style:{background:c.dot}}),c.label,' ',CE('span',{style:{opacity:.7,fontSize:11}},'('+counts[c.key]+')')))
@@ -1015,9 +883,9 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
       ),
       CE('div',{style:{display:'flex',gap:8,flexWrap:'wrap',alignItems:'center',marginTop:8}},
         CE('div',{style:{display:'flex',alignItems:'center',gap:4}},
-          CE('span',{style:{fontSize:11,fontWeight:700,color:'var(--text-3)',whiteSpace:'nowrap'}},'Du'),
+          CE('span',{className:'hist-du-au'},'Du'),
           CE('input',{type:'date',value:dateFrom,onChange:e=>setDateFrom(e.target.value),style:{padding:'6px 8px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:12}}),
-          CE('span',{style:{fontSize:11,fontWeight:700,color:'var(--text-3)',whiteSpace:'nowrap'}},'Au'),
+          CE('span',{className:'hist-du-au'},'Au'),
           CE('input',{type:'date',value:dateTo,onChange:e=>setDateTo(e.target.value),style:{padding:'6px 8px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:12}})
         ),
         CE('button',{className:'btn btn-secondary btn-sm',onClick:()=>setSortDir(d=>-d)},sortDir===1?'↑ Date':'↓ Date'),
@@ -1025,7 +893,7 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
         CE('button',{className:'btn btn-secondary btn-sm',onClick:onRefresh},'🔄 Sync'),
         CE('button',{className:'btn btn-secondary btn-sm',onClick:resetFiltres},'✖ Réinitialiser')
       ),
-      CE('div',{style:{fontSize:11,color:'var(--text-3)',marginTop:8}},`${filtered.length} atelier(s) affiché(s) sur ${entries.length}`)
+      CE('div',{className:'hist-count'},`${filtered.length} atelier(s) affiché(s) sur ${entries.length}`)
     ),
     // Liste des ateliers
     CE('div',{className:'atelier-list'},filtered.map((e,ei)=>{
@@ -1051,7 +919,7 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
       panel&&CE(React.Fragment,null,
         CE('div',{className:'side-panel-header'},
           CE('h3',null,'Détail / Mise à jour'),
-          CE('button',{onClick:closePanel,style:{background:'none',border:'none',fontSize:18,cursor:'pointer',color:'var(--text-3)'}},'✕')
+          CE('button',{onClick:closePanel,className:'panel-close'},'✕')
         ),
         CE('div',{className:'side-panel-body'},
           // v9.0 : Flux de clôture rapide si atelier en retard
@@ -1061,7 +929,7 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
               CLOTURE_PRESETS.map(p=>CE('button',{key:p.statut,className:'cloture-btn',style:{background:p.bg,color:p.color},onClick:()=>setPanelStatut(p.statut)},p.label))
             )
           ),
-          CE('div',{style:{fontSize:13,fontWeight:700,color:'var(--text)',marginBottom:8}},panel.thematique),
+          CE('div',{className:'panel-title'},panel.thematique),
           CE('div',{className:'sp-info-row'},CE('span',null,'Date'),CE('span',null,fmtDate(panel.date),' ',panel.horaire)),
           CE('div',{className:'sp-info-row'},CE('span',null,'Commune'),CE('span',null,panel.commune)),
           CE('div',{className:'sp-info-row'},CE('span',null,'Lieu'),CE('span',null,panel.lieu)),
@@ -1069,7 +937,7 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
           CE('div',{className:'sp-info-row'},CE('span',null,'Public'),CE('span',null,panel.public)),
           CE('div',{className:'sp-info-row'},CE('span',null,'Conseiller'),CE('span',{style:{color:conseillerColor(panel.conseiller),fontWeight:700}},panel.conseiller)),
           panel.materiel&&panel.materiel.length>0&&CE('div',{style:{marginTop:10,marginBottom:4}},
-            CE('div',{style:{fontSize:11,fontWeight:700,color:'var(--text-3)',marginBottom:4,fontFamily:"'IBM Plex Mono',monospace",textTransform:'uppercase',letterSpacing:'.06em'}},'MATÉRIEL'),
+            CE('div',{className:'panel-sublbl'},'MATÉRIEL'),
             panel.materiel.map(m=>CE('span',{key:m,className:'mat-chip'},m))
           ),
           CE('hr',{style:{border:'none',borderTop:'1px solid #e2e8f0',margin:'12px 0'}}),
@@ -1085,7 +953,7 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
         ),
         CE('div',{className:'side-panel-footer'},
           canDelete&&CE('button',{className:'btn btn-danger btn-sm',onClick:()=>{setConfirmDel(panel);closePanel();}},'Supprimer'),
-          onDuplicate&&CE('button',{className:'btn btn-secondary btn-sm',style:{background:'#eff6ff',color:'#1d4ed8',border:'1px solid #bfdbfe'},onClick:()=>{onDuplicate(panel);closePanel();}},'📋 Dupliquer'),
+          onDuplicate&&CE('button',{className:'btn btn-secondary btn-sm',className:'btn btn-sm btn-dupliquer',onClick:()=>{onDuplicate(panel);closePanel();}},'📋 Dupliquer'),
           CE('button',{className:'btn btn-secondary',style:{flex:1},onClick:()=>onEdit(panel._id)},'Éditer complet'),
           CE('button',{className:'btn btn-primary',style:{flex:1},onClick:savePanel,disabled:saving},saving?'…':'💾 Enregistrer')
         )
@@ -1096,7 +964,7 @@ function VueHistorique({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
       CE('div',{className:'card',style:{width:360}},
         CE('h2',null,'🗑️ Confirmer la suppression'),
         CE('p',{style:{margin:'12px 0',fontSize:13}},`Supprimer l'atelier #${confirmDel._n} — ${confirmDel.thematique} ?`),
-        CE('p',{style:{fontSize:12,color:'var(--text-3)',marginBottom:16}},'Cette action est irréversible.'),
+        CE('p',{className:'panel-irrev'},'Cette action est irréversible.'),
         CE('div',{style:{display:'flex',gap:10}},
           CE('button',{className:'btn btn-danger',onClick:()=>{onDelete(confirmDel._id);setConfirmDel(null);}},'🗑️ Supprimer'),
           CE('button',{className:'btn btn-secondary',onClick:()=>setConfirmDel(null)},'Annuler')
@@ -1196,12 +1064,12 @@ function VueCalendrier({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
       CE('div',{style:{display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:10,marginBottom:12}},
         CE('div',{style:{display:'flex',alignItems:'center',gap:8}},
           CE('button',{className:'btn btn-secondary btn-sm',onClick:prevMonth},'‹'),
-          CE('div',{style:{fontSize:18,fontWeight:800,color:'var(--text)',minWidth:170,textAlign:'center'}},`${MOIS_LONG[mo]} ${yr}`),
+          CE('div',{className:'rm-month-nav'},`${MOIS_LONG[mo]} ${yr}`),
           CE('button',{className:'btn btn-secondary btn-sm',onClick:nextMonth},'›'),
           CE('button',{className:'btn btn-secondary btn-sm',style:{marginLeft:4,fontSize:12},onClick:goToday},'Aujourd\'hui')
         ),
         CE('div',{style:{display:'flex',alignItems:'center',gap:8}},
-          CE('label',{style:{fontSize:12,fontWeight:600,color:'var(--text-2)',margin:0,whiteSpace:'nowrap'}},'Conseiller :'),
+          CE('label',{className:'rm-filter-lbl'},'Conseiller :'),
           CE('select',{value:filtConseiller,onChange:e=>{setFiltConseiller(e.target.value);if(onChangeConseiller)onChangeConseiller(e.target.value);},style:{padding:'5px 10px',border:'1.5px solid #e2e8f0',borderRadius:6,fontSize:13}},
             CE('option',{value:'Tous'},'Tous'),
             CONSEILLERS.map(c=>CE('option',{key:c,value:c},c))
@@ -1209,11 +1077,11 @@ function VueCalendrier({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
         )
       ),
       CE('div',{style:{display:'flex',gap:8,flexWrap:'wrap'}},
-        CE('div',{className:'kpi-mini',style:{flex:'1 1 70px',borderLeft:'3px solid #1e3a8a',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--blue)',fontSize:20}},kpi.total),CE('div',{className:'l'},'Ateliers')),
-        CE('div',{className:'kpi-mini',style:{flex:'1 1 70px',borderLeft:'3px solid #16a34a',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--green)',fontSize:20}},kpi.realises),CE('div',{className:'l'},'Réalisés')),
-        CE('div',{className:'kpi-mini',style:{flex:'1 1 70px',borderLeft:'3px solid #2563eb',background:'#eff6ff'}},CE('div',{className:'v',style:{color:'#2563eb',fontSize:20}},kpi.planifies),CE('div',{className:'l'},'Planifiés')),
-        CE('div',{className:'kpi-mini',style:{flex:'1 1 70px',borderLeft:'3px solid #7c3aed',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--violet)',fontSize:20}},kpi.inscrits),CE('div',{className:'l'},'Inscrits')),
-        CE('div',{className:'kpi-mini',style:{flex:'1 1 70px',borderLeft:'3px solid var(--cyan)',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--cyan)',fontSize:20}},kpi.presents),CE('div',{className:'l'},'Présents'))
+        CE('div',{className:'kpi-mini-card',style:{flex:'1 1 70px',borderLeft:'3px solid 'var(--blue)'',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--blue)',fontSize:20}},kpi.total),CE('div',{className:'l'},'Ateliers')),
+        CE('div',{className:'kpi-mini-card',style:{flex:'1 1 70px',borderLeft:'3px solid '#16a34a'',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--green)',fontSize:20}},kpi.realises),CE('div',{className:'l'},'Réalisés')),
+        CE('div',{className:'kpi-mini-card',style:{flex:'1 1 70px',borderLeft:'3px solid 'var(--blue)'',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--blue)',fontSize:20}},kpi.planifies),CE('div',{className:'l'},'Planifiés')),
+        CE('div',{className:'kpi-mini-card',style:{flex:'1 1 70px',borderLeft:'3px solid 'var(--violet)'',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--violet)',fontSize:20}},kpi.inscrits),CE('div',{className:'l'},'Inscrits')),
+        CE('div',{className:'kpi-mini-card',style:{flex:'1 1 70px',borderLeft:'3px solid 'var(--cyan)'',background:'var(--bg-1)'}},CE('div',{className:'v',style:{color:'var(--cyan)',fontSize:20}},kpi.presents),CE('div',{className:'l'},'Présents'))
       )
     ),
     // ── Grille ──
@@ -1259,7 +1127,7 @@ function VueCalendrier({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
       panel&&CE(React.Fragment,null,
         CE('div',{className:'side-panel-header'},
           CE('h3',null,'Détail / Mise à jour'),
-          CE('button',{onClick:closePanel,style:{background:'none',border:'none',fontSize:18,cursor:'pointer',color:'var(--text-3)'}},'✕')
+          CE('button',{onClick:closePanel,className:'panel-close'},'✕')
         ),
         CE('div',{className:'side-panel-body'},
           isRetard(panel)&&CE('div',{className:'cloture-banner'},
@@ -1268,7 +1136,7 @@ function VueCalendrier({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
               CLOTURE_PRESETS.map(p=>CE('button',{key:p.statut,className:'cloture-btn',style:{background:p.bg,color:p.color},onClick:()=>setPanelStatut(p.statut)},p.label))
             )
           ),
-          CE('div',{style:{fontSize:13,fontWeight:700,color:'var(--text)',marginBottom:8}},panel.thematique),
+          CE('div',{className:'panel-title'},panel.thematique),
           CE('div',{className:'sp-info-row'},CE('span',null,'Date'),CE('span',null,fmtDate(panel.date),' ',panel.horaire)),
           CE('div',{className:'sp-info-row'},CE('span',null,'Commune'),CE('span',null,panel.commune)),
           CE('div',{className:'sp-info-row'},CE('span',null,'Lieu'),CE('span',null,panel.lieu)),
@@ -1276,7 +1144,7 @@ function VueCalendrier({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
           CE('div',{className:'sp-info-row'},CE('span',null,'Public'),CE('span',null,panel.public)),
           CE('div',{className:'sp-info-row'},CE('span',null,'Conseiller'),CE('span',{style:{color:conseillerColor(panel.conseiller),fontWeight:700}},panel.conseiller)),
           panel.materiel&&panel.materiel.length>0&&CE('div',{style:{marginTop:10,marginBottom:4}},
-            CE('div',{style:{fontSize:11,fontWeight:700,color:'var(--text-3)',marginBottom:4,fontFamily:"'IBM Plex Mono',monospace",textTransform:'uppercase',letterSpacing:'.06em'}},'MATÉRIEL'),
+            CE('div',{className:'panel-sublbl'},'MATÉRIEL'),
             panel.materiel.map(m=>CE('span',{key:m,className:'mat-chip'},m))
           ),
           CE('hr',{style:{border:'none',borderTop:'1px solid #e2e8f0',margin:'12px 0'}}),
@@ -1292,7 +1160,7 @@ function VueCalendrier({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
         ),
         CE('div',{className:'side-panel-footer'},
           canDelete&&CE('button',{className:'btn btn-danger btn-sm',onClick:()=>{setConfirmDel(panel);closePanel();}},'Supprimer'),
-          onDuplicate&&CE('button',{className:'btn btn-secondary btn-sm',style:{background:'#eff6ff',color:'#1d4ed8',border:'1px solid #bfdbfe'},onClick:()=>{onDuplicate(panel);closePanel();}},'📋 Dupliquer'),
+          onDuplicate&&CE('button',{className:'btn btn-secondary btn-sm',className:'btn btn-sm btn-dupliquer',onClick:()=>{onDuplicate(panel);closePanel();}},'📋 Dupliquer'),
           CE('button',{className:'btn btn-secondary',style:{flex:1},onClick:()=>onEdit(panel._id)},'Éditer complet'),
           CE('button',{className:'btn btn-primary',style:{flex:1},onClick:savePanel,disabled:saving},saving?'…':'💾 Enregistrer')
         )
@@ -1302,7 +1170,7 @@ function VueCalendrier({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
       CE('div',{className:'card',style:{width:360}},
         CE('h2',null,'🗑️ Confirmer la suppression'),
         CE('p',{style:{margin:'12px 0',fontSize:13}},`Supprimer l'atelier #${confirmDel._n} — ${confirmDel.thematique} ?`),
-        CE('p',{style:{fontSize:12,color:'var(--text-3)',marginBottom:16}},'Cette action est irréversible.'),
+        CE('p',{className:'panel-irrev'},'Cette action est irréversible.'),
         CE('div',{style:{display:'flex',gap:10}},
           CE('button',{className:'btn btn-danger',onClick:()=>{onDelete(confirmDel._id);setConfirmDel(null);}},'🗑️ Supprimer'),
           CE('button',{className:'btn btn-secondary',onClick:()=>setConfirmDel(null)},'Annuler')
@@ -1315,27 +1183,12 @@ function VueCalendrier({entries,onEdit,onDelete,onRefresh,onDuplicate,initConsei
 // ═══════════════════════════════════════════════════════════
 // ECharts — composants graphiques (migration depuis Recharts)
 // ═══════════════════════════════════════════════════════════
-function NoData(){return CE('p',{style:{color:'var(--text-3)',fontSize:12,textAlign:'center',paddingTop:20}},'Aucune donnée');}
+function NoData(){return CE('p',{style:{color:'var(--text-3)',fontSize:12,textAlign:'center',paddingTop:20,fontFamily:"'IBM Plex Mono',monospace"}},'Aucune donnée');}
 function trunc(s,n){return s&&s.length>n?s.slice(0,n-1)+'…':s;}
 function barH(n,base){return Math.max(base,base+(Math.max(0,n-6)*8));}
 
 // ── Base wrapper ECharts ────────────────────────────────────
 const EC_ANIM={animation:true,animationDuration:800,animationEasing:'cubicOut',animationDurationUpdate:500,animationEasingUpdate:'cubicInOut'};
-
-// Récupère les couleurs du thème CSS courant pour les constantes ECharts
-function getEcThemeVars(){
-  const isDark=(document.documentElement.getAttribute('data-theme')||'dark')==='dark';
-  return{
-    tooltipBg:   isDark?'#1a2235':'#1f2937',
-    tooltipBorder:isDark?'#1e2d45':'#374151',
-    tooltipText: isDark?'#e8f0fe':'#f9fafb',
-    axisLabel:   isDark?'#94a3b8':'#9ca3af',
-    splitLine:   isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)',
-    legendText:  isDark?'#94a3b8':'#6b7280',
-    borderDark:  isDark?'#1a1d27':'#ffffff',
-  };
-}
-
 function EChart({option,height}){
   const ref=React.useRef(null);
   const inst=React.useRef(null);
@@ -1344,7 +1197,7 @@ function EChart({option,height}){
     if(!ref.current||!window.echarts)return;
     const isNew=!inst.current;
     if(isNew){
-      inst.current=window.echarts.init(ref.current, (window.GDIN_THEME||{getEChartsTheme:()=>'gdin-dark'}).getEChartsTheme());
+      inst.current=window.echarts.init(ref.current,(window.GDIN_THEME||{getEChartsTheme:()=>'gdin-dark'}).getEChartsTheme());
       const ro=new ResizeObserver(()=>{if(inst.current)inst.current.resize();});
       ro.observe(ref.current);
       inst.current._ro=ro;
@@ -1364,26 +1217,18 @@ function mkGrad(c1,c2,dir='v'){
   const[x1,y1,x2,y2]=dir==='v'?[0,0,0,1]:[0,0,1,0];
   return new window.echarts.graphic.LinearGradient(x1,y1,x2,y2,[{offset:0,color:c1},{offset:1,color:c2}]);
 }
-// ── v15.0+ : Style graphiques GDIN — theme-aware ─────────────
-// On génère les constantes à la volée pour refléter dark/light
-function mkEcConsts(){
-  const t=getEcThemeVars();
-  return{
-    TT:{backgroundColor:t.tooltipBg,borderColor:t.tooltipBorder,textStyle:{color:t.tooltipText,fontSize:12},extraCssText:'border-radius:8px;padding:10px 14px;box-shadow:0 8px 24px rgba(0,0,0,.4)'},
-    GRID:{top:24,right:8,bottom:48,left:28,containLabel:true},
-    AXIS_LABEL:{color:t.axisLabel,fontSize:10,fontFamily:"'IBM Plex Mono',monospace"},
-    SPLIT:{lineStyle:{color:t.splitLine,type:'dashed'}},
-    APN:{axisPointer:{type:'none'}},
-    LEGEND_STYLE:{color:t.legendText,fontSize:10},
-    DONUT_BORDER:t.borderDark,
-  };
-}
-// Aliases statiques pour compat (utilisés par les composants inline)
-function EC_TT(){return mkEcConsts().TT;}
+// ── v15.0 : Style graphiques GDIN ────────────────────────────
+function getEcT(){const d=isDark();return{
+  TT:{backgroundColor:d?'#1a2235':'#1f2937',borderColor:d?'#1e2d45':'#374151',textStyle:{color:d?'#e8f0fe':'#f9fafb',fontSize:12},extraCssText:'border-radius:8px;padding:10px 14px;box-shadow:0 8px 24px rgba(0,0,0,.4)'},
+  LABEL:{color:d?'#94a3b8':'#9ca3af',fontSize:10,fontFamily:"'IBM Plex Mono',monospace"},
+  SPLIT:{lineStyle:{color:d?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)',type:'dashed'}},
+  LEGEND:{color:d?'#94a3b8':'#6b7280',fontSize:10},
+  BORDER:d?'#0d1220':'#ffffff',
+};}
+function EC_TT(){return getEcT().TT;}
+function EC_AXIS_BASE(){const t=getEcT();return{axisLine:{show:false},axisTick:{show:false},axisLabel:t.LABEL,splitLine:t.SPLIT};}
+function EC_AXIS_LABEL(){return getEcT().LABEL;}
 const EC_GRID={top:24,right:8,bottom:48,left:28,containLabel:true};
-function EC_AXIS_LABEL(){return mkEcConsts().AXIS_LABEL;}
-function EC_SPLIT(){return mkEcConsts().SPLIT;}
-function EC_AXIS_BASE(){const c=mkEcConsts();return{axisLine:{show:false},axisTick:{show:false},axisLabel:c.AXIS_LABEL,splitLine:c.SPLIT};}
 const EC_APN={axisPointer:{type:'none'}};
 
 // ── BarChart vertical ───────────────────────────────────────
@@ -1401,7 +1246,7 @@ function BarChart({data,colors,height}){
     yAxis:{...EC_AXIS_BASE()},
     series:[{type:'bar',barMaxWidth:44,
       data:data.map((d,i)=>({value:d.value,itemStyle:{color:colArr[i%colArr.length],borderRadius:[4,4,0,0]}})),
-      label:{show:true,position:'top',color:getEcThemeVars().legendText,fontSize:10,fontWeight:'bold'}
+      label:{show:true,position:'top',color:getEcT().LEGEND.color,fontSize:10,fontWeight:'bold'}
     }]
   };
   return CE(EChart,{option,height:h});
@@ -1420,7 +1265,7 @@ function LineChart({data}){
       lineStyle:{width:2.5,color:'#a78bfa'},
       itemStyle:{color:'#a78bfa'},
       areaStyle:{color:mkGrad('rgba(167,139,250,0.25)','rgba(167,139,250,0.02)')},
-      label:{show:true,position:'top',color:getEcThemeVars().legendText,fontSize:9,fontWeight:'bold'}
+      label:{show:true,position:'top',color:getEcT().LEGEND.color,fontSize:9,fontWeight:'bold'}
     }]
   };
   return CE(EChart,{option,height:200});
@@ -1432,7 +1277,7 @@ function DualLineChart({data}){
   const option={
     backgroundColor:'transparent',grid:{...EC_GRID,bottom:50},
     tooltip:{trigger:'axis',...EC_TT(),...EC_APN},
-    legend:{data:['Inscrits','Présents'],textStyle:{color:getEcThemeVars().legendText,fontSize:11},bottom:0,icon:'circle',itemWidth:8,itemHeight:8},
+    legend:{data:['Inscrits','Présents'],textStyle:{color:getEcT().LEGEND.color,fontSize:11},bottom:0,icon:'circle',itemWidth:8,itemHeight:8},
     xAxis:{data:data.map(d=>d.label),...EC_AXIS_BASE(),splitLine:{show:false},axisLabel:{...EC_AXIS_LABEL(),rotate:data.length>8?-35:0,interval:0}},
     yAxis:{...EC_AXIS_BASE()},
     series:[
@@ -1460,7 +1305,7 @@ function RadialChart({data,colors,height=220}){
     yAxis:{type:'category',data:data.map(d=>d.label),axisLabel:{...EC_AXIS_LABEL(),fontSize:11},axisLine:{show:false},axisTick:{show:false},splitLine:{show:false}},
     series:[{type:'bar',barMaxWidth:32,
       data:data.map((d,i)=>({value:d.value,itemStyle:{color:colArr[i%colArr.length],borderRadius:[0,4,4,0]}})),
-      label:{show:true,position:'right',color:getEcThemeVars().legendText,fontSize:10,fontWeight:'bold'}
+      label:{show:true,position:'right',color:getEcT().LEGEND.color,fontSize:10,fontWeight:'bold'}
     }]
   };
   return CE(EChart,{option,height});
@@ -1474,9 +1319,9 @@ function DonutChart({data,colors,height=220}){
   const option={
     backgroundColor:'transparent',
     tooltip:{trigger:'item',...EC_TT(),formatter:params=>`<b style="color:${params.color}">${params.name}</b><br/>${params.value} (${Math.round(params.value/total*100)}%)`},
-    legend:{orient:'horizontal',bottom:0,textStyle:{color:getEcThemeVars().legendText,fontSize:11},icon:'circle',itemWidth:8,itemHeight:8},
+    legend:{orient:'horizontal',bottom:0,textStyle:{color:getEcT().LEGEND.color,fontSize:11},icon:'circle',itemWidth:8,itemHeight:8},
     series:[{type:'pie',radius:['38%','65%'],center:['50%','46%'],
-      itemStyle:{borderRadius:5,borderColor:getEcThemeVars().borderDark,borderWidth:3},
+      itemStyle:{borderRadius:5,borderColor:getEcT().BORDER,borderWidth:3},
       label:{show:true,position:'inside',color:'#fff',fontSize:10,fontWeight:'bold',formatter:p=>p.percent>6?Math.round(p.percent)+'%':''},
       data:data.map((d,i)=>({name:d.label,value:d.value,itemStyle:{color:colArr[i%colArr.length]}})),
       emphasis:{scale:true,scaleSize:5}
@@ -1496,7 +1341,7 @@ function StackedActivityChart({data}){
     backgroundColor:'transparent',grid:{top:28,right:8,bottom:48,left:28,containLabel:true},
     tooltip:{trigger:'axis',...EC_TT(),...EC_APN,
       formatter:params=>{const k=keys[params[0].dataIndex];const d=data[k];const futur=k>=todayYM?' (à venir)':'';return`<b style="color:#60a5fa">${fmtML(k)}${futur}</b><br/><span style="color:#22c55e">✅ ${d.realises} réalisés</span><br/><span style="color:#3b82f6">📅 ${d.planifies} planifiés</span><br/><span style="color:#ef4444">❌ ${d.annules} annulés</span>`;}},
-    legend:{data:['Réalisés','Annulés','Planifiés'],textStyle:{color:getEcThemeVars().legendText,fontSize:10},bottom:0,icon:'roundRect',itemWidth:10,itemHeight:8},
+    legend:{data:['Réalisés','Annulés','Planifiés'],textStyle:{color:getEcT().LEGEND.color,fontSize:10},bottom:0,icon:'roundRect',itemWidth:10,itemHeight:8},
     xAxis:{data:labels,...EC_AXIS_BASE(),splitLine:{show:false},axisLabel:{...EC_AXIS_LABEL(),rotate:-35,interval:0}},
     yAxis:{...EC_AXIS_BASE()},
     series:[
@@ -1530,13 +1375,13 @@ function ConseillerBarChart({entries}){
     backgroundColor:'transparent',grid:{top:8,right:60,bottom:30,left:8,containLabel:true},
     tooltip:{trigger:'axis',...EC_TT(),...EC_APN,
       formatter:params=>{const d=data[params[0].dataIndex];return`<b style="color:#60a5fa">${d.name}</b><br/><span style="color:#22c55e">✅ Réalisés : ${d.realises}</span><br/><span style="color:#3b82f6">📅 Planifiés : ${d.planifies}</span><br/><span style="color:#ef4444">❌ Annulés : ${d.annules}</span><br/><span style="color:#a78bfa;font-weight:700">👥 Présents : ${d.presents}/${d.inscrits} — ${d.tx}%</span>`;}},
-    legend:{data:['Réalisés','Planifiés','Annulés'],textStyle:{color:getEcThemeVars().legendText,fontSize:10},bottom:0,icon:'roundRect',itemWidth:10,itemHeight:8},
+    legend:{data:['Réalisés','Planifiés','Annulés'],textStyle:{color:getEcT().LEGEND.color,fontSize:10},bottom:0,icon:'roundRect',itemWidth:10,itemHeight:8},
     xAxis:{...EC_AXIS_BASE()},
     yAxis:{type:'category',data:data.map(d=>d.name),axisLabel:{...EC_AXIS_LABEL(),fontSize:11},axisLine:{show:false},axisTick:{show:false},splitLine:{show:false}},
     series:[
       {name:'Réalisés',type:'bar',barMaxWidth:14,data:data.map(d=>d.realises),
         itemStyle:{color:p=>conseillerColor(data[p.dataIndex].name),borderRadius:[0,4,4,0]},
-        label:{show:true,position:'right',color:getEcThemeVars().legendText,fontSize:9,fontWeight:'bold'}},
+        label:{show:true,position:'right',color:getEcT().LEGEND.color,fontSize:9,fontWeight:'bold'}},
       {name:'Planifiés',type:'bar',barMaxWidth:14,data:data.map(d=>d.planifies),
         itemStyle:{color:'rgba(59,130,246,0.5)',borderRadius:[0,4,4,0]}},
       {name:'Annulés',type:'bar',barMaxWidth:14,data:data.map(d=>d.annules),
@@ -1556,30 +1401,23 @@ function lighten(hex){try{const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.sli
 // DonutChart → remplacé par version ECharts ci-dessus
 
 
-// ── KPI Card avec tendance — theme-aware ───────────────────
+// ── KPI Card avec tendance ─────────────────────────────────
 function KpiCard({val,lbl,sub,trend,color,icon,delay=0}){
   const up=trend>0,down=trend<0;
-  const isDark=(document.documentElement.getAttribute('data-theme')||'dark')==='dark';
   const[sv,setSv]=React.useState(false);React.useEffect(()=>{const t=setTimeout(()=>setSv(true),delay*1000+20);return()=>clearTimeout(t);},[]);
-  // En dark mode, on ignore bgColor hardcodé et on utilise --bg-1 du thème
-  const cardBg=isDark?'var(--bg-1)':'var(--bg-1)';
-  const labelColor=isDark?'var(--text-3)':'var(--text-3)';
-  const trendBg=up?(isDark?'var(--green-dim)':'#f0fdf4'):down?(isDark?'var(--red-dim)':'#fef2f2'):(isDark?'var(--bg-3)':'#f8fafc');
-  const trendColor=up?'var(--green)':down?'var(--red)':'var(--text-3)';
-  return CE('div',{className:'kpi',style:{background:cardBg,borderLeft:'4px solid '+(color||'var(--blue)'),textAlign:'left',padding:'14px 16px',position:'relative',overflow:'hidden',opacity:sv?1:0,transform:sv?'none':'translateY(14px)',transition:'opacity .45s ease,transform .45s ease'}},
-    CE('div',{style:{position:'absolute',right:10,top:8,fontSize:28,opacity:isDark?.06:.08}},icon),
+  return CE('div',{className:'kpi',style:{background:'var(--bg-1)',borderLeft:'4px solid '+(color||'var(--cyan)'),textAlign:'left',padding:'14px 16px',position:'relative',overflow:'hidden',opacity:sv?1:0,transform:sv?'none':'translateY(14px)',transition:'opacity .45s ease,transform .45s ease'}},
+    CE('div',{style:{position:'absolute',right:10,top:8,fontSize:28,opacity:.06}},icon),
     CE('div',{style:{display:'flex',alignItems:'flex-start',justifyContent:'space-between'}},
       CE('div',null,
-        CE('div',{style:{fontSize:11,color:labelColor,fontWeight:600,marginBottom:4,display:'flex',alignItems:'center',gap:4,fontFamily:"'IBM Plex Mono',monospace",textTransform:'uppercase',letterSpacing:'.06em'}},lbl),
+        CE('div',{style:{fontSize:10,color:'var(--text-3)',fontWeight:600,marginBottom:4,fontFamily:"'IBM Plex Mono',monospace",textTransform:'uppercase',letterSpacing:'.06em'}},lbl),
         CE('div',{className:'val',style:{color:color||'var(--cyan)',fontSize:28,lineHeight:1.1,fontFamily:"'IBM Plex Mono',monospace",fontWeight:600}},val),
-        sub&&CE('div',{style:{fontSize:11,color:labelColor,marginTop:3}},sub)
+        sub&&CE('div',{style:{fontSize:11,color:'var(--text-3)',marginTop:3}},sub)
       ),
       trend!==undefined&&CE('div',{style:{
-        fontSize:11,fontWeight:700,
-        color:trendColor,
-        background:trendBg,
-        padding:'2px 7px',borderRadius:8,whiteSpace:'nowrap',marginTop:2,alignSelf:'flex-start',
-        fontFamily:"'IBM Plex Mono',monospace"
+        fontSize:11,fontWeight:700,fontFamily:"'IBM Plex Mono',monospace",
+        color:up?'var(--green)':down?'var(--red)':'var(--text-3)',
+        background:up?'var(--green-dim)':down?'var(--red-dim)':'var(--bg-3)',
+        padding:'2px 7px',borderRadius:8,whiteSpace:'nowrap',marginTop:2,alignSelf:'flex-start'
       }},(up?'↑ +':down?'↓ ':'')+Math.abs(trend)+'%')
     )
   );
@@ -1591,7 +1429,7 @@ function KpiCard({val,lbl,sub,trend,color,icon,delay=0}){
 
 // ── MAIN : VueDashboard ────────────────────────────────────
 function VueDashboard({entries}){
-  if(!window.echarts)return CE('div',{className:'card'},CE('p',{style:{color:'#718096',textAlign:'center',padding:'40px 0'}},'⚠️ ECharts non chargé.'));
+  if(!window.echarts)return CE('div',{className:'card'},CE('p',{style:{color:'var(--text-3)',textAlign:'center',padding:'40px 0'}},'⚠️ ECharts non chargé.'));
 
   const[periodeIdx,setPeriodeIdx]=React.useState(1); // défaut : ce mois
   const now=new Date();
@@ -1674,12 +1512,12 @@ function VueDashboard({entries}){
     // ── Barre période ──
     CE('div',{className:'card',style:{marginBottom:12,padding:'12px 16px'}},
       CE('div',{style:{display:'flex',alignItems:'center',gap:8,flexWrap:'wrap'}},
-        CE('span',{style:{fontSize:12,fontWeight:700,color:'#718096'}},'Période :'),
+        CE('span',{className:'hist-filter-lbl',style:{marginBottom:0}},'Période :'),
         PERIODES.map((p,i)=>CE('button',{key:i,onClick:()=>setPeriodeIdx(i),style:{
           padding:'4px 13px',borderRadius:20,fontSize:12,fontWeight:600,cursor:'pointer',
           border:`1.5px solid ${periodeIdx===i?accent:'#e2e8f0'}`,
-          background:periodeIdx===i?accent:'#fff',
-          color:periodeIdx===i?'#fff':'#718096',transition:'all .15s'
+          background:periodeIdx===i?accent:'var(--bg-2)',
+          color:periodeIdx===i?'#fff':'var(--text-3)',transition:'all .15s'
         }},p.l)),
         CE('span',{style:{marginLeft:'auto',fontSize:11,color:'#94a3b8'}},filtered.length+' ateliers · '+now.toLocaleDateString('fr-FR'))
       )
@@ -1687,10 +1525,10 @@ function VueDashboard({entries}){
 
     // ── KPIs ──
     CE('div',{style:{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))',gap:12,marginBottom:16}},
-      CE(KpiCard,{val:realises.length,lbl:'Ateliers réalisés',icon:'✅',color:'#16a34a',bgColor:'#f0fdf4',trend:mkTrend(realises.length,prevR.length),delay:0}),
+      CE(KpiCard,{val:realises.length,lbl:'Ateliers réalisés',icon:'✅',color:'var(--green)',bgColor:'#f0fdf4',trend:mkTrend(realises.length,prevR.length),delay:0}),
       CE(KpiCard,{val:planifies.length,lbl:'Planifiés à venir',icon:'📅',color:'#2563eb',bgColor:'#eff6ff',delay:0.08}),
       CE(KpiCard,{val:presents,lbl:'Participants présents',icon:'👥',color:'#7c3aed',bgColor:'#faf5ff',trend:mkTrend(presents,prevPresents),delay:0.16}),
-      CE(KpiCard,{val:inscrits,lbl:'Inscrits total',icon:'📝',color:'#0891b2',bgColor:'#ecfeff',delay:0.24}),
+      CE(KpiCard,{val:inscrits,lbl:'Inscrits total',icon:'📝',color:'var(--cyan)',bgColor:'#ecfeff',delay:0.24}),
       CE(KpiCard,{val:txPresence+'%',lbl:'Taux de présence',icon:'🎯',
         color:txPresence>=70?'#16a34a':txPresence>=50?'#d97706':'#dc2626',
         bgColor:txPresence>=70?'#f0fdf4':txPresence>=50?'#fffbeb':'#fef2f2'}),
@@ -1753,7 +1591,7 @@ function VueDashboard({entries}){
 // VUE GRAPHIQUES (stats détaillées — inchangé)
 // ═══════════════════════════════════════════════════════════
 function VueGraphiques({entries}){
-  if(!window.echarts)return CE('div',{className:'card'},CE('p',{style:{color:'#718096',textAlign:'center',padding:'40px 0'}},'⚠️ ECharts non chargé — vérifiez la connexion internet.'));
+  if(!window.echarts)return CE('div',{className:'card'},CE('p',{style:{color:'var(--text-3)',textAlign:'center',padding:'40px 0'}},'⚠️ ECharts non chargé — vérifiez la connexion internet.'));
 
   const[dateFrom,setDateFrom]=React.useState('');
   const[dateTo,setDateTo]=React.useState('');
@@ -1812,15 +1650,15 @@ function VueGraphiques({entries}){
     // Barre filtre période
     CE('div',{className:'card',style:{marginBottom:12}},
       CE('div',{style:{display:'flex',alignItems:'center',gap:10,flexWrap:'wrap'}},
-        CE('span',{style:{fontSize:12,fontWeight:700,color:'#718096',whiteSpace:'nowrap'}},'📅 Période'),
+        CE('span',{className:'hist-filter-lbl',style:{marginBottom:0,whiteSpace:'nowrap'}},'📅 Période'),
         // Boutons années
-        CE('button',{onClick:()=>{setDateFrom('');setDateTo('');},style:{padding:'5px 12px',borderRadius:6,border:`1.5px solid ${!hasFilter?'#1e3a8a':'#e2e8f0'}`,background:!hasFilter?'var(--blue)':'var(--bg-2)',color:!hasFilter?'#fff':'var(--text-3)',fontSize:12,fontWeight:600,cursor:'pointer'}},'Tout'),
-        annees.map(yr=>CE('button',{key:yr,onClick:()=>{setDateFrom(`${yr}-01-01`);setDateTo(`${yr}-12-31`);},style:{padding:'5px 12px',borderRadius:6,border:`1.5px solid ${dateFrom===`${yr}-01-01`&&dateTo===`${yr}-12-31`?'#1e3a8a':'#e2e8f0'}`,background:dateFrom===`${yr}-01-01`&&dateTo===`${yr}-12-31`?'var(--blue)':'var(--bg-2)',color:dateFrom===`${yr}-01-01`&&dateTo===`${yr}-12-31`?'#fff':'var(--text-3)',fontSize:12,fontWeight:600,cursor:'pointer'}},yr)),
+        CE('button',{onClick:()=>{setDateFrom('');setDateTo('');},style:{padding:'5px 12px',borderRadius:6,border:`1.5px solid ${!hasFilter?'var(--blue)':'var(--border)'}`,background:!hasFilter?'var(--blue)':'var(--bg-2)',color:!hasFilter?'#fff':'var(--text-3)',fontSize:12,fontWeight:600,cursor:'pointer'}},'Tout'),
+        annees.map(yr=>CE('button',{key:yr,onClick:()=>{setDateFrom(`${yr}-01-01`);setDateTo(`${yr}-12-31`);},style:{padding:'5px 12px',borderRadius:6,border:`1.5px solid ${dateFrom===`${yr}-01-01`&&dateTo===`${yr}-12-31`?'var(--blue)':'var(--border)'}`,background:dateFrom===`${yr}-01-01`&&dateTo===`${yr}-12-31`?'var(--blue)':'var(--bg-2)',color:dateFrom===`${yr}-01-01`&&dateTo===`${yr}-12-31`?'#fff':'var(--text-3)',fontSize:12,fontWeight:600,cursor:'pointer'}},yr)),
         // Saisie manuelle
         CE('div',{style:{display:'flex',alignItems:'center',gap:6,marginLeft:4}},
-          CE('span',{style:{fontSize:12,color:'#718096'}},'Du'),
+          CE('span',{className:'hist-du-au'},'Du'),
           CE('input',{type:'date',value:dateFrom,onChange:e=>setDateFrom(e.target.value),style:{padding:'5px 8px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:12,background:'var(--bg-2)',color:'var(--text)'}}),
-          CE('span',{style:{fontSize:12,color:'#718096'}},'Au'),
+          CE('span',{className:'hist-du-au'},'Au'),
           CE('input',{type:'date',value:dateTo,onChange:e=>setDateTo(e.target.value),style:{padding:'5px 8px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:12,background:'var(--bg-2)',color:'var(--text)'}})
         ),
         hasFilter&&CE('span',{style:{fontSize:12,color:'var(--blue)',fontWeight:600,background:'var(--blue-dim)',padding:'4px 10px',borderRadius:6}},`${filtered.length} / ${entries.length}`),
@@ -1828,13 +1666,13 @@ function VueGraphiques({entries}){
       )
     ),
     passes.length===0
-      ?CE('div',{className:'card'},CE('p',{style:{color:'#718096',textAlign:'center',padding:'40px 0'}},hasFilter?'Aucun atelier réalisé sur cette période.':'Aucun atelier réalisé.'))
+      ?CE('div',{className:'card'},CE('p',{style:{color:'var(--text-3)',textAlign:'center',padding:'40px 0'}},hasFilter?'Aucun atelier réalisé sur cette période.':'Aucun atelier réalisé.'))
       :CE('div',null,
           CE('div',{className:'kpi-grid'},
-            CE(FadeItem,{delay:0,style:{display:'contents'}},CE('div',{className:'kpi',style:{borderLeft:'4px solid #16a34a',background:'#f0fdf4',textAlign:'left'}},CE('div',{className:'val',style:{color:'#16a34a'}},total),CE('div',{className:'lbl'},'Ateliers réalisés'))),
+            CE(FadeItem,{delay:0,style:{display:'contents'}},CE('div',{className:'kpi',style:{borderLeft:'4px solid #16a34a',background:'#f0fdf4',textAlign:'left'}},CE('div',{className:'val',style:{color:'var(--green)'}},total),CE('div',{className:'lbl'},'Ateliers réalisés'))),
             CE(FadeItem,{delay:0.08,style:{display:'contents'}},CE('div',{className:'kpi',style:{borderLeft:'4px solid #dc2626',background:'#fff5f5',textAlign:'left'}},CE('div',{className:'val',style:{color:'#dc2626'}},annules),CE('div',{className:'lbl'},'Annulés'))),
             CE(FadeItem,{delay:0.16,style:{display:'contents'}},CE('div',{className:'kpi',style:{borderLeft:'4px solid #7c3aed',background:'#faf5ff',textAlign:'left'}},CE('div',{className:'val',style:{color:'#7c3aed'}},totalPresents),CE('div',{className:'lbl'},'Participants présents'))),
-            CE(FadeItem,{delay:0.24,style:{display:'contents'}},CE('div',{className:'kpi',style:{borderLeft:'4px solid #0891b2',background:'#ecfeff',textAlign:'left'}},CE('div',{className:'val',style:{color:'#0891b2'}},txPresence+'%'),CE('div',{className:'lbl'},'Taux de présence')))
+            CE(FadeItem,{delay:0.24,style:{display:'contents'}},CE('div',{className:'kpi',style:{borderLeft:'4px solid #0891b2',background:'#ecfeff',textAlign:'left'}},CE('div',{className:'val',style:{color:'var(--cyan)'}},txPresence+'%'),CE('div',{className:'lbl'},'Taux de présence')))
           ),
           CE('div',{className:'dashboard-charts',style:{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:16}},
             CE('div',{className:'card'},CE('h2',null,'Ateliers par mois (révolus)'),CE(LineChart,{data:dataMois})),
@@ -1901,7 +1739,7 @@ function VueBingo({entries}){
   const sel=selected?communes.find(c=>c.nom===selected):null;
   return CE('div',null,
     CE('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}},
-      CE('div',{style:{fontSize:13,color:'#718096'}},
+      CE('div',{style:{fontSize:13,color:'var(--text-3)'}},
         CE('span',{style:{marginRight:16}},CE('span',{style:{display:'inline-block',width:10,height:10,borderRadius:'50%',background:'#22c55e',border:'2px solid #22c55e',marginRight:4}}),'≥70% réalisés'),
         CE('span',{style:{marginRight:16}},CE('span',{style:{display:'inline-block',width:10,height:10,borderRadius:'50%',background:'#ffedd5',border:'2px solid #f97316',marginRight:4}}),'40-70%'),
         CE('span',null,CE('span',{style:{display:'inline-block',width:10,height:10,borderRadius:'50%',background:'#dbeafe',border:'2px solid #3b82f6',marginRight:4}}),'<40%')
@@ -1911,8 +1749,8 @@ function VueBingo({entries}){
     CE('div',{className:'bingo-grid'},communes.map((c,ci)=>{const col=getCircleColor(c.pct);return CE(FadeItem,{key:c.nom,delay:ci*0.04},CE('div',{className:'bingo-card'+(selected===c.nom?' selected':''),style:{background:col.bg+'44',borderColor:col.stroke+'66'},onClick:()=>setSelected(selected===c.nom?null:c.nom)},CE('div',{className:'bingo-circle',style:{background:col.bg,borderColor:col.stroke,color:col.text,boxShadow:'0 0 0 4px '+col.stroke+'22'}},c.total),CE('div',{className:'bingo-nom'},c.nom),CE('div',{className:'bingo-pct',style:{color:col.text}},c.pct+'% réalisés')));})),
     sel&&CE('div',{className:'card'},
       CE('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}},
-        CE('h2',{style:{borderBottom:'none',marginBottom:0,paddingBottom:0}},CE('span',{style:{color:'#1e3a8a'}},'📍 '+sel.nom),CE('span',{style:{fontSize:13,fontWeight:400,color:'#718096',marginLeft:8}},'— '+sel.total+' atelier(s)')),
-        CE('button',{onClick:()=>setSelected(null),style:{background:'none',border:'none',fontSize:18,cursor:'pointer',color:'#718096'}},'✕')
+        CE('h2',{style:{borderBottom:'none',marginBottom:0,paddingBottom:0}},CE('span',{style:{color:'var(--blue)'}},'📍 '+sel.nom),CE('span',{style:{fontSize:13,fontWeight:400,color:'#718096',marginLeft:8}},'— '+sel.total+' atelier(s)')),
+        CE('button',{onClick:()=>setSelected(null),className:'panel-close',style:{}},'✕')
       ),
       CE('div',{className:'bingo-list'},sel.ateliers.map((e,i)=>CE('div',{key:i,className:'bingo-list-item'},CE('span',{className:'bingo-dot',style:{background:BORDER_C[e.statut]||'#94a3b8'}}),CE('span',{className:'bingo-list-date'},fmtDate(e.date)),CE('span',{className:'bingo-list-theme'},e.thematique),CE('span',{className:'bingo-list-badge',style:{background:BADGE_COLORS[e.statut]||'#f1f5f9',color:BADGE_TEXT[e.statut]||'#475569'}},e.statut))))
     )
@@ -2040,8 +1878,8 @@ function VueAdmin({entries,onRefresh,addLog,conseillersList,onSaveColors}){
     CE('div',{className:'card'},
       CE('h2',null,'⚙️ Panneau Administrateur'),
       CE('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,marginBottom:8}},
-        CE(FadeItem,{delay:0,style:{display:'contents'}},CE('div',{className:'kpi',style:{borderLeft:'4px solid #1e3a8a',background:'#f0f4ff',textAlign:'left'}},CE('div',{className:'val',style:{color:'#1e3a8a'}},entries.length),CE('div',{className:'lbl'},'Total ateliers'))),
-        CE(FadeItem,{delay:0.1},CE('div',{className:'kpi',style:{borderLeft:'4px solid #16a34a',background:'#f0fdf4',textAlign:'left'}},CE('div',{className:'val',style:{color:'#16a34a'}},entries.filter(e=>e.statut==='Réalisé').length),CE('div',{className:'lbl'},'Réalisés')))
+        CE(FadeItem,{delay:0,style:{display:'contents'}},CE('div',{className:'kpi',style:{borderLeft:'4px solid #1e3a8a',background:'#f0f4ff',textAlign:'left'}},CE('div',{className:'val',style:{color:'var(--blue)'}},entries.length),CE('div',{className:'lbl'},'Total ateliers'))),
+        CE(FadeItem,{delay:0.1},CE('div',{className:'kpi',style:{borderLeft:'4px solid #16a34a',background:'#f0fdf4',textAlign:'left'}},CE('div',{className:'val',style:{color:'var(--green)'}},entries.filter(e=>e.statut==='Réalisé').length),CE('div',{className:'lbl'},'Réalisés')))
       )
     ),
     // Couleurs conseillers
@@ -2051,7 +1889,7 @@ function VueAdmin({entries,onRefresh,addLog,conseillersList,onSaveColors}){
       CE('div',{style:{display:'flex',flexDirection:'column',gap:10}},
         (conseillersList||Object.keys(CONSEILLER_COLORS)).map(c=>{
           const hexVal=(colorDraft[c]||'#6B7280').toUpperCase();
-          return CE('div',{key:c,style:{display:'flex',alignItems:'center',gap:12,padding:'10px 14px',background:'var(--bg-2)',borderRadius:10,border:'1.5px solid var(--border)'}},
+          return CE('div',{key:c,className:'admin-color-row'},
             // Color picker visuel
             CE('input',{type:'color',value:(colorDraft[c]||'#6B7280').toLowerCase(),
               onChange:e=>setColorDraft(d=>({...d,[c]:e.target.value.toUpperCase()})),
@@ -2059,7 +1897,7 @@ function VueAdmin({entries,onRefresh,addLog,conseillersList,onSaveColors}){
             // Preview carré
             CE('div',{style:{width:36,height:36,borderRadius:8,background:colorDraft[c]||'#6B7280',flexShrink:0,boxShadow:'0 2px 6px rgba(0,0,0,.15)'}}),
             // Nom
-            CE('span',{style:{flex:1,fontWeight:700,fontSize:14,color:'var(--text)'}},c),
+            CE('span',{className:'admin-color-name'},c),
             // Input hex éditable
             CE('input',{type:'text',value:hexVal,maxLength:7,
               onChange:e=>{
@@ -2072,10 +1910,10 @@ function VueAdmin({entries,onRefresh,addLog,conseillersList,onSaveColors}){
                 if(/^#[0-9A-Fa-f]{6}$/.test(v))setColorDraft(d=>({...d,[c]:v.toUpperCase()}));
                 else setColorDraft(d=>({...d,[c]:colorDraft[c]||'#6B7280'}));
               },
-              style:{width:88,fontFamily:"'IBM Plex Mono',monospace",fontSize:13,fontWeight:700,color:'var(--text)',padding:'6px 10px',border:'1.5px solid var(--border)',borderRadius:8,background:'var(--bg-2)',textAlign:'center'}}),
+              className:'admin-color-hex'}),
             // Bouton reset
             CE('button',{onClick:()=>{const orig=CONSEILLER_COLORS[c]||'#6B7280';setColorDraft(d=>({...d,[c]:orig}));},
-              style:{padding:'4px 10px',border:'1px solid var(--border)',borderRadius:6,fontSize:11,color:'var(--text-3)',cursor:'pointer',background:'var(--bg-2)',flexShrink:0}},'↩ Reset')
+              className:'admin-color-reset',style:{flexShrink:0}},'↩ Reset')
           );
         })
       ),
@@ -2093,12 +1931,12 @@ function VueAdmin({entries,onRefresh,addLog,conseillersList,onSaveColors}){
     CE('div',{className:'admin-section'},
       CE('h3',null,'📥 Import CSV'),
       CE('p',{style:{fontSize:12,color:'#4a5568',marginBottom:12}},'Importe un fichier CSV compatible. Les entrées existantes sont fusionnées.'),
-      importing?CE('div',null,CE('p',{style:{fontSize:12,color:'#4a5568',marginBottom:6}},importMsg),CE('div',{className:'progress-bar'},CE('div',{className:'progress-fill',style:{width:importProgress+'%'}})),CE('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginTop:6}},CE('p',{style:{fontSize:11,color:'#718096'}},importProgress+'%'),CE('button',{className:'btn btn-danger btn-sm',onClick:()=>cancelRef.current=true},'⛔ Annuler'))):CE('label',{style:{display:'inline-block',cursor:'pointer'}},CE('span',{className:'btn btn-primary'},'📂 Choisir un fichier CSV'),CE('input',{type:'file',accept:'.csv',style:{display:'none'},onChange:handleImportCSV}))
+      importing?CE('div',null,CE('p',{style:{fontSize:12,color:'var(--text-2)',marginBottom:6}},importMsg),CE('div',{className:'progress-bar'},CE('div',{className:'progress-fill',style:{width:importProgress+'%'}})),CE('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginTop:6}},CE('p',{style:{fontSize:11,color:'#718096'}},importProgress+'%'),CE('button',{className:'btn btn-danger btn-sm',onClick:()=>cancelRef.current=true},'⛔ Annuler'))):CE('label',{style:{display:'inline-block',cursor:'pointer'}},CE('span',{className:'btn btn-primary'},'📂 Choisir un fichier CSV'),CE('input',{type:'file',accept:'.csv',style:{display:'none'},onChange:handleImportCSV}))
     ),
     CE('div',{className:'admin-section'},
       CE('h3',null,'📊 Import XLSX'),
       CE('p',{style:{fontSize:12,color:'#4a5568',marginBottom:12}},'Réimporte un fichier .xlsx précédemment exporté.'),
-      importing?CE('div',null,CE('p',{style:{fontSize:12,color:'#4a5568',marginBottom:6}},importMsg||'Import en cours…'),CE('div',{className:'progress-bar'},CE('div',{className:'progress-fill',style:{width:importProgress+'%'}})),CE('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginTop:6}},CE('p',{style:{fontSize:11,color:'#718096'}},importProgress+'%'),CE('button',{className:'btn btn-danger btn-sm',onClick:()=>cancelRef.current=true},'⛔ Annuler'))):CE('label',{style:{display:'inline-block',cursor:'pointer'}},CE('span',{className:'btn btn-warn'},'📂 Choisir un fichier XLSX'),CE('input',{type:'file',accept:'.xlsx',style:{display:'none'},onChange:handleImportXLSX}))
+      importing?CE('div',null,CE('p',{style:{fontSize:12,color:'var(--text-2)',marginBottom:6}},importMsg||'Import en cours…'),CE('div',{className:'progress-bar'},CE('div',{className:'progress-fill',style:{width:importProgress+'%'}})),CE('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginTop:6}},CE('p',{style:{fontSize:11,color:'#718096'}},importProgress+'%'),CE('button',{className:'btn btn-danger btn-sm',onClick:()=>cancelRef.current=true},'⛔ Annuler'))):CE('label',{style:{display:'inline-block',cursor:'pointer'}},CE('span',{className:'btn btn-warn'},'📂 Choisir un fichier XLSX'),CE('input',{type:'file',accept:'.xlsx',style:{display:'none'},onChange:handleImportXLSX}))
     ),
     CE('div',{className:'admin-section'},
       CE('h3',null,'🗑️ Réinitialiser la base de données'),
@@ -2263,7 +2101,7 @@ function VuePowerBI({entries, conseillers: conseillersList}){
     React.useEffect(()=>{
       if(!ref.current||!window.echarts)return;
       const isNew=!inst.current;
-      if(isNew){inst.current=window.echarts.init(ref.current, (window.GDIN_THEME||{getEChartsTheme:()=>'gdin-dark'}).getEChartsTheme());const ro=new ResizeObserver(()=>{if(inst.current)inst.current.resize();});ro.observe(ref.current);inst.current._ro=ro;}
+      if(isNew){inst.current=window.echarts.init(ref.current,(window.GDIN_THEME||{getEChartsTheme:()=>'gdin-dark'}).getEChartsTheme());const ro=new ResizeObserver(()=>{if(inst.current)inst.current.resize();});ro.observe(ref.current);inst.current._ro=ro;}
       if(!isNew&&prevOpt.current===option)return;
       prevOpt.current=option;
       const merged={...EC_ANIM,...option};
@@ -2333,7 +2171,7 @@ function VuePowerBI({entries, conseillers: conseillersList}){
       page==='general'&&CE(React.Fragment,null,
         CE('div',{style:{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10,marginBottom:12}},
           CE(KpiPBI,{label:'Ateliers',value:total,sub:real+' réalisés',color:'#2563EB',icon:'🖥️',delay:0}),
-          CE(KpiPBI,{label:'Réalisation',value:tReal+'%',sub:'Objectif 80%',color:'#16a34a',icon:'✅',delay:0.08}),
+          CE(KpiPBI,{label:'Réalisation',value:tReal+'%',sub:'Objectif 80%',color:'var(--green)',icon:'✅',delay:0.08}),
           CE(KpiPBI,{label:'Participants',value:totPre,sub:totIns+' inscrits',color:'#7C3AED',icon:'👥',delay:0.16}),
           CE(KpiPBI,{label:'Présence',value:tPres+'%',sub:'Sur réalisés',color:'#d97706',icon:'📊',delay:0.24})
         ),
@@ -2342,7 +2180,7 @@ function VuePowerBI({entries, conseillers: conseillersList}){
           CE(PBIChart,{height:180,option:{backgroundColor:'transparent',
             grid:{top:8,right:4,bottom:36,left:0,containLabel:true},
             tooltip:{trigger:'axis',..._ecAPN,...ecTT},
-            legend:{data:['Réalisés','Planifiés','Annulés'],textStyle:{color:getEcThemeVars().legendText,fontSize:9},bottom:0,icon:'roundRect',itemWidth:8,itemHeight:6},
+            legend:{data:['Réalisés','Planifiés','Annulés'],textStyle:{color:getEcT().LEGEND.color,fontSize:9},bottom:0,icon:'roundRect',itemWidth:8,itemHeight:6},
             xAxis:{data:pMois.map(d=>d.mois),axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'#94a3b8',fontSize:9}},
             yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
             series:[
@@ -2388,7 +2226,7 @@ function VuePowerBI({entries, conseillers: conseillersList}){
             yAxis:{type:'category',data:pTheme.map(d=>d.name),axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
             series:[{type:'bar',barMaxWidth:14,
               data:pTheme.map((d,i)=>({value:d.count,itemStyle:{color:mkGradPBI(`hsl(${230+i*10},70%,65%)`,`hsl(${230+i*10},70%,45%)`,'h'),borderRadius:[0,4,4,0]}})),
-              label:{show:true,position:'right',color:getEcThemeVars().legendText,fontSize:9,fontWeight:'bold'}
+              label:{show:true,position:'right',color:getEcT().LEGEND.color,fontSize:9,fontWeight:'bold'}
             }]}})
         ),
 
@@ -2400,7 +2238,7 @@ function VuePowerBI({entries, conseillers: conseillersList}){
             yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
             series:[{type:'bar',barMaxWidth:20,data:pOri.map(d=>d.count),
               itemStyle:{color:mkGradPBI('#fdba74','#f97316'),..._bar3D,borderRadius:[3,3,0,0]},
-              label:{show:true,position:'top',color:'#94a3b8',fontSize:8}}]}}))
+              label:{show:true,position:'top',color:getEcT().LEGEND.color,fontSize:8}}]}}))
       ),
 
       // PAGE CONSEILLERS
@@ -2431,7 +2269,7 @@ function VuePowerBI({entries, conseillers: conseillersList}){
           CE(PBIChart,{height:200,option:{backgroundColor:'transparent',
             grid:{top:8,right:4,bottom:44,left:0,containLabel:true},
             tooltip:{trigger:'axis',..._ecAPN,...ecTT},
-            legend:{data:CONS.map(c=>c.split(' ')[0]),textStyle:{color:getEcThemeVars().legendText,fontSize:9},bottom:0,icon:'roundRect',itemWidth:8,itemHeight:6},
+            legend:{data:CONS.map(c=>c.split(' ')[0]),textStyle:{color:getEcT().LEGEND.color,fontSize:9},bottom:0,icon:'roundRect',itemWidth:8,itemHeight:6},
             xAxis:{data:pConsMois.map(d=>d.mois),axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'#94a3b8',fontSize:9}},
             yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
             series:CONS.map((c,ci)=>({name:c.split(' ')[0],type:'bar',stackId:'a',barMaxWidth:30,data:pConsMois.map(d=>d[c]||0),itemStyle:{color:cColor(c),..._bar3D,borderRadius:ci===CONS.length-1?[3,3,0,0]:[0,0,0,0]}}))}}),
@@ -2454,7 +2292,7 @@ function VuePowerBI({entries, conseillers: conseillersList}){
                     CE('span',{style:{fontWeight:600,fontSize:10}},c.split(' ')[0])
                   )),
                   CE('td',{style:{padding:'6px 8px',fontWeight:700}},r.length),
-                  CE('td',{style:{padding:'6px 8px',color:'#16a34a',fontWeight:600}},rl),
+                  CE('td',{style:{padding:'6px 8px',color:'var(--green)',fontWeight:600}},rl),
                   CE('td',{style:{padding:'6px 8px',color:'#dc2626',fontWeight:600}},ann),
                   CE('td',{style:{padding:'6px 8px'}},pre),
                   CE('td',{style:{padding:'6px 8px'}},CE('div',{style:{display:'flex',alignItems:'center',gap:5}},
@@ -2481,7 +2319,7 @@ function VuePowerBI({entries, conseillers: conseillersList}){
             yAxis:{type:'category',data:pComm.map(d=>d.name),axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
             series:[{type:'bar',barMaxWidth:18,
               data:pComm.map((d,i)=>({value:d.presents,itemStyle:{color:mkGradPBI(`hsl(${210+i*12},70%,60%)`,`hsl(${210+i*12},70%,40%)`,'h'),borderRadius:[0,4,4,0]}})),
-              label:{show:true,position:'right',color:getEcThemeVars().legendText,fontSize:9,fontWeight:'bold'}
+              label:{show:true,position:'right',color:getEcT().LEGEND.color,fontSize:9,fontWeight:'bold'}
             }]}})
         ),
 
@@ -2493,7 +2331,7 @@ function VuePowerBI({entries, conseillers: conseillersList}){
             yAxis:{splitLine:{lineStyle:{color:'#2d3250',type:'dashed'}},axisLabel:{color:'#94a3b8',fontSize:9},axisLine:{show:false},axisTick:{show:false}},
             series:[{type:'bar',barMaxWidth:22,data:pComm.map(d=>d.ateliers),
               itemStyle:{color:mkGradPBI('#c084fc','#7c3aed'),..._bar3D,borderRadius:[3,3,0,0]},
-              label:{show:true,position:'top',color:'#94a3b8',fontSize:8}}]}})        
+              label:{show:true,position:'top',color:getEcT().LEGEND.color,fontSize:8}}]}})        
         ),
 
         CE(CardPBI,{title:'Détail communes'},
