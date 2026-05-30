@@ -544,6 +544,44 @@ tr:hover td{background:var(--surface)}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeSlideIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 .view-anim{animation:fadeSlideIn .22s ease both}
+/* ── Override global inputs inline styles pour tous les thèmes dark ── */
+[data-theme="gdin"] input,[data-theme="gdin"] select,[data-theme="gdin"] textarea,
+[data-theme="grafana"] input,[data-theme="grafana"] select,[data-theme="grafana"] textarea,
+[data-theme="glass"] input,[data-theme="glass"] select,[data-theme="glass"] textarea,
+[data-theme="cyber"] input,[data-theme="cyber"] select,[data-theme="cyber"] textarea{
+  background:var(--input-bg) !important;
+  color:var(--text) !important;
+  border-color:var(--border) !important;
+}
+[data-theme="gdin"] input::placeholder,[data-theme="grafana"] input::placeholder,
+[data-theme="glass"] input::placeholder,[data-theme="cyber"] input::placeholder,
+[data-theme="gdin"] textarea::placeholder,[data-theme="grafana"] textarea::placeholder,
+[data-theme="glass"] textarea::placeholder,[data-theme="cyber"] textarea::placeholder{color:var(--text-3) !important}
+/* ── Side panel body dark ── */
+[data-theme="gdin"] .side-panel,[data-theme="grafana"] .side-panel,
+[data-theme="glass"] .side-panel,[data-theme="cyber"] .side-panel{background:var(--card-bg) !important}
+[data-theme="gdin"] .side-panel-header,[data-theme="grafana"] .side-panel-header,
+[data-theme="glass"] .side-panel-header,[data-theme="cyber"] .side-panel-header{background:var(--surface) !important;border-color:var(--border) !important}
+[data-theme="gdin"] .side-panel-body *,[data-theme="grafana"] .side-panel-body *,
+[data-theme="glass"] .side-panel-body *,[data-theme="cyber"] .side-panel-body *{color:var(--text) !important}
+[data-theme="gdin"] .side-panel-footer,[data-theme="grafana"] .side-panel-footer,
+[data-theme="glass"] .side-panel-footer,[data-theme="cyber"] .side-panel-footer{border-color:var(--border) !important}
+/* ── sp-info-row ── */
+[data-theme="gdin"] .sp-info-row,[data-theme="grafana"] .sp-info-row,
+[data-theme="glass"] .sp-info-row,[data-theme="cyber"] .sp-info-row{border-color:var(--border-light) !important}
+[data-theme="gdin"] .sp-info-row span:first-child,[data-theme="grafana"] .sp-info-row span:first-child,
+[data-theme="glass"] .sp-info-row span:first-child,[data-theme="cyber"] .sp-info-row span:first-child{color:var(--text-3) !important}
+/* ── Cards sections formulaire ── */
+[data-theme="gdin"] .sf-section,[data-theme="grafana"] .sf-section,
+[data-theme="glass"] .sf-section,[data-theme="cyber"] .sf-section{background:var(--card-bg) !important}
+/* ── Bouton secondaire ── */
+[data-theme="gdin"] .btn-secondary,[data-theme="grafana"] .btn-secondary,
+[data-theme="glass"] .btn-secondary,[data-theme="cyber"] .btn-secondary{background:var(--surface-2) !important;color:var(--text-2) !important;border-color:var(--border) !important}
+/* ── Filters inputs ── */
+[data-theme="gdin"] .filters input,[data-theme="grafana"] .filters input,
+[data-theme="glass"] .filters input,[data-theme="cyber"] .filters input,
+[data-theme="gdin"] .filters select,[data-theme="grafana"] .filters select,
+[data-theme="glass"] .filters select,[data-theme="cyber"] .filters select{background:var(--input-bg) !important;color:var(--text) !important;border-color:var(--border) !important}
 /* ── Écran sélection thème ── */
 .theme-select-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg)}
 .theme-select-card{text-align:center;max-width:480px;width:100%}
@@ -1034,11 +1072,12 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
   const LblG=({t})=>CE('span',{style:{fontSize:11,fontWeight:700,letterSpacing:'.08em',textTransform:'uppercase',color:'#94a3b8',display:'block',marginBottom:6}},t);
 
   // ── Style inputs ─────────────────────────────────────────
-  const iStyle=(err)=>({width:'100%',padding:'11px 14px',border:`2px solid ${err?'#e53e3e':'#e2e8f0'}`,borderRadius:10,fontSize:14,color:'#1a202c',background:err?'#fff5f5':'#f8fafc',outline:'none',boxSizing:'border-box'});
+  const _tv=v=>getComputedStyle(document.body).getPropertyValue(v).trim()||undefined;
+  const iStyle=(err)=>({width:'100%',padding:'11px 14px',border:`2px solid ${err?'#e53e3e':(_tv('--border')||'#e2e8f0')}`,borderRadius:10,fontSize:14,color:_tv('--text')||'#1a202c',background:err?(_tv('--offline-bg')||'#fff5f5'):(_tv('--input-bg-alt')||'#f8fafc'),outline:'none',boxSizing:'border-box'});
   const sStyle=(err)=>({...iStyle(err),cursor:'pointer',appearance:'auto'});
   const nStyle=()=>({...iStyle(false),fontSize:18,fontWeight:700,textAlign:'center'});
   const taStyle=(err)=>({...iStyle(err),minHeight:84,resize:'vertical'});
-  const secStyle={background:'#fff',borderRadius:14,padding:'18px 20px',marginBottom:12,boxShadow:'0 1px 4px rgba(0,0,0,.07)',borderTop:`3px solid ${ac}`};
+  const secStyle={background:_tv('--card-bg')||'#fff',borderRadius:14,padding:'18px 20px',marginBottom:12,boxShadow:_tv('--glow-card')||'0 1px 4px rgba(0,0,0,.07)',border:`1px solid ${_tv('--border')||'#e2e8f0'}`,borderTop:`3px solid ${ac}`};
 
   // ── Statut pills ─────────────────────────────────────────
   const SDOTS={'Planifié':'#3b82f6','Réalisé':'#22c55e','Annulé':'#ef4444','Reporté':'#f59e0b','Non réalisé':'#94a3b8'};
