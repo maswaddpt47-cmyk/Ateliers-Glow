@@ -368,7 +368,7 @@ function App(){
         meta.group&&CE('span',{className:'app-topbar-sub'},'— '+meta.group),
         CE('span',{className:'app-topbar-date','aria-label':'Date du jour'},'📅 '+dateLabel),
         CE('div',{className:'app-topbar-right'},
-          CE('button',{className:'theme-toggle',onClick:()=>setShowThemePicker(p=>!p),title:'Changer de thème','aria-label':'Changer de thème'},'🎨'),
+          CE('button',{className:'theme-toggle',onClick:(e)=>{e.stopPropagation();setShowPicker(false);setShowThemePicker(p=>!p);},title:'Changer de thème','aria-label':'Changer de thème'},'🎨'),
           !online&&CE('span',{className:'offline-badge'},'📡 Hors ligne'),
           !loading&&lastSync&&CE('span',{className:'topbar-sync-info',title:'Sync auto toutes les 5 min'},
             '🔄 ',lastSync.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})

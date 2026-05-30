@@ -1,86 +1,5 @@
 /* ── v10 : Dark/Light Mode — Néon Violet ─────────────────── */
-
-/* ══════════════════════════════════════════════════════════
-   VARIABLES — DARK (défaut)
-   ══════════════════════════════════════════════════════════ */
-:root {
-  --bg:           #0a0e1a;
-  --card-bg:      #111827;
-  --surface:      #0f1623;
-  --surface-2:    #161d2e;
-  --surface-alt:  #0d1520;
-  --pbi-bar:      #070a12;
-
-  --text:         #e2e8f0;
-  --text-2:       #94a3b8;
-  --text-3:       #64748b;
-  --text-muted:   #475569;
-
-  --border:       #1e2a45;
-  --border-light: #141e30;
-  --border-pbi:   #1f2d47;
-
-  --accent:       #7c3aed;
-  --accent-hover: #6d28d9;
-  --accent-bg:    #1a1040;
-  --accent-2:     #a78bfa;
-
-  --glow:         0 0 12px #7c3aed88, 0 0 24px #7c3aed44;
-  --glow-sm:      0 0 6px #7c3aed55;
-  --glow-card:    0 1px 4px rgba(0,0,0,.5), 0 0 0 1px var(--border), var(--glow-sm);
-
-  --skeleton-from:#111827;
-  --skeleton-to:  #1e2a45;
-
-  --input-bg:     #0d1520;
-  --input-bg-alt: #0f1c2e;
-  --input-border: #1e2a45;
-
-  --offline-bg:   #1a0a0a;
-  --offline-border:#7f1d1d;
-  --offline-text: #fca5a5;
-}
-
-/* ══════════════════════════════════════════════════════════
-   VARIABLES — LIGHT MODE
-   ══════════════════════════════════════════════════════════ */
-.light-mode {
-  --bg:           #f0f4f8;
-  --card-bg:      #ffffff;
-  --surface:      #f8fafc;
-  --surface-2:    #f7fafc;
-  --surface-alt:  #fafbfc;
-  --pbi-bar:      #1e2132;
-
-  --text:         #1a202c;
-  --text-2:       #4a5568;
-  --text-3:       #718096;
-  --text-muted:   #9ca3af;
-
-  --border:       #e2e8f0;
-  --border-light: #f0f4f8;
-  --border-pbi:   #e5e7eb;
-
-  --accent:       #1e3a8a;
-  --accent-hover: #1e40af;
-  --accent-bg:    #eff6ff;
-  --accent-2:     #2563eb;
-
-  --glow:         none;
-  --glow-sm:      none;
-  --glow-card:    0 1px 4px rgba(0,0,0,.08);
-
-  --skeleton-from:#f0f4f8;
-  --skeleton-to:  #e2eaf2;
-
-  --input-bg:     #ffffff;
-  --input-bg-alt: #f8fafc;
-  --input-border: #e2e8f0;
-
-  --offline-bg:   #fff5f5;
-  --offline-border:#feb2b2;
-  --offline-text: #c53030;
-}
+/* Variables définies dans shared.js (injectCSS) */
 
 /* ══════════════════════════════════════════════════════════
    TOGGLE DARK/LIGHT
@@ -101,11 +20,6 @@
   border-color:var(--accent);
   box-shadow:var(--glow-sm);
 }
-
-/* ══════════════════════════════════════════════════════════
-   BASE
-   ══════════════════════════════════════════════════════════ */
-body { background:var(--bg); color:var(--text); transition:background .3s, color .3s; }
 
 /* ── v9.5 : Sidebar pin + Mobile + Transitions + A11y ───────── */
 .app-shell nav { display: none !important; }
@@ -276,7 +190,7 @@ body { background:var(--bg); color:var(--text); transition:background .3s, color
   height:46px; display:flex; align-items:center; padding:0 22px;
   border-bottom:1px solid var(--border);
   background:var(--card-bg);
-  position:sticky; top:0; z-index:100;
+  position:sticky; top:0; z-index:300;
   box-shadow:0 1px 5px rgba(0,0,0,.18); gap:10px;
   transition:background .3s, border-color .3s;
 }
