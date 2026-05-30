@@ -19,7 +19,7 @@
   --skeleton-from:#0d1420;--skeleton-to:#1e2d40;
   --input-bg:#0a0f1a;--input-bg-alt:#0d1420;--input-border:#1e2d40;
   --offline-bg:#1a0a0a;--offline-border:#7f1d1d;--offline-text:#fca5a5;
-  --font-ui:'Space Mono',monospace;--panel-bg:#0d1420;--panel-header:#0f1a2b;
+  --font-ui:'Space Mono',monospace;--panel-bg:#162030;--panel-header:#1a2840;
 }
 /* ══ THÈME GRAFANA — Dark Orange ══ */
 [data-theme="grafana"]{
@@ -33,7 +33,7 @@
   --skeleton-from:#181b1f;--skeleton-to:#2c2f36;
   --input-bg:#111217;--input-bg-alt:#181b1f;--input-border:#2c2f36;
   --offline-bg:#1a0a0a;--offline-border:#7f1d1d;--offline-text:#fca5a5;
-  --font-ui:'DM Sans',sans-serif;--panel-bg:#181b1f;--panel-header:#1e2024;
+  --font-ui:'DM Sans',sans-serif;--panel-bg:#22262e;--panel-header:#282d36;
 }
 /* ══ THÈME GLASS — Glassmorphism Violet ══ */
 [data-theme="glass"]{
@@ -47,7 +47,7 @@
   --skeleton-from:rgba(255,255,255,0.04);--skeleton-to:rgba(255,255,255,0.1);
   --input-bg:rgba(255,255,255,0.05);--input-bg-alt:rgba(255,255,255,0.04);--input-border:rgba(255,255,255,0.12);
   --offline-bg:rgba(220,38,38,0.1);--offline-border:rgba(220,38,38,0.3);--offline-text:#fca5a5;
-  --font-ui:'DM Sans',sans-serif;--panel-bg:#140d2a;--panel-header:#1a1035;
+  --font-ui:'DM Sans',sans-serif;--panel-bg:#1e1438;--panel-header:#261a48;
 }
 /* ══ THÈME CYBER — Cyberpunk Violet ══ */
 [data-theme="cyber"]{
@@ -61,7 +61,7 @@
   --skeleton-from:#08050f;--skeleton-to:#2d1a5e;
   --input-bg:#050509;--input-bg-alt:#08050f;--input-border:#2d1a5e;
   --offline-bg:#1a0a0a;--offline-border:#7f1d1d;--offline-text:#fca5a5;
-  --font-ui:'Rajdhani',sans-serif;--panel-bg:#0a0515;--panel-header:#0f0820;
+  --font-ui:'Rajdhani',sans-serif;--panel-bg:#130a28;--panel-header:#1a1035;
 }
 /* ══ THÈME LIGHT — Neutre clair (style original) ══ */
 [data-theme="light"]{
