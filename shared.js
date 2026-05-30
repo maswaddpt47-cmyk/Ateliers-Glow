@@ -19,7 +19,7 @@
   --skeleton-from:#0d1420;--skeleton-to:#1e2d40;
   --input-bg:#0a0f1a;--input-bg-alt:#0d1420;--input-border:#1e2d40;
   --offline-bg:#1a0a0a;--offline-border:#7f1d1d;--offline-text:#fca5a5;
-  --font-ui:'Space Mono',monospace;--panel-bg:#162030;--panel-header:#1a2840;
+  --font-ui:'Space Mono',monospace;--panel-bg:#1e2d42;--panel-header:#243450;
 }
 /* ══ THÈME GRAFANA — Dark Orange ══ */
 [data-theme="grafana"]{
@@ -33,7 +33,7 @@
   --skeleton-from:#181b1f;--skeleton-to:#2c2f36;
   --input-bg:#111217;--input-bg-alt:#181b1f;--input-border:#2c2f36;
   --offline-bg:#1a0a0a;--offline-border:#7f1d1d;--offline-text:#fca5a5;
-  --font-ui:'DM Sans',sans-serif;--panel-bg:#22262e;--panel-header:#282d36;
+  --font-ui:'DM Sans',sans-serif;--panel-bg:#2a2f38;--panel-header:#32383f;
 }
 /* ══ THÈME GLASS — Glassmorphism Violet ══ */
 [data-theme="glass"]{
@@ -47,7 +47,7 @@
   --skeleton-from:rgba(255,255,255,0.04);--skeleton-to:rgba(255,255,255,0.1);
   --input-bg:rgba(255,255,255,0.05);--input-bg-alt:rgba(255,255,255,0.04);--input-border:rgba(255,255,255,0.12);
   --offline-bg:rgba(220,38,38,0.1);--offline-border:rgba(220,38,38,0.3);--offline-text:#fca5a5;
-  --font-ui:'DM Sans',sans-serif;--panel-bg:#1e1438;--panel-header:#261a48;
+  --font-ui:'DM Sans',sans-serif;--panel-bg:#2a1d50;--panel-header:#342460;
 }
 /* ══ THÈME CYBER — Cyberpunk Violet ══ */
 [data-theme="cyber"]{
@@ -61,7 +61,7 @@
   --skeleton-from:#08050f;--skeleton-to:#2d1a5e;
   --input-bg:#050509;--input-bg-alt:#08050f;--input-border:#2d1a5e;
   --offline-bg:#1a0a0a;--offline-border:#7f1d1d;--offline-text:#fca5a5;
-  --font-ui:'Rajdhani',sans-serif;--panel-bg:#130a28;--panel-header:#1a1035;
+  --font-ui:'Rajdhani',sans-serif;--panel-bg:#1e1040;--panel-header:#261850;
 }
 /* ══ THÈME LIGHT — Neutre clair (style original) ══ */
 [data-theme="light"]{
@@ -595,7 +595,7 @@ tr:hover td{background:var(--surface)}
 .theme-select-desc{font-size:10px;color:var(--text-3);margin-top:2px}
 /* ── Picker thème (topbar) ── */
 .theme-picker-overlay{position:fixed;inset:0;z-index:399}
-.theme-picker{position:absolute;top:calc(100% + 8px);right:0;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.4),var(--glow-sm);z-index:400;min-width:220px;overflow:hidden;padding:8px}
+.theme-picker{position:absolute;top:calc(100% + 8px);right:0;background:var(--panel-bg,var(--card-bg));border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.4),var(--glow-sm);z-index:400;min-width:220px;overflow:hidden;padding:8px}
 .theme-picker-title{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.1em;padding:4px 8px 8px;border-bottom:1px solid var(--border);margin-bottom:6px}
 .theme-picker-btn{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:none;background:none;cursor:pointer;border-radius:8px;transition:all .15s;text-align:left}
 .theme-picker-btn:hover{background:var(--surface)}
