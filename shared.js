@@ -6,63 +6,7 @@
 // ── CSS injection ──────────────────────────────────────────
 
 // ── CSS injection (résiduel — tout le reste est dans themes.css) ──
-(function injectCSS(){
-  const s=document.createElement('style');
-  s.textContent=`
-/* Styles dynamiques résiduels non couverts par themes.css */
-
-/* ── Atelier card Historique ── */
-.atelier-card-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:11px;color:var(--text-muted)}
-.atelier-card-statut{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700}
-.atelier-retard{animation:blink-retard 1.5s infinite}
-
-/* ── Filtre banner neutral override ── */
-[data-theme="neutral"] .filtre-banner{background:#eff6ff;border-color:#bfdbfe;color:#1e3a8a}
-[data-theme="neutral"] .filtre-banner button{background:#1e3a8a}
-[data-theme="neutral"] .cloture-banner{background:#fffbeb;border-color:#fcd34d}
-[data-theme="neutral"] .cloture-title{color:#92400e}
-
-/* ── Combo neutral ── */
-[data-theme="neutral"] .combo-dropdown{background:#fff;border-color:#1e3a8a;box-shadow:0 4px 12px rgba(0,0,0,.1)}
-[data-theme="neutral"] .combo-item:hover,[data-theme="neutral"] .combo-item.active{background:#eff6ff}
-[data-theme="neutral"] .combo-cp{color:#1e3a8a;text-shadow:none}
-[data-theme="neutral"] .combo-nom{color:#1a202c}
-
-/* ── Lot row ── */
-.lot-row{display:grid;grid-template-columns:140px 100px 64px 1fr 32px;gap:8px;align-items:end;padding:10px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:6px;background:var(--bg-card2)}
-.lot-row:hover{background:var(--ac-light);border-color:rgba(var(--neon-rgb),.3)}
-.lot-row-err{border-color:var(--danger) !important;background:var(--danger-bg) !important}
-
-/* ── Roadmap tooltip ── */
-.roadmap-tooltip{position:fixed;pointer-events:none;z-index:900;background:var(--bg-card2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:12px;box-shadow:0 4px 20px rgba(0,0,0,.5);max-width:220px;color:var(--text)}
-
-/* ── Accueil stat neutral ── */
-[data-theme="neutral"] .accueil-stat-chip{border:1px solid rgba(30,58,138,.15) !important}
-
-/* ── Dashboard tabs (VueDashboardTabs) ── */
-.dashboard-tab-bar{display:flex;border-bottom:2px solid var(--border);margin-bottom:16px;gap:4px}
-.dashboard-tab{padding:8px 18px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:400;font-family:inherit;color:var(--text-muted);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s}
-.dashboard-tab.active{font-weight:700;color:var(--neon);border-bottom-color:var(--neon);text-shadow:var(--neon-glow-sm)}
-.dashboard-tab:hover{color:var(--text)}
-
-/* ── Notification badge ── */
-.notif-badge{display:inline-block;background:#fbbf24;color:#1a202c;font-size:10px;font-weight:800;padding:1px 5px;border-radius:10px;margin-left:5px;vertical-align:middle}
-
-/* ── Power BI bandeau ── */
-.pbi-bandeau{background:#1e2132;border-radius:6px 6px 0 0;padding:0 14px;display:flex;align-items:center;gap:8px;min-height:44px}
-.pbi-tabs{background:#1e2132;display:flex;border-bottom:1px solid #374151;overflow-x:auto}
-
-/* ── Gantt / Roadmap ── */
-.gantt-bar{border-radius:4px;transition:transform .12s,box-shadow .12s}
-.gantt-bar:hover{transform:scale(1.2);z-index:20}
-
-/* ── Theme picker mini (topbar) ── */
-.theme-quick-dot{width:12px;height:12px;border-radius:50%;cursor:pointer;transition:transform .15s,box-shadow .15s;flex-shrink:0}
-.theme-quick-dot:hover{transform:scale(1.3)}
-.theme-quick-dot.active{box-shadow:0 0 0 2px #fff}
-`;
-  document.head.appendChild(s);
-})();
+// CSS géré par themes.css
 
 // ── Globals ────────────────────────────────────────────────
 
