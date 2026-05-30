@@ -66,7 +66,7 @@ function App(){
   function setAnnee(v){ localStorage.setItem('f_annee',v); setAnneeState(v); }
   function resetConseiller(){ localStorage.removeItem('f_conseiller'); setFiltreConseiller(null); }
   function togglePin(){ setSidebarPinned(p=>{ const n=!p; localStorage.setItem('sidebar_pinned',n?'1':'0'); return n; }); }
-  function applyTheme(t){ document.body.setAttribute('data-theme',t); localStorage.setItem('ui_theme',t); setThemeState(t); setShowThemePicker(false); }
+  function applyTheme(t){ const isFirst=theme===null; document.body.setAttribute('data-theme',t); localStorage.setItem('ui_theme',t); setThemeState(t); setShowThemePicker(false); if(isFirst){ setLoading(true); setTimeout(()=>loadData(),100); } }
 
   // ── Init thème au montage ──────────────────────────────────────
   React.useEffect(()=>{ const s=localStorage.getItem('ui_theme'); if(s) document.body.setAttribute('data-theme',s); },[]);
