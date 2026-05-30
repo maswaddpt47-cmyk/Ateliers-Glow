@@ -393,6 +393,7 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
     obs.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
     return()=>obs.disconnect();
   },[]);
+  const _isDarkNow=document.documentElement.getAttribute('data-theme')!=='neutral';
   const statuts    = lists?.statuts     || STATUTS_DEFAULT;
   const conseillers= lists?.conseillers || CONSEILLERS_DEFAULT;
   const publics    = lists?.publics     || PUBLICS_DEFAULT;
@@ -531,7 +532,7 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
   const LblG=({t})=>CE('span',{style:{fontSize:11,fontWeight:700,letterSpacing:'.08em',textTransform:'uppercase',color:'var(--text-muted)',display:'block',marginBottom:6}},t);
 
   // ── Style inputs ─────────────────────────────────────────
-  const iStyle=(err)=>{const _d=document.documentElement.getAttribute('data-theme')!=='neutral';return{width:'100%',padding:'11px 14px',border:`2px solid ${err?'#e53e3e':(_d?'rgba(255,255,255,.18)':'#e2e8f0')}`,borderRadius:10,fontSize:14,color:_d?'#f1f5f9':'#1a202c',background:err?(_d?'rgba(239,68,68,.15)':'#fff5f5'):(_d?'rgba(255,255,255,.07)':'#f8fafc'),outline:'none',boxSizing:'border-box'};};
+  const iStyle=(err)=>({width:'100%',padding:'11px 14px',border:`2px solid ${err?'#e53e3e':(_isDarkNow?'rgba(255,255,255,.18)':'#e2e8f0')}`,borderRadius:10,fontSize:14,color:_isDarkNow?'#f1f5f9':'#1a202c',background:err?(_isDarkNow?'rgba(239,68,68,.15)':'#fff5f5'):(_isDarkNow?'rgba(255,255,255,.07)':'#f8fafc'),outline:'none',boxSizing:'border-box'});
   const sStyle=(err)=>({...iStyle(err),cursor:'pointer',appearance:'auto'});
   const nStyle=()=>({...iStyle(false),fontSize:18,fontWeight:700,textAlign:'center'});
   const taStyle=(err)=>({...iStyle(err),minHeight:84,resize:'vertical'});
@@ -602,7 +603,7 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
       CE('input',{type:'text',style:iStyle(false),value:frm.remarques,placeholder:'Notes libres',onChange:e=>setFn('remarques',e.target.value)}))
   );
 
-  return CE('div',{style:{padding:'4px 0'}},
+  return CE('div',{'data-theme-key':_themeKey,style:{padding:'4px 0'}},
     // Badge conseiller coloré
     accentColor&&CE('div',{style:{display:'inline-flex',alignItems:'center',gap:8,padding:'6px 14px',borderRadius:20,fontSize:12,fontWeight:700,color:'#fff',background:ac,marginBottom:14}},
       editId?'✏️ Modifier':isDup?'📋 Duplication':modeLot?'🔄 Saisie par cycle':'⚡ Saisie One Shot'
