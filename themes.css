@@ -1670,13 +1670,7 @@ nav button.notif:hover { filter: brightness(.9); }
 }
 
 /* ── Inputs dans side panel — contraste garanti ─── */
-.side-panel-body input,
-.side-panel-body select,
-.side-panel-body textarea {
-  background: rgba(255,255,255,.07) !important;
-  border-color: rgba(255,255,255,.18) !important;
-  color: #e2e8f0 !important;
-}
+
 [data-theme="neutral"] .side-panel-body input,
 [data-theme="neutral"] .side-panel-body select,
 [data-theme="neutral"] .side-panel-body textarea {
@@ -1688,44 +1682,58 @@ nav button.notif:hover { filter: brightness(.9); }
 /* ── Clôture presets — boutons lisibles sur tous thèmes ── */
 .cloture-btn { font-weight: 800 !important; }
 
-/* ── Thème neutre — inputs couleurs light ───────── */
-[data-theme="neutral"] input,
-[data-theme="neutral"] select,
-[data-theme="neutral"] textarea,
-[data-theme="neutral"] .sf-input,
-[data-theme="neutral"] .sf-textarea,
-[data-theme="neutral"] .sf-select,
-[data-theme="neutral"] .sf-num {
-  background: #ffffff !important;
-  border-color: #e2e8f0 !important;
-  color: #1a202c !important;
-}
 
-/* ── Texte saisi dans inputs — lisibilité maximale dark ── */
-:not([data-theme="neutral"]) input:not([type="color"]):not([type="checkbox"]):not([type="radio"]),
+/* ════════════════════════════════════════════════
+   INPUTS — règle unique, fond sombre, texte blanc
+   ════════════════════════════════════════════════ */
+
+/* Dark : fond sombre coloré, texte blanc cassé */
+:not([data-theme="neutral"]) input:not([type="color"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]),
 :not([data-theme="neutral"]) select,
 :not([data-theme="neutral"]) textarea {
+  background: rgba(255,255,255,.07) !important;
+  border-color: rgba(255,255,255,.18) !important;
   color: #f1f5f9 !important;
   -webkit-text-fill-color: #f1f5f9 !important;
 }
-:not([data-theme="neutral"]) input:not([type="color"]):not([type="checkbox"]):not([type="radio"])::placeholder,
+
+:not([data-theme="neutral"]) input::placeholder,
 :not([data-theme="neutral"]) textarea::placeholder {
-  color: rgba(241,245,249,.3) !important;
-  -webkit-text-fill-color: rgba(241,245,249,.3) !important;
+  color: rgba(255,255,255,.3) !important;
+  -webkit-text-fill-color: rgba(255,255,255,.3) !important;
+  opacity: 1 !important;
 }
-/* Autofill webkit — évite le fond bleu/jaune natif */
-:not([data-theme="neutral"]) input:-webkit-autofill,
-:not([data-theme="neutral"]) input:-webkit-autofill:hover,
-:not([data-theme="neutral"]) input:-webkit-autofill:focus {
-  -webkit-text-fill-color: #f1f5f9 !important;
-  -webkit-box-shadow: 0 0 0 1000px rgba(255,255,255,.07) inset !important;
-  transition: background-color 5000s ease-in-out 0s;
-}
-/* Date/time inputs — la couleur du texte system peut résister */
+
+/* Calendrier et time natif mobile en dark */
 :not([data-theme="neutral"]) input[type="date"],
 :not([data-theme="neutral"]) input[type="time"] {
   color-scheme: dark;
 }
+
+/* Autofill — fond sombre */
+:not([data-theme="neutral"]) input:-webkit-autofill,
+:not([data-theme="neutral"]) input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #f1f5f9 !important;
+  -webkit-box-shadow: 0 0 0 100px rgba(30,30,50,.9) inset !important;
+}
+
+/* Neutre : fond blanc, texte sombre */
+[data-theme="neutral"] input:not([type="color"]):not([type="checkbox"]):not([type="radio"]),
+[data-theme="neutral"] select,
+[data-theme="neutral"] textarea {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #1a202c !important;
+  -webkit-text-fill-color: #1a202c !important;
+}
+
+[data-theme="neutral"] input::placeholder,
+[data-theme="neutral"] textarea::placeholder {
+  color: #a0aec0 !important;
+  -webkit-text-fill-color: #a0aec0 !important;
+  opacity: 1 !important;
+}
+
 [data-theme="neutral"] input[type="date"],
 [data-theme="neutral"] input[type="time"] {
   color-scheme: light;
