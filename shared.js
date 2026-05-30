@@ -693,7 +693,7 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
   const sStyle=(err)=>({...iStyle(err),cursor:'pointer',appearance:'auto'});
   const nStyle=()=>({...iStyle(false),fontSize:18,fontWeight:700,textAlign:'center'});
   const taStyle=(err)=>({...iStyle(err),minHeight:84,resize:'vertical'});
-  const secStyle={background:'var(--bg-1)',borderRadius:14,padding:'18px 20px',marginBottom:12,boxShadow:'var(--shadow-sm)',borderTop:`3px solid ${ac}`};
+  const secStyle={background:'var(--bg-1)',borderRadius:14,padding:'18px 20px',marginBottom:12,boxShadow:'0 1px 8px rgba(0,0,0,.15)',borderTop:`3px solid ${ac}`,border:'1px solid var(--border)'};
 
   // ── Statut pills ─────────────────────────────────────────
   const SDOTS={'Planifié':'#3b82f6','Réalisé':'#22c55e','Annulé':'#ef4444','Reporté':'#f59e0b','Non réalisé':'#94a3b8'};
@@ -704,7 +704,7 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
       statuts.map(s=>{
         const active=form.statut===s;
         return CE('button',{key:s,type:'button',
-          style:{padding:'8px 16px',borderRadius:20,border:`2px solid ${active?ac:'#e2e8f0'}`,background:active?ac:'#fff',color:active?'#fff':'#718096',fontSize:13,fontWeight:600,cursor:'pointer',display:'flex',alignItems:'center',gap:6,transition:'all .18s'},
+          className:'sf-pill'+(active?' active':''),style:{'--ac':ac,'--ac-light':ac+'22'},
           onClick:()=>set('statut',s)},
           CE('span',{style:{width:7,height:7,borderRadius:'50%',background:active?'rgba(255,255,255,.7)':SDOTS[s]||'#94a3b8',display:'inline-block'}}),s);
       })
@@ -750,7 +750,7 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
       CE('div',{style:{display:'flex',flexWrap:'wrap',gap:8}},
         materiels.map(m=>{
           const chk=frm.materiel.includes(m);
-          return CE('label',{key:m,style:{display:'flex',alignItems:'center',gap:6,padding:'7px 12px',border:`2px solid ${chk?ac:'#e2e8f0'}`,borderRadius:20,cursor:'pointer',fontSize:12,fontWeight:600,color:chk?ac:'#718096',background:chk?acLight:'#fff',transition:'all .15s',userSelect:'none'}},
+          return CE('label',{key:m,className:'sf-mat-chip'+(chk?' checked':''),style:{'--ac':ac,'--ac-light':acLight}},
             CE('input',{type:'checkbox',checked:chk,style:{display:'none'},onChange:()=>(modeLot?toggleLotMat:toggleMat)(m)}),m);
         })
       )
@@ -850,13 +850,13 @@ function VueSaisie({entries,onSaved,onNewEntry,lists,editingId,onClearEdit,prefi
           const hasErr=Object.keys(rErr).length>0;
           const brd=(err)=>`2px solid ${err?'#e53e3e':'#e2e8f0'}`;
           const inp=(type,val,key,err,ph)=>CE('input',{type,value:val,placeholder:ph||'',onChange:e=>setRow(row.id,key,e.target.value),style:{width:'100%',padding:'8px 10px',border:brd(err),borderRadius:8,fontSize:12,background:err?'#fff5f5':'#f8fafc',outline:'none',boxSizing:'border-box'}});
-          return CE('div',{key:row.id,style:{display:'grid',gridTemplateColumns:'140px 100px 64px 1fr 32px',gap:8,alignItems:'start',padding:'9px 10px',borderRadius:10,border:`1.5px solid ${hasErr?'#fc8181':acLight}`,marginBottom:6,background:hasErr?'#fff5f5':acLight}},
+          return CE('div',{key:row.id,style:{display:'grid',gridTemplateColumns:'140px 100px 64px 1fr 32px',gap:8,alignItems:'start',padding:'9px 10px',borderRadius:10,border:`1.5px solid ${hasErr?'var(--red)':acLight}`,marginBottom:6,background:hasErr?'var(--red-dim)':acLight}},
             inp('date',row.date,'date',rErr.date),
             inp('time',row.horaire,'horaire',rErr.horaire),
             CE('select',{value:row.ampm,onChange:e=>setRow(row.id,'ampm',e.target.value),style:{width:'100%',padding:'8px 4px',border:brd(rErr.ampm),borderRadius:8,fontSize:12,background:'var(--bg-2)',color:'var(--text)'}},
               CE('option',{value:'',disabled:true},'—'),CE('option',{value:'AM'},'AM'),CE('option',{value:'PM'},'PM')),
             inp('text',row.thematique,'thematique',rErr.thematique,"Thème de la séance"),
-            CE('button',{onClick:()=>removeRow(row.id),disabled:lotRows.length===1,style:{background:'none',border:`1px solid ${acLight}`,borderRadius:6,color:'#9b2c2c',cursor:'pointer',fontSize:15,height:32,width:32,display:'flex',alignItems:'center',justifyContent:'center'}},'×')
+            CE('button',{onClick:()=>removeRow(row.id),disabled:lotRows.length===1,style:{background:'none',border:`1px solid ${acLight}`,borderRadius:6,color:'var(--red)',cursor:'pointer',fontSize:15,height:32,width:32,display:'flex',alignItems:'center',justifyContent:'center'}},'×')
           );
         }),
         CE('button',{onClick:addRow,style:{display:'flex',alignItems:'center',justifyContent:'center',gap:6,padding:10,background:'var(--bg-2)',border:`2px dashed ${ac}`,borderRadius:10,cursor:'pointer',fontSize:13,color:ac,fontWeight:700,width:'100%',marginTop:6}},'＋ Ajouter une date')
