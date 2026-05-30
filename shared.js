@@ -63,6 +63,19 @@
   --offline-bg:#1a0a0a;--offline-border:#7f1d1d;--offline-text:#fca5a5;
   --font-ui:'Rajdhani',sans-serif;
 }
+/* ══ THÈME LIGHT — Neutre clair (style original) ══ */
+[data-theme="light"]{
+  --bg:#f0f4f8;--card-bg:#ffffff;--surface:#f8fafc;--surface-2:#f7fafc;--surface-alt:#fafbfc;--pbi-bar:#1e2132;
+  --text:#1a202c;--text-2:#4a5568;--text-3:#718096;--text-muted:#9ca3af;
+  --border:#e2e8f0;--border-light:#f0f4f8;--border-pbi:#e5e7eb;
+  --accent:#1e3a8a;--accent-hover:#1e40af;--accent-bg:#eff6ff;--accent-2:#2563eb;
+  --glow:none;--glow-sm:none;
+  --glow-card:0 1px 4px rgba(0,0,0,.08);
+  --skeleton-from:#f0f4f8;--skeleton-to:#e2eaf2;
+  --input-bg:#ffffff;--input-bg-alt:#f8fafc;--input-border:#e2e8f0;
+  --offline-bg:#fff5f5;--offline-border:#feb2b2;--offline-text:#c53030;
+  --font-ui:'Segoe UI',sans-serif;
+}
 /* ══ FALLBACK — si aucun thème (écran de sélection) ══ */
 :root{
   --bg:#0a0e1a;--card-bg:#111827;--surface:#0f1623;--surface-2:#161d2e;--surface-alt:#0d1520;--pbi-bar:#070a12;
@@ -537,7 +550,7 @@ tr:hover td{background:var(--surface)}
 .theme-select-logo{font-size:48px;margin-bottom:12px}
 .theme-select-title{font-size:20px;font-weight:800;color:var(--text);margin-bottom:6px}
 .theme-select-sub{font-size:13px;color:var(--text-3);margin-bottom:28px}
-.theme-select-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.theme-select-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.theme-select-grid-5{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
 .theme-select-btn{background:var(--card-bg);border:2px solid var(--border);border-radius:14px;padding:0;cursor:pointer;transition:all .2s;overflow:hidden;text-align:left}
 .theme-select-btn:hover{border-color:var(--ac);box-shadow:0 0 20px rgba(var(--ac-rgb),.25);transform:translateY(-3px)}
 .theme-select-preview{height:80px;padding:12px;display:flex;align-items:flex-end;gap:3px;background:var(--bg);border-bottom:1px solid var(--border)}

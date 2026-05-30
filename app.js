@@ -201,8 +201,9 @@ function App(){
         CE('div',{className:'theme-select-logo'},'🖥️'),
         CE('div',{className:'theme-select-title'},'Ateliers Inclusion Numérique'),
         CE('div',{className:'theme-select-sub'},"Choisissez votre style d'interface"),
-        CE('div',{className:'theme-select-grid'},
+        CE('div',{className:'theme-select-grid theme-select-grid-5'},
           [
+            {id:'light',   label:'Neutre Clair',   ico:'⑤', desc:'Interface classique · Bleu marine', preview:'#f0f4f8', accent:'#1e3a8a'},
             {id:'gdin',    label:'GDIN Cyan',     ico:'①', desc:'Dark navy · Cyan électrique', preview:'#0a0f1a', accent:'#00d4ff'},
             {id:'grafana', label:'Grafana Dark',  ico:'②', desc:'Dashboard pro · Orange', preview:'#111217', accent:'#ff9800'},
             {id:'glass',   label:'Glassmorphism', ico:'③', desc:'Flou · Violet profond', preview:'#0b0518', accent:'#e879f9'},
@@ -373,6 +374,7 @@ function App(){
             showThemePicker&&CE('div',{className:'theme-picker'},
               CE('div',{className:'theme-picker-title'},'Choisir un thème'),
               [
+                {id:'light',   label:'Neutre Clair',   ico:'⑤', desc:'Interface classique · Bleu marine'},
                 {id:'gdin',    label:'GDIN Cyan',     ico:'①', desc:'Dark navy · Cyan électrique'},
                 {id:'grafana', label:'Grafana Dark',  ico:'②', desc:'Dashboard pro · Multi-courbes'},
                 {id:'glass',   label:'Glassmorphism', ico:'③', desc:'Flou · Transparence · Violet'},
