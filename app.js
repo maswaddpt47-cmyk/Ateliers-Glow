@@ -421,27 +421,32 @@ function App(){
 
     CE('div',{id:'toast',className:'toast',style:{opacity:0}}),
 
-    // ── Theme picker — rendu au niveau racine pour éviter les stacking contexts ──
-    showThemePicker&&CE('div',{className:'theme-picker-overlay',onClick:()=>setShowThemePicker(false)}),
-    showThemePicker&&CE('div',{className:'theme-picker'},
-      CE('div',{className:'theme-picker-title'},'Choisir un thème'),
-      [
-        {id:'light',   label:'Neutre Clair',   ico:'⑤', desc:'Interface classique · Bleu marine'},
-        {id:'gdin',    label:'GDIN Cyan',       ico:'①', desc:'Dark navy · Cyan électrique'},
-        {id:'grafana', label:'Grafana Dark',    ico:'②', desc:'Dashboard pro · Multi-courbes'},
-        {id:'glass',   label:'Glassmorphism',   ico:'③', desc:'Flou · Transparence · Violet'},
-        {id:'cyber',   label:'Cyberpunk',       ico:'④', desc:'Grille néon · Glow violet'},
-      ].map(t=>CE('button',{
-        key:t.id,
-        className:'theme-picker-btn'+(theme===t.id?' active':''),
-        onClick:(e)=>{e.stopPropagation();applyTheme(t.id);}
-      },
-        CE('span',{className:'theme-picker-ico'},t.ico),
-        CE('div',null,
-          CE('div',{className:'theme-picker-lbl'},t.label),
-          CE('div',{className:'theme-picker-desc'},t.desc)
+    // ── Theme picker via portail — échappe tous les stacking contexts ──
+    showThemePicker&&ReactDOM.createPortal(
+      CE(React.Fragment,null,
+        CE('div',{className:'theme-picker-overlay',onClick:()=>setShowThemePicker(false)}),
+        CE('div',{className:'theme-picker'},
+          CE('div',{className:'theme-picker-title'},'Choisir un thème'),
+          [
+            {id:'light',   label:'Neutre Clair',   ico:'⑤', desc:'Interface classique · Bleu marine'},
+            {id:'gdin',    label:'GDIN Cyan',       ico:'①', desc:'Dark navy · Cyan électrique'},
+            {id:'grafana', label:'Grafana Dark',    ico:'②', desc:'Dashboard pro · Multi-courbes'},
+            {id:'glass',   label:'Glassmorphism',   ico:'③', desc:'Flou · Transparence · Violet'},
+            {id:'cyber',   label:'Cyberpunk',       ico:'④', desc:'Grille néon · Glow violet'},
+          ].map(t=>CE('button',{
+            key:t.id,
+            className:'theme-picker-btn'+(theme===t.id?' active':''),
+            onClick:(e)=>{e.stopPropagation();applyTheme(t.id);}
+          },
+            CE('span',{className:'theme-picker-ico'},t.ico),
+            CE('div',null,
+              CE('div',{className:'theme-picker-lbl'},t.label),
+              CE('div',{className:'theme-picker-desc'},t.desc)
+            )
+          ))
         )
-      ))
+      ),
+      document.body
     )
   );
 }
