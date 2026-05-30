@@ -56,7 +56,8 @@ function App(){
   const[online,setOnline]          = React.useState(navigator.onLine);
   const[showPicker,setShowPicker]   = React.useState(false);
   const[sidebarPinned,setSidebarPinned] = React.useState(()=>localStorage.getItem('sidebar_pinned')==='1');
-  const[darkMode,setDarkMode] = React.useState(()=>localStorage.getItem('theme')!=='light');
+  const[theme,setThemeState] = React.useState(()=>localStorage.getItem('ui_theme')||null);
+  const[showThemePicker,setShowThemePicker] = React.useState(false);
 
   // Ref pour l'event delegation sur les vues avec filtre conseiller
   const viewRef = React.useRef(null);
@@ -65,13 +66,10 @@ function App(){
   function setAnnee(v){ localStorage.setItem('f_annee',v); setAnneeState(v); }
   function resetConseiller(){ localStorage.removeItem('f_conseiller'); setFiltreConseiller(null); }
   function togglePin(){ setSidebarPinned(p=>{ const n=!p; localStorage.setItem('sidebar_pinned',n?'1':'0'); return n; }); }
-  function toggleTheme(){ setDarkMode(d=>{ const n=!d; if(n){document.body.classList.remove('light-mode');localStorage.setItem('theme','dark');}else{document.body.classList.add('light-mode');localStorage.setItem('theme','light');}return n; }); }
+  function applyTheme(t){ document.body.setAttribute('data-theme',t); localStorage.setItem('ui_theme',t); setThemeState(t); setShowThemePicker(false); }
 
   // ── Init thème au montage ──────────────────────────────────────
-  React.useEffect(()=>{
-    if(darkMode){document.body.classList.remove('light-mode');}
-    else{document.body.classList.add('light-mode');}
-  },[]);
+  React.useEffect(()=>{ const s=localStorage.getItem('ui_theme'); if(s) document.body.setAttribute('data-theme',s); },[]);
 
   // ── Sync couleur depuis les selects internes (shared.js) ──────
   // VueHistorique/VueCalendrier gèrent leur propre state interne.
@@ -194,6 +192,44 @@ function App(){
   function handleDuplicate(entry){
     const{_id,_n,date,horaire,ampm,inscrits,presents,remarques,...rest}=entry;
     setPrefillData({...rest});setEditingId(null);setView('saisie');
+  }
+
+  // ── Sélecteur de thème au 1er lancement ──────────────────────
+  if(!theme){
+    return CE('div',{className:'theme-select-screen'},
+      CE('div',{className:'theme-select-card'},
+        CE('div',{className:'theme-select-logo'},'🖥️'),
+        CE('div',{className:'theme-select-title'},'Ateliers Inclusion Numérique'),
+        CE('div',{className:'theme-select-sub'},"Choisissez votre style d'interface"),
+        CE('div',{className:'theme-select-grid'},
+          [
+            {id:'gdin',    label:'GDIN Cyan',     ico:'①', desc:'Dark navy · Cyan électrique', preview:'#0a0f1a', accent:'#00d4ff'},
+            {id:'grafana', label:'Grafana Dark',  ico:'②', desc:'Dashboard pro · Orange', preview:'#111217', accent:'#ff9800'},
+            {id:'glass',   label:'Glassmorphism', ico:'③', desc:'Flou · Violet profond', preview:'#0b0518', accent:'#e879f9'},
+            {id:'cyber',   label:'Cyberpunk',     ico:'④', desc:'Grille néon · Violet', preview:'#050509', accent:'#a78bfa'},
+          ].map(t=>CE('button',{
+            key:t.id,
+            className:'theme-select-btn',
+            style:{'--bg':t.preview,'--ac':t.accent},
+            onClick:()=>applyTheme(t.id)
+          },
+            CE('div',{className:'theme-select-preview'},
+              CE('div',{className:'theme-select-bars'},
+                [70,45,85,55,95,40,65].map((h,i)=>CE('div',{key:i,className:'theme-select-bar',style:{height:h+'%',background:t.accent,opacity:.3+i*.1}}))
+              )
+            ),
+            CE('div',{className:'theme-select-info'},
+              CE('span',{className:'theme-select-ico'},t.ico),
+              CE('div',null,
+                CE('div',{className:'theme-select-lbl'},t.label),
+                CE('div',{className:'theme-select-desc'},t.desc)
+              )
+            )
+          ))
+        )
+      ),
+      CE('div',{id:'toast',className:'toast',style:{opacity:0}})
+    );
   }
 
   // ── Vue Accueil ───────────────────────────────────────────────
@@ -331,7 +367,29 @@ function App(){
         meta.group&&CE('span',{className:'app-topbar-sub'},'— '+meta.group),
         CE('span',{className:'app-topbar-date','aria-label':'Date du jour'},'📅 '+dateLabel),
         CE('div',{className:'app-topbar-right'},
-          CE('button',{className:'theme-toggle',onClick:toggleTheme,title:darkMode?'Passer en mode clair':'Passer en mode sombre','aria-label':'Basculer le thème'},darkMode?'☀️':'🌙'),
+          CE('div',{style:{position:'relative'}},
+            CE('button',{className:'theme-toggle',onClick:()=>setShowThemePicker(p=>!p),title:'Changer de thème','aria-label':'Changer de thème'},'🎨'),
+            showThemePicker&&CE('div',{className:'theme-picker-overlay',onClick:()=>setShowThemePicker(false)}),
+            showThemePicker&&CE('div',{className:'theme-picker'},
+              CE('div',{className:'theme-picker-title'},'Choisir un thème'),
+              [
+                {id:'gdin',    label:'GDIN Cyan',     ico:'①', desc:'Dark navy · Cyan électrique'},
+                {id:'grafana', label:'Grafana Dark',  ico:'②', desc:'Dashboard pro · Multi-courbes'},
+                {id:'glass',   label:'Glassmorphism', ico:'③', desc:'Flou · Transparence · Violet'},
+                {id:'cyber',   label:'Cyberpunk',     ico:'④', desc:'Grille néon · Glow violet'},
+              ].map(t=>CE('button',{
+                key:t.id,
+                className:'theme-picker-btn'+(theme===t.id?' active':''),
+                onClick:()=>applyTheme(t.id)
+              },
+                CE('span',{className:'theme-picker-ico'},t.ico),
+                CE('div',null,
+                  CE('div',{className:'theme-picker-lbl'},t.label),
+                  CE('div',{className:'theme-picker-desc'},t.desc)
+                )
+              ))
+            )
+          ),
           !online&&CE('span',{className:'offline-badge'},'📡 Hors ligne'),
           !loading&&lastSync&&CE('span',{className:'topbar-sync-info',title:'Sync auto toutes les 5 min'},
             '🔄 ',lastSync.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})
